@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib import font_manager as fm
 from PIL import Image
 import sys
-sys.path.insert(0, "/home/claude/droplet")
+sys.path.insert(0, "archive/v1_droplet")
 from src.data import load
 
 for f in glob.glob("/root/.fonts/Inter-*.ttf"): fm.fontManager.addfont(f)
@@ -22,8 +22,8 @@ plt.rcParams.update({"font.family": "Inter", "font.size": 27, "axes.edgecolor": 
                      "axes.titlecolor": INK, "axes.titlelocation": "left", "axes.linewidth": 1.4,
                      "xtick.major.width": 1.4, "ytick.major.width": 1.4})
 W = 250 / 25.4          # 250 mm in inches
-OUT = "/home/claude/droplet/poster/assets"
-R = "/home/claude/droplet/results"
+OUT = "archive/v1_droplet/poster/assets"
+R = "archive/v1_droplet/results"
 
 
 def save(fig, name):
@@ -31,7 +31,7 @@ def save(fig, name):
 
 
 # ---------- SEM panels ----------
-SEM = "/home/claude/droplet/data/raw/06 - SEM images of the test surfaces/"
+SEM = "archive/v1_droplet/data/raw/06 - SEM images of the test surfaces/"
 def sem_crop(name, box, size):
     im = Image.open(SEM + name + ".tif").crop(box); im = im.resize(size, Image.LANCZOS); im.save(f"{OUT}/{name}.jpg", quality=92)
 sem_crop("D200_43", (300, 200, 1500, 1400), (1200, 1200))

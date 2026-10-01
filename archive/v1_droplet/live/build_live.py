@@ -2,7 +2,7 @@
 import json, os, html, time, re
 import numpy as np
 
-ROOT = "/home/claude/droplet"
+ROOT = "archive/v1_droplet"
 R = f"{ROOT}/results"; FR = f"{R}/final"
 
 

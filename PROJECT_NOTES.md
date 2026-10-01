@@ -1,22 +1,21 @@
-# Droplet Intelligence: handoff for Claude Code
+# Droplet Intelligence: project notes
 
-Parth Sharma's research project: predict the maximum spreading ratio β_max = D_max/D_0 of a droplet impacting a laser-textured aluminium surface **that the model has never seen**. Presented as a poster at the International Conference on Interfacial Phenomena in Droplets, IISc Bengaluru, 5–7 Oct 2026 (sub-topic: Impact of Droplets onto Surfaces).
+Research project by Parth Sharma: predict the maximum spreading ratio β_max = D_max/D_0 of a droplet impacting a laser-textured aluminium surface **that the model has never seen**. Presented as a poster at the International Conference on Interfacial Phenomena in Droplets, IISc Bengaluru, 5–7 Oct 2026 (sub-topic: Impact of Droplets onto Surfaces).
 
-Status on 1 Oct 2026: the paper, the A0 portrait poster (the submitted version), the pitch scripts, the live browser model and the local demo app are all done. Everything was built in a Claude cloud workspace between 23 Sept and 1 Oct 2026 and moved here.
+Status on 1 Oct 2026: the paper, the A0 portrait poster (the submitted version), the pitch scripts, the live website and the local demo app are all done. Work period: 23 Sept to 1 Oct 2026.
 
-## Ground rules (read before changing anything)
+## Ground rules
 
-1. **Numbers come only from the result files.** That means `Droplet_Intelligence_v2/results/*.json`, `Droplet_Intelligence_v2/models/release.json`, `Droplet_Intelligence_v2/results/sem/summary.json`, or `paper/numbers.json`, which `paper/paper_numbers.py` rebuilds from them. Never type a figure from memory. Earlier drafts contained invented numbers; the list of what was wrong is in `notes/research_summary.md` §7 and in Appendix A of `paper/research_paper_v2.md`.
+1. **Numbers come only from the result files.** That means `Droplet_Intelligence_v2/results/*.json`, `Droplet_Intelligence_v2/models/release.json`, `Droplet_Intelligence_v2/results/sem/summary.json`, or `paper/numbers.json`, which `paper/paper_numbers.py` rebuilds from them. Never type a figure from memory. Earlier drafts contained invented numbers; the list of what was wrong is in `notes/research_summary.md` §7.
 2. **The data are not Parth's experiments.** They are the public dataset of Može et al., *Data in Brief* 61 (2025) 111697 (Mendeley Data doi:10.17632/wsh8rxwd38.1), from the University of Ljubljana. Parth's contribution is the surface-held-out evaluation, the surface descriptors, the models and the uncertainty analysis.
 3. **REF-H (the smooth plate) is never used to train or choose a model.** It was looked at during development, so call it a *held-out stress test*, not a blind test.
 4. **Models are chosen on leave-one-surface-out (LOSO) RMSE.** A change is accepted only if its 95% paired bootstrap interval excludes zero. The bootstrap resamples whole surfaces (4,000 draws, seed 23). Otherwise the simpler model stays.
-5. **Sole author:** Parth Sharma, Thapar Institute of Engineering and Technology, Patiala, Punjab, India. AI assistance is disclosed in the paper's acknowledgements.
+5. **Sole author:** Parth Sharma, Thapar Institute of Engineering and Technology, Patiala, Punjab, India.
 6. **Poster rules** (conference spec plus Parth's requests):
    - A0 portrait.
    - Conference name prominent at the top, conference logo in the top-right corner, presenter name underlined.
    - Plain, non-"AI" wording.
    - **No hyphens or dashes in visible poster text.** The exceptions are the sample code REF-H and minus signs in maths. For example, the title reads "Physics Informed Machine Learning for Cross Surface Droplet Impact Prediction", and number ranges are written "8 to 119".
-7. Parth prefers direct, concise answers in English.
 
 ## Folder map
 
@@ -27,11 +26,9 @@ Status on 1 Oct 2026: the paper, the A0 portrait poster (the submitted version),
 | `poster/final_A0_portrait/` | **The submitted poster:** `Parth_Sharma_Droplet_Poster_A0_Portrait.pdf`. Built by `figs.py` → `build6.py` → `render.py`. |
 | `poster/landscape_A0/` | The earlier A0 landscape version (28 Sept), built by `figs3.py`, `build4.py` and `render3.py`. |
 | `poster/portrait_v1_with_cover/` | The first portrait poster plus a cover page (24 Sept). |
-| `live_model/` | Browser predictor (`index.html`, `data.js`, `L.txt`), published as the claude.ai artifact "Droplet Spread Predictor". It runs the same baseline GP and matched Python on five test impacts to two decimals. Its build script was not saved. A byte-identical copy of `models/baseline.L.bin` that `index.html` never loaded was left out. |
-| `notes/` | `research_summary.md` (all key tables), `pitch_scripts.md` (30 s / 1 min / 3 min scripts, demo steps, likely questions), `phase1_audit_and_plan.md` and `phases_2-4_report.md` (exports of Parth's planning doc, see below). |
+| `live_model/` | Early single-file browser predictor (`index.html`, `data.js`, `L.txt`). It runs the same baseline GP and matched Python on five test impacts to two decimals. Superseded by the website in `site/`. |
+| `notes/` | `research_summary.md` (all key tables), `pitch_scripts.md` (30 s / 1 min / 3 min scripts, demo steps, likely questions), `phase1_audit_and_plan.md` and `phases_2-4_report.md` (the planning document). |
 | `archive/v1_droplet/` | The earlier v1 workspace. `src/` contains the 13-model screen (`models_extra.py`, `ft_transformer.py`), the phase 2–4 experiments (`phases.py`, `phase_extra.py`), the CNN and OOD code. `results/` holds their outputs (including `zoo_table.csv`). `droplet_app/` is the Streamlit and FastAPI dashboard, the backup demo. It also contains `webdash/`, `live/` and the v1 `poster/`. |
-
-The planning doc "Droplet Intelligence — Phase 1 Audit & Plan" lives online as a claude.ai doc (https://claude.ai/code/artifact/5dee729b-fb8b-4743-8c60-a8c0459a2c4c). The two files in `notes/` are exports of its two tabs as of 1 Oct 2026. The claude.ai project "banglore" holds copies of the research summary, the pitch scripts and the paper text.
 
 ## Final model and headline results
 
@@ -49,7 +46,7 @@ The planning doc "Droplet Intelligence — Phase 1 Audit & Plan" lives online as
 
 Full tables are in `notes/research_summary.md` and `paper/research_paper_v2.md`.
 
-## How to run (tested on 1 Oct 2026 from this exact folder layout)
+## How to run (tested on 1 Oct 2026)
 
 **Demo app, which Parth uses at the poster.** Python 3.10+:
 ```
@@ -59,7 +56,7 @@ python -m droplet.serve --port 8000        # or double-click run_demo.bat on Win
 ```
 Open http://127.0.0.1:8000. As a check, POST to `/api/predict` with `{"D_mm":2.5,"V":1.5,"rho":997.2375,"mu":0.000943923,"sigma":0.07246,"surface":"D200"}`. It should return β_max 2.859, interval [2.807, 2.913], status `within_measured_support`.
 
-**Vercel deployment** (root `vercel.json`, Vercel "services" mode, added 1 Oct 2026):
+**Website** (live at https://iisc-droplet-parth1682.vercel.app; root `vercel.json`, Vercel "services" mode):
 - `site`: the repo-level `site/` folder, plain static files. It is generated by `python Droplet_Intelligence_v2/build_site.py` (web UI at the root, plus `models/`, `results/`, `data/sem/`, the same layout `droplet.serve` serves; the "download package" links point to the GitHub repo). **Re-run it and commit `site/` after changing `web/`, `models/` or `results/`.** It is prebuilt because Vercel treats any service folder with a `requirements.txt` as Python. The GP runs in the browser, so the site needs no backend. Public on `/(.*)`.
 - `legacy_api`: `archive/v1_droplet/droplet_app/api.py` (FastAPI, the v1 model). Public on `/v1/api/*`, e.g. `POST /v1/api/predict`, docs at `/v1/api/docs`. Its `requirements.txt` is API only; the Streamlit dashboard uses `requirements-dashboard.txt`.
 - No bindings: neither service calls the other. `.vercelignore` keeps the SEM TIFFs, paper, posters and the rest of the archive out of the upload.
@@ -97,17 +94,11 @@ python render.py --pdf    # Playwright + Chromium → Parth_Sharma_Droplet_Poste
 
 ## Notes on provenance and paths
 
-- The scripts in `paper/` and `poster/` were changed for this handoff to use repo-relative paths (`_ROOT` at the top of each file). `paper_numbers.py` now also regenerates three things that had been added to `numbers.json` by hand on 24 Sept:
+- The scripts in `paper/` and `poster/` use repo-relative paths (`_ROOT` at the top of each file). `paper_numbers.py` now also regenerates three things that had been added to `numbers.json` by hand on 24 Sept:
   - the `zoo` key (13-model screen, from `archive/v1_droplet/results/zoo_table.csv`);
   - `mu_ratio`;
   - the per-fluid means and viscosity ranges.
-- Scripts in `archive/` still contain the old cloud paths. Map them before rerunning:
-  - `/home/claude/droplet` → `archive/v1_droplet`
-  - `/home/claude/di2/Droplet_Intelligence_v2` → `Droplet_Intelligence_v2`
-  - `/home/claude/paper` → `paper`
-  - `/home/claude/poster4` → `poster/final_A0_portrait`
-  - `/home/claude/poster3` → `poster/landscape_A0`
-  - `/home/claude/poster2` → `poster/portrait_v1_with_cover`
+- Scripts in `archive/` use paths relative to the repository root; run them from there.
 - **Not included, because of size or duplication:**
   - The original dataset zip (148 MB). The five CSVs and the dataset description PDF are in `Droplet_Intelligence_v2/data/raw/`.
 - **SEM originals now included (1 Oct 2026):** all 39 TIFFs (13 surfaces × 43/100/350×) are in `Droplet_Intelligence_v2/data/sem_original/`, where `droplet.sem` expects them. Every file matches the SHA-256 in `data/sem/manifest.json`, and `droplet.sem.prepare()` rebuilds `training_pixels.npz` from them with zero pixel difference.
@@ -132,7 +123,7 @@ A "Conclusions" band with 4 points runs along the bottom.
 3. **Conference logo.** The poster uses `logo_ws.png`, the droplet "D" mark from the earlier files. The organisers' email mentioned an attached official logo that has not been supplied yet. If it differs, replace `poster/final_A0_portrait/logo_ws.png` (the `.r` image in `build6.py`) and re-render.
 4. **Print quality.** The TIET logo is 277×258 px and the cover image is 1132×1600 px. Larger or vector originals would print better at A0.
 5. ~~Paper author list~~: confirmed 1 Oct 2026 (body text, .docx and PDF metadata: Parth Sharma, sole author).
-6. **Planning doc diagram.** The architecture diagram in the planning doc still shows the early design: a Laan prior and a spacing descriptor feeding the GP, and a conformal interval. The final model is the plain GP on the five inputs above.
+6. **Planning doc diagram.** The architecture diagram in `notes/phase1_audit_and_plan.md` still shows the early design: a Laan prior and a spacing descriptor feeding the GP, and a conformal interval. The final model is the plain GP on the five inputs above.
 7. **Research next steps** (from the paper):
    - measured advancing and receding contact angles for every fluid–surface pair, as a wettability input;
    - a noise model that depends on the Ohnesorge number, to fix water undercoverage;

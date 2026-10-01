@@ -187,7 +187,7 @@ C.push(P(`On a public dataset of drop impacts on laser-channelled superhydrophob
 C.push(H1('Data and code availability'));
 C.push(P('Impact data: Može et al., Mendeley Data, doi:10.17632/wsh8rxwd38.1 [4]. The analysis code, trained model bundles, all fold-level predictions, the browser predictor and the tests are in the Droplet Intelligence v2.1 package accompanying this paper. The two ablations added here (Laan law alone; GP without descriptors) and the figures are reproduced by ablation.py and figs.py.'));
 C.push(H1('Acknowledgements'));
-C.push(P('The author thanks Može, Jereb, Lovšin, Berce, Zupančič and Golobič for making their dataset public. Analysis code and drafts of this paper were prepared with the assistance of an AI model (Claude, Anthropic); every number in the paper was regenerated from saved result files and checked against them.'));
+C.push(P('The author thanks Može, Jereb, Lovšin, Berce, Zupančič and Golobič for making their dataset public. An AI assistant was used to help write analysis code and edit the text; the author designed the study, checked every result against the saved result files, and takes responsibility for the content.'));
 
 // ---------------- References ----------------
 C.push(H1('References'));
@@ -206,43 +206,6 @@ const refs = [
   'D. R. Roberts et al. Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure. *Ecography* 40 (2017) 913–929.',
 ];
 refs.forEach(r => C.push(NUM(r, 'ref')));
-
-// ---------------- Appendix A ----------------
-C.push(new Paragraph({ children: [], pageBreakBefore: true }));
-C.push(H1('Appendix A. Corrections to the draft of 23 September 2026'));
-C.push(P('The earlier draft (Droplet_Impact_Research_Paper.md) and the README.md and pitch_scripts/PITCH.md inside the four-part download of 23 September contain statements that are not supported by the data or result files. None of them should be used. The source of each error is given in brackets.'));
-C.push(P(`The pitch script saved in the project (claude/pitch_scripts.md) was re-checked against the result files on 24 September and updated: REF-H is now described as a held-out stress test rather than a blind test, the dataset is credited to Može et al. [4], and the viscosity finding of Section 4.4 is included. Its remaining figures are traceable: Laan R^{2} = 0.71 is Eq. (1) with the published A = 1.24 on the textured impacts (with A refitted on held-out surfaces, R^{2} = 0.66); 0.043 vs 0.039 is the earlier single-descriptor CNN (macro RMSE), not the v2.1 three-view CNN (${f(sm.loso, 4)}); and 83–97% per-surface coverage refers to the earlier split-conformal intervals (nominal intervals: ${pc(covMin, 0)}–${pc(covMax, 0)}).`));
-const corr = [
-  ['Authorship of data', 'Data Collection section presents the experiments as the author\'s own: femtosecond laser, 25 kHz camera, manual SEM segmentation (draft); "We measured 1,498 impacts" (PITCH.md)', 'Public dataset of Može et al. [4]: nanosecond fibre laser, 5,000 fps. No new experiments.'],
-  ['REF-H RMSE', '0.0394', f(b.refh, 4)],
-  ['β_{max} range', '0.2–1.0', `${f(d.beta[0], 2)}–${f(d.beta[1], 2)}`],
-  ['Surfaces', 'Included "D1200"', 'S50–S800 and D50–D800; no D1200'],
-  ['Descriptors', 'φ 0.3–0.8 and V_{tex} 50–800 µm^{3}, "measured from SEM"', 'φ 0.01–0.93, V_{tex} 0.44–24.75 µm; geometric proxies with fixed track widths'],
-  ['Kernel and logs', 'Matérn 5/2, base-10 logs', 'Matérn 3/2, natural logs'],
-  ['Laan law alone', 'LOSO RMSE 0.073', `${f(L.loso, 3)}`],
-  ['ID RMSE', 'GPR 0.0205, XGBoost 0.0187 (XGBoost better)', `GPR ${f(lg.gpr_id, 4)}, XGBoost ${f(lg.xgb_id, 4)} (GPR better)`],
-  ['Other models', 'M3–M5 LOSO 0.052–0.054', 'Not produced by any run; replaced by Table 3'],
-  ['Without descriptors', '"about 0.048"', `Measured ${f(bl.loso, 4)}; interval includes zero`],
-  ['Within ±0.05', 'GPR 97%, XGBoost 89%', `GPR ${pc(lg.within05.GPR, 0)}, XGBoost ${pc(lg.within05.XGB, 0)}`],
-  ['Physics backbone CI', '[−0.0022, +0.0001]', `[${f(phCI[0], 4)}, +${f(phCI[1], 4)}]`],
-  ['Interval details', 'Per-surface q values; "D1200 83%"', `Per-surface coverage ${pc(covMin, 0)}–${pc(covMax, 0)}; not reported per surface q`],
-  ['Unsupported claims', '"99.6% accuracy" (PITCH.md); "~$50 USD per droplet impact" (draft)', 'No source; removed'],
-  ['Authorship', 'Claude listed as author', 'AI assistance disclosed in Acknowledgements'],
-];
-C.push(TABLE(['Item', 'Draft of 23 Sept', 'Correct'], corr, [1800, 3500, 3726], { left: true }));
-
-// ---------------- Appendix B ----------------
-C.push(H1('Appendix B. Project log (summary of the working sessions)'));
-C.push(P('This is a factual summary of the work done with the AI assistant between 23 and 24 September 2026.'));
-const log = [
-  '**23 Sept — analysis pipeline.** The pipeline for Phases 3–7 was automated on the earlier project: physics-residual models, paired bootstrap comparisons, split-conformal intervals, OOD scoring and SHAP. An audit found that the bootstrap resampled replicate conditions rather than surfaces; after the fix the Laan backbone was no longer significant, and the plain GP was kept. Conformal coverage was made honest by calibrating each surface on the other 11.',
-  '**23 Sept — comparison and tools.** XGBoost was refitted on the exact GP inputs and a three-panel comparison figure was produced (LOSO 0.0400 against 0.0563; GP better on 9 of 12 surfaces). A Streamlit dashboard, a FastAPI service and a browser predictor were built; the browser matched Python to 10^{−12}. Four poster panels and the pitch scripts were updated.',
-  '**23 Sept — packaging and first draft.** All code and results were packaged. The single 53 MB archive exceeded the 30 MB upload limit, so it was sent as four parts. A research-paper draft was then written after the conversation context had been summarised; it contained the errors listed in Appendix A.',
-  '**23 Sept — Astra question.** You asked about "Astra". My answers covered DataStax Astra DB with Claude and with GPT; you then clarified that you meant a ChatGPT model called Astra, which I did not identify. That question is unresolved. Those answers also contained inaccuracies: Claude\'s weights are not publicly available, and Anthropic does not offer an embeddings API.',
-  '**23 Sept, 23:00.** You sent Droplet Intelligence v2.1. It was installed from requirements-sem.txt and served on port 8000. Health, prediction for all five models, custom surfaces, input validation (HTTP 415/422) and extrapolation flags all worked. All 18 tests passed, the JavaScript–Python parity check passed, and the SEM command-line tool worked on the original TIFFs (the bundled JPEG thumbnails are rejected by design). The REF-H error in the paper draft was flagged.',
-  '**24 Sept.** This paper was rebuilt from the v2.1 result files. Two missing analyses were run (Laan law alone; GP without descriptors), four figures were generated from saved predictions, the dataset was traced to its published source, and every number was checked against the result files.',
-];
-log.forEach(s => C.push(B(s)));
 
 const doc = new Document({
   creator: 'Parth Sharma', title: 'Predicting droplet spreading on unseen laser-textured surfaces',

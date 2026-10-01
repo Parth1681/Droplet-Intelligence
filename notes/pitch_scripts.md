@@ -40,7 +40,7 @@ Start it before the session: `python -m droplet.serve --port 8000`, then open ht
 5. **02 Model evaluation.** Show accuracy and interval coverage by unseen surface. D50 is the hardest.
 6. If asked about images: **05 SEM image model**. Pick a surface and press "Predict using this image set".
 
-Backup 1: the browser version "Droplet Spread Predictor" (claude.ai artifact, 24 Sept 2026). Same trained baseline GP, no install; needs internet. Checked against the Python package on five impacts: identical β_max and interval to two decimals.
+Backup 1: the website https://iisc-droplet-parth1682.vercel.app. Same trained GP running in the browser, no install; needs internet. Checked against the Python package: identical β_max and interval (2.859, 2.81 to 2.91 for the D200 water example).
 Backup 2: the older Streamlit dashboard (`streamlit run Overview.py`) has the same prediction on its Predict page.
 
 ## Likely questions (short, honest answers)

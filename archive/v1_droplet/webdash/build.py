@@ -3,7 +3,7 @@ import json, os
 import numpy as np
 import pandas as pd
 
-ROOT = "/home/claude/droplet"; APP = f"{ROOT}/droplet_app"; OUT = f"{ROOT}/webdash"
+ROOT = "archive/v1_droplet"; APP = f"{ROOT}/droplet_app"; OUT = f"{ROOT}/webdash"
 b = np.load(f"{APP}/model/bundle.npz"); meta = json.load(open(f"{APP}/model/meta.json"))
 L = b["L"]; n = len(L)
 L[np.tril_indices(n)].astype("<f4").tofile(f"{OUT}/gp_L.bin")     # packed lower triangle, row-major

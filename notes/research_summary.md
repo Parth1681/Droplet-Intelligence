@@ -109,7 +109,7 @@ Re and We recomputed from the raw data match the dataset to 5×10⁻⁷. Laan sc
 | Earlier A0 landscape poster (28 Sept) | `poster/landscape_A0/` |
 | Earlier A0 portrait poster + cover (24 Sept) | `poster/portrait_v1_with_cover/` |
 | Pitch scripts | `notes/pitch_scripts.md` |
-| Live browser model | claude.ai artifact "Droplet Spread Predictor" (source `live_model/`) |
+| Live website | https://iisc-droplet-parth1682.vercel.app (source `site/`) |
 | Local demo app | `python -m droplet.serve --port 8000` in `Droplet_Intelligence_v2/` |
 
 The browser model runs the trained baseline GP (same weights and Cholesky factor as the package) and matched the Python predictor on five test impacts to two decimals, e.g. water, D200, 2.5 mm, 1.5 m/s → 2.86 [2.81, 2.91].
