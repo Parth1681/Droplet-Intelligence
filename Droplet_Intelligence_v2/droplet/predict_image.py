@@ -63,11 +63,13 @@ def predict(phi, D_mm, V, rho, mu, sigma):
         reasons.append(f'phi {phi:.3f} outside the training surfaces ({lo:.2f} to {hi:.2f})')
     if phi > .95:
         reasons.append('Smooth surface: wettability is not modelled; on REF-H only about 62% of impacts fell inside the 90% interval')
-    return dict(beta_max=float(np.exp(m[0])), interval_90=[float(np.exp(m[0] - E.Z90 * s[0])), float(np.exp(m[0] + E.Z90 * s[0]))],
+    bundle = ROOT / 'models/image_only.json'   # calibrated multiplier from LOSO residuals (same method as the main models)
+    q = json.loads(bundle.read_text())['q'] if bundle.exists() else E.Z90
+    return dict(beta_max=float(np.exp(m[0])), interval_90=[float(np.exp(m[0] - q * s[0])), float(np.exp(m[0] + q * s[0]))],
                 phi_from_image=phi, Re=float(d.Re.iloc[0]), We=float(d.We.iloc[0]),
                 status='within_measured_support' if not reasons else 'extrapolation', reasons=reasons,
                 model='image_only GP (ln Re, ln We, ln D0, phi from image)',
-                note=f"Leave one surface out: RMSE {b['loso']['rmse']:.4f}, 90% interval coverage {b['loso']['coverage']:.3f}")
+                note=f"Leave one surface out: RMSE {b['loso']['rmse']:.4f}; interval calibrated on LOSO residuals (multiplier {q:.3f})")
 
 
 def main():

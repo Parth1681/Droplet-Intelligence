@@ -112,6 +112,7 @@ Code: `droplet/extensions.py` (experiments), `droplet/predict_image.py` (tool), 
   ```
   python -m droplet.predict_image --image new_43x.tif --D_mm 2.5 --V 1.5 --rho 997.2 --mu 0.000944 --sigma 0.0725
   ```
+- **In the browser:** `web/imagereader.mjs` is a port of the reader and the image GP (`models/image_only.json` + `.L.bin`, exported by `python -m droplet.export_image_model`). It reproduces Python exactly on all 13 SEM images (φ difference 0, GP to 1e-10). It powers the "Drop in an SEM image" section of the Claude artifact. The interval uses a LOSO-calibrated multiplier (1.739, coverage 90.1%), in the CLI too.
 - **Step 2, wettability: rejected on this data.** Lee β₀ correction: LOSO unchanged, but REF-H RMSE 0.228 (bias +0.22) at the literature angle and still 0.151 at 130°. Angle as a GP input: LOSO worse (0.0480, interval excludes zero). The training angles span only about 160 to 167°, so the data cannot teach a wettability effect; surfaces with intermediate angles are needed.
 
 ## Final poster layout (portrait, built by `build6.py`)
