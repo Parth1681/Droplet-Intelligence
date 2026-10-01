@@ -31,17 +31,21 @@ Panel numbers refer to the submitted A0 portrait poster. Three columns, read top
 10. **Smooth plate REF-H (panel 10).** RMSE 0.059, mean error 1.9%, but only 62% inside the interval. Point at the warning box: the misses sit at high We and in water, 20% and 60% glycerol; at high We the model over-predicts, because textured surfaces spread further. The smooth plate is hydrophobic and the textures are superhydrophobic, so wettability is the missing input. Our hypothesis: less friction over the trapped air layer on the textures.
 11. **Future work and Conclusions (bottom of column 3, bottom band).** Next: measured contact angles as an input, a noise level that depends on Oh, and new surfaces with a test set fixed before tuning. Close on the Conclusions band: judge droplet models on unseen surfaces, describe surfaces with quantities every surface has (φ = 1 for the smooth plate), and say where the model stops being trustworthy.
 
-## Live demo (≈60 s, laptop next to the poster)
-Start it before the session: `python -m droplet.serve --port 8000`, then open http://127.0.0.1:8000. It works offline once installed.
-1. **01 Predict & compare.** Pick water, D200, 2.5 mm, 1.5 m/s: β_max ≈ 2.86, 90% band 2.81–2.91.
-2. Push the velocity outside the measured 0.48–1.71 m/s. The reliability status changes to extrapolation and gives the reasons.
-3. Switch the surface to **REF-H**. The smooth-surface warning appears: historical interval undercoverage, wettability not modelled.
-4. Under "Same impact. Five models.", show that all five trained models agree to within about 0.01.
-5. **02 Model evaluation.** Show accuracy and interval coverage by unseen surface. D50 is the hardest.
-6. If asked about images: **05 SEM image model**. Pick a surface and press "Predict using this image set".
 
-Backup 1: the website https://iisc-droplet-parth1682.vercel.app. Same trained GP running in the browser, no install; needs internet. Checked against the Python package: identical β_max and interval (2.859, 2.81 to 2.91 for the D200 water example).
-Backup 2: the older Streamlit dashboard (`streamlit run Overview.py`) has the same prediction on its Predict page.
+## New since the poster (30 seconds, say after panel 10 or when asked "what next?")
+Since submitting I tested two ways to reach surfaces outside the dataset.
+First, reading the surface straight from one 43× SEM image: the rough laser tracks and smooth plateaus are separated by local roughness, which gives φ without knowing spacing or depth. With that image φ the model is just as accurate on unseen surfaces, 0.0397 against 0.0400, and it reads the smooth plate correctly as φ = 1.00, where the CNN said 0.71.
+Second, adding contact angle. It does not work on this data: the Lee correction over-predicts the smooth plate by about 0.22, and as an input the angle makes the model worse, because every training surface sits between about 160 and 167°. So wettability needs new surfaces with intermediate angles, which is the clearest next experiment.
+I also automated the measurement: a pipeline reads D₀, V and β_max from an impact video and checks them against the prediction, with no manual steps.
+
+## Live demo (≈90 s, laptop next to the poster)
+Open https://iisc-droplet.vercel.app (or the Claude artifact). Everything runs in the browser.
+1. **Predict.** Water, D200, 2.5 mm, 1.5 m/s: β_max ≈ 2.86, 90% band 2.81 to 2.91. Push V past 1.71 m/s: status turns to extrapolation with reasons.
+2. **Compare all five models.** They agree to within about 0.01.
+3. **Your image.** Click "Smooth plate": φ reads 1.000 from the image and the tool warns that wettability is not modelled. Click "D200 textured": φ 0.48, β ≈ 2.84.
+4. **Video.** Click "Synthetic impact": it finds the drop and surface by itself and measures D₀ 2.50 mm, V 1.20 m/s, β_max 2.58 (true 2.6), then compares with the prediction.
+5. If asked about evidence: **Evaluate** (per-surface error and coverage) and **SEM** (the CNN result).
+Backup: local app, `python -m droplet.serve --port 8000` in Droplet_Intelligence_v2.
 
 ## Likely questions (short, honest answers)
 - **Did you do the experiments?** No. The impacts are a public dataset from Može et al., University of Ljubljana (*Data in Brief*, 2025). My contribution is testing on unseen surfaces, the surface descriptors, the models and the uncertainty analysis.
@@ -53,3 +57,6 @@ Backup 2: the older Streamlit dashboard (`streamlit run Overview.py`) has the sa
 - **Would it work on other materials?** Only within the texture family it was trained on. The CNN, for example, reads the smooth plate as φ ≈ 0.71, not 1.0. The next step is a wettability input.
 - **How much does the surface matter?** Re and We carry most of the signal: mean |SHAP| of about 0.12–0.13 each against about 0.004 for φ and V_tex. Removing the surface inputs raises the unseen-surface error from 0.040 to 0.046 and the smooth-plate error from 0.059 to 0.069. It helps most on D50, the most extreme texture. With 12 surfaces that is a strong hint, not proof.
 - **What would you do next?** Measure advancing and receding angles for every fluid–surface pair, let the noise level depend on viscosity, and add new surfaces with a test set held back before any tuning.
+- **Can it handle a new surface it has never seen?** Within the laser-textured family, yes: give it one 43× SEM image and it reads φ itself, with the same error as the geometry model (0.0397). Other materials or wettability are extrapolation, and the tool says so.
+- **Why not add contact angle?** I tried. All training surfaces are superhydrophobic (about 160 to 167°), so the model cannot learn the effect, and the Lee correction over-predicts the smooth plate. It needs surfaces with intermediate angles.
+- **Can it run on its own?** Yes. A watch mode measures each new impact video automatically and logs measured against predicted β_max. So far it is validated on synthetic videos with known answers; I am requesting raw recordings from the dataset authors to validate it on real footage.

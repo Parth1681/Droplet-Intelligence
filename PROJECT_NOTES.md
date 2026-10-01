@@ -2,7 +2,7 @@
 
 Research project by Parth Sharma: predict the maximum spreading ratio β_max = D_max/D_0 of a droplet impacting a laser-textured aluminium surface **that the model has never seen**. Presented as a poster at the International Conference on Interfacial Phenomena in Droplets, IISc Bengaluru, 5–7 Oct 2026 (sub-topic: Impact of Droplets onto Surfaces).
 
-Status on 1 Oct 2026: the paper, the A0 portrait poster (the submitted version), the pitch scripts, the live website and the local demo app are all done. Work period: 23 Sept to 1 Oct 2026.
+Status on 1 Oct 2026: the paper (extended with Sections 4.8–4.10: SEM image reader, wettability test, video pipeline), the A0 portrait poster (the submitted version), the pitch scripts, the live website and the local demo app are all done. Work period: 23 Sept to 1 Oct 2026.
 
 ## Ground rules
 
@@ -138,7 +138,7 @@ A "Conclusions" band with 4 points runs along the bottom.
 
 ## Open items
 
-1. ~~Pitch scripts out of date for the layout~~: done 1 Oct 2026. The 3-minute script now follows the portrait panels 1 to 10, Future work and the Conclusions band; numbers unchanged.
+1. ~~Pitch scripts out of date for the layout~~: done 1 Oct 2026; later the same day a "New since the poster" segment, a new website demo and three Q&A answers were added. The 3-minute script now follows the portrait panels 1 to 10, Future work and the Conclusions band; numbers unchanged.
 2. ~~Research summary deliverables table~~: done 1 Oct 2026, now uses repo-relative paths and the portrait poster.
 3. **Conference logo.** The poster uses `logo_ws.png`, the droplet "D" mark from the earlier files. The organisers' email mentioned an attached official logo that has not been supplied yet. If it differs, replace `poster/final_A0_portrait/logo_ws.png` (the `.r` image in `build6.py`) and re-render.
 4. **Print quality.** The TIET logo is 277×258 px and the cover image is 1132×1600 px. Larger or vector originals would print better at A0.

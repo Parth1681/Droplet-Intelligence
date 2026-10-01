@@ -121,3 +121,19 @@ The browser model runs the trained baseline GP (same weights and Cholesky factor
 
 ## 7. Corrections to the earlier 24 Sept summary
 The first version of this summary (written the same day) had these errors: data cited as "Pode et al." (correct: Može et al.); kernel given as Matérn 5/2 (deployed model is Matérn 3/2); φ range given as 0.55–0.93 and texture volume in mm³ (correct: φ 0.01–1.0, texture volume 0.44–24.75 µm); diameter range 1.5–3.5 mm (correct: 2.15–2.61 mm); a 40 wt% fluid that does not exist; wrong viscosities for 20/60/78 wt%; invented per-surface RMSE, per-fluid coverage and model-comparison tables. All replaced above with values from the result files.
+
+## 8. Extensions after submission (1 Oct 2026)
+Source: `Droplet_Intelligence_v2/results/extensions/summary.json` and `REPORT.md`. Same protocol (LOSO, paired surface bootstrap 4,000 draws seed 23, REF-H never used for choices).
+
+| Candidate | LOSO RMSE | 95% CI vs baseline | REF-H RMSE | REF-H coverage |
+|---|---|---|---|---|
+| baseline | 0.0400 | [+0.0000, +0.0000] | 0.0591 | 61.6% |
+| image_phi | 0.0398 | [-0.0057, +0.0047] | 0.0595 | 66.4% |
+| image_only | 0.0397 | [-0.0068, +0.0045] | 0.0636 | 61.6% |
+| lee_beta0 | 0.0398 | [-0.0013, +0.0009] | 0.2279 | 0.8% |
+| angle_input | 0.0480 | [+0.0004, +0.0171] | 0.3771 | 100.0% |
+
+- **Image reader (accepted as an input path):** φ from one 43× SEM image; REF-H reads 1.000. Equivalent accuracy, not better; baseline stays default. Valid near 43× only. Tools: `droplet.predict_image`, website section "Drop in an SEM image".
+- **Wettability (rejected on this data):** training angles too uniform; Lee correction over-predicts REF-H.
+- **Video pipeline:** `droplet.video` (single video or `--watch` folder), website section "Drop in an impact video". Validated on synthetic videos only; raw recordings to be requested from Može et al.
+- **Paper:** Sections 4.8–4.10 added; .docx/.pdf rebuilt (11 pages). The submitted poster is unchanged.
