@@ -61,9 +61,9 @@ Open http://127.0.0.1:8000. As a check, POST to `/api/predict` with `{"D_mm":2.5
 
 **Vercel deployment** (root `vercel.json`, Vercel "services" mode, added 1 Oct 2026):
 - `site`: `Droplet_Intelligence_v2/`, static. `python3 build_site.py` assembles `public/` (web UI at the root, plus `models/`, `results/`, `data/sem/` and the package zip, the same layout `droplet.serve` serves). The GP runs in the browser, so the site needs no backend. Public on `/(.*)`.
-- `v1_api`: `archive/v1_droplet/droplet_app/api.py` (FastAPI, the v1 model). Public on `/v1/api/*`, e.g. `POST /v1/api/predict`, docs at `/v1/api/docs`. Its `requirements.txt` is API only; the Streamlit dashboard uses `requirements-dashboard.txt`.
+- `legacy_api`: `archive/v1_droplet/droplet_app/api.py` (FastAPI, the v1 model). Public on `/v1/api/*`, e.g. `POST /v1/api/predict`, docs at `/v1/api/docs`. Its `requirements.txt` is API only; the Streamlit dashboard uses `requirements-dashboard.txt`.
 - No bindings: neither service calls the other. `.vercelignore` keeps the SEM TIFFs, paper, posters and the rest of the archive out of the upload.
-- Checked locally: the built site predicts 2.859 [2.81, 2.91] for water/D200/2.5 mm/1.5 m/s in headless Chromium with no errors; `v1_api` returns 2.859 at `/v1/api/predict`.
+- Checked locally: the built site predicts 2.859 [2.81, 2.91] for water/D200/2.5 mm/1.5 m/s in headless Chromium with no errors; `legacy_api` returns 2.859 at `/v1/api/predict`.
 
 **Tests** (re-checked 1 Oct 2026 on Linux, Python 3.11: all 18 tests pass with the SEM originals in place, demo check returns 2.859 [2.807, 2.913], JS parity ≤3.1×10⁻¹²):
 ```

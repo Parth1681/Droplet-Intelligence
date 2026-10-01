@@ -7,14 +7,14 @@
       "buildCommand": "python3 build_site.py",
       "outputDirectory": "public"
     },
-    "v1_api": {
+    "legacy_api": {
       "root": "archive/v1_droplet/droplet_app",
       "framework": "fastapi",
       "entrypoint": "api.py"
     }
   },
   "rewrites": [
-    { "source": "/v1/api/(.*)", "destination": { "service": "v1_api" } },
+    { "source": "/v1/api/(.*)", "destination": { "service": "legacy_api" } },
     { "source": "/(.*)", "destination": { "service": "site" } }
   ]
 }

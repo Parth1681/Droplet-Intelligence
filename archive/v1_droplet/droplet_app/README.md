@@ -21,7 +21,7 @@ Double-click `run_dashboard.bat`. It installs the packages, starts the API in a 
 
 ## Files
 - `core.py`: numpy-only predictor (no sklearn needed; checked against sklearn to 1e-6 at export)
-- `api.py`: FastAPI service. Routes are under `/v1/api` (also answered at the bare paths). Deployed on Vercel as service `v1_api`.
+- `api.py`: FastAPI service. Routes are under `/v1/api` (also answered at the bare paths). Deployed on Vercel as service `legacy_api`.
 - `requirements.txt`: API only (numpy, fastapi), used by Vercel. `requirements-dashboard.txt` adds Streamlit and plotting for the local dashboard.
 - `model/`: exported GP (bundle.npz) and metadata (meta.json)
 - `data/`: result files the dashboard shows
