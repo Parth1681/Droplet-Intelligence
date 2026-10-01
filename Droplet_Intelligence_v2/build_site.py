@@ -40,7 +40,7 @@ def build(out, artifact):
     (out / 'sem').mkdir(); (out / 'samples').mkdir()
     page = (ROOT / 'showcase/index.html').read_text()
     (out / 'index.html').write_text(page if artifact else HEAD + page.replace('<link rel="preconnect"', '</head>\n<body>\n<link rel="preconnect"', 1) + '\n</body>\n</html>\n')
-    shutil.copy(ROOT / 'showcase/imagereader.mjs', out); shutil.copy(ROOT / 'web/engine.mjs', out)
+    shutil.copy(ROOT / 'showcase/imagereader.mjs', out); shutil.copy(ROOT / 'showcase/video.mjs', out); shutil.copy(ROOT / 'web/engine.mjs', out)
     (out / 'stats.json').write_text(json.dumps(stats()))
     shutil.copy(ROOT / 'models/release.json', out / 'models'); shutil.copy(ROOT / 'models/sem/encoder.json', out / 'models/sem')
     for k in MODELS:
@@ -52,6 +52,9 @@ def build(out, artifact):
     shutil.copy(ROOT / 'results/sem/summary.json', out / 'results/sem')
     for p in sorted((ROOT / 'data/sem').glob('*.jpg')): shutil.copy(p, out / 'sem')
     for s in SAMPLES: Image.open(ROOT / f'data/sem_original/{s}.tif').convert('L').save(out / f'samples/{s}.png', optimize=True)
+    from droplet.synthetic_video import render, encode   # known-answer impact for the video section
+    frames, truth = render(seed=0); encode(frames, str(out / 'samples/impact_sample.webm'))
+    (out / 'samples/impact_sample.truth.json').write_text(json.dumps(truth))
     print('built', out, sum(f.stat().st_size for f in out.rglob('*') if f.is_file()) // 2**20, 'MB')
 
 

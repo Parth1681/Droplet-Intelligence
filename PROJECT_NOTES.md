@@ -115,6 +115,15 @@ Code: `droplet/extensions.py` (experiments), `droplet/predict_image.py` (tool), 
 - **In the browser:** `showcase/imagereader.mjs` is a port of the reader and the image GP (`models/image_only.json` + `.L.bin`, exported by `python -m droplet.export_image_model`). It reproduces Python exactly on all 13 SEM images (φ difference 0, GP to 1e-10). It powers the "Drop in an SEM image" section of the website and the Claude artifact (https://claude.ai/artifact/8hNvWLNL4Yor9k3DGbhZhj). The interval uses a LOSO-calibrated multiplier (1.739, coverage 90.1%), in the CLI too.
 - **Step 2, wettability: rejected on this data.** Lee β₀ correction: LOSO unchanged, but REF-H RMSE 0.228 (bias +0.22) at the literature angle and still 0.151 at 130°. Angle as a GP input: LOSO worse (0.0480, interval excludes zero). The training angles span only about 160 to 167°, so the data cannot teach a wettability effect; surfaces with intermediate angles are needed.
 
+## Automatic impact video measurement (1 Oct 2026)
+
+`droplet/video.py` measures a backlit side-view impact video with no manual steps: Otsu threshold, substrate = dark band across the width, drop = largest dark blob above it; D₀ from area, V from a line fit of the centroid before contact, β_max from the widest blob extent after contact. It then predicts β_max from D₀ and V and checks the measurement against the 90% interval.
+```
+python -m droplet.video --video impact.mp4 --fps 5000 --mm-per-px 0.02 --fluid 0 --surface D200
+python -m droplet.video --watch incoming/ --fps 5000 --mm-per-px 0.02 --fluid 0 --surface D200   # automatic: every new video -> results.csv
+```
+Browser port: `showcase/video.mjs` (website section "Drop in an impact video"). Validated only on synthetic videos with known answers (`droplet/synthetic_video.py`, `tests/test_video.py`): D₀ and V exact, β_max within about 1% (frame sampling of the peak). The Zenodo liquid-film fluorescence videos (Drive folder) are a different problem (impact on a film, no visible drop edge, no scale or capture rate) and were not used. Real validation needs backlit videos with known D₀, V, β_max, e.g. raw videos from Može et al.
+
 ## Final poster layout (portrait, built by `build6.py`)
 
 The header carries the conference name, with the Thapar logo top-left and the conference logo top-right. Below it come the title, the subtitle "Testing on laser textured aluminium by holding out one surface at a time", the underlined presenter name and the affiliation.

@@ -210,14 +210,14 @@
 <header class="header">
   <a class="logo" href="#top">DROPLET</a>
   <nav class="nav-desktop" aria-label="Sections">
-    <a href="#lab">Predict</a><a href="#upload">Your image</a><a href="#evaluate">Evaluate</a><a href="#data">Data</a><a href="#sem">SEM</a><a href="#method">Method</a>
+    <a href="#lab">Predict</a><a href="#upload">Your image</a><a href="#video">Video</a><a href="#evaluate">Evaluate</a><a href="#data">Data</a><a href="#sem">SEM</a><a href="#method">Method</a>
   </nav>
   <button class="burger" id="burger" aria-label="Open menu"><span></span><span></span><span></span></button>
 </header>
 
 <aside class="drawer" id="drawer" aria-label="Menu">
   <button class="close" id="close" aria-label="Close menu">&times;</button>
-  <a href="#lab">Predict and compare</a><a href="#upload">Evaluate your own SEM image</a><a href="#results">Model ranking</a><a href="#trust">Calibration</a><a href="#evaluate">Model evaluation</a><a href="#data">Experimental data</a><a href="#surfaces">Surfaces</a><a href="#sem">SEM image model</a><a href="#method">Architecture and limits</a>
+  <a href="#lab">Predict and compare</a><a href="#upload">Evaluate your own SEM image</a><a href="#video">Measure an impact video</a><a href="#results">Model ranking</a><a href="#trust">Calibration</a><a href="#evaluate">Model evaluation</a><a href="#data">Experimental data</a><a href="#surfaces">Surfaces</a><a href="#sem">SEM image model</a><a href="#method">Architecture and limits</a>
 </aside>
 
 <section class="section hero tall" id="top">
@@ -299,6 +299,38 @@
         <canvas class="overlay" id="up-canvas" width="800" height="588" hidden></canvas>
         <div class="legend" id="up-legend" hidden><span><i style="background:var(--accent)"></i>Rough laser track</span><span><i style="background:#777"></i>Flat plateau</span></div>
         <p class="note">Model: GP on ln Re, ln We, ln D₀ and image φ, trained on the 12 textured surfaces. On surfaces it never saw: RMSE <span id="up-loso"></span>, interval coverage <span id="up-cov"></span>. The dataset samples above are training surfaces, except the smooth plate, which was never trained on.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="plain" id="video">
+  <div class="inner">
+    <div class="head-row">
+      <div><div class="eyebrow">Automatic measurement</div><h2>Drop in an impact video</h2></div>
+      <p class="lede">A backlit side view high speed video: dark drop and substrate on a bright background. The page finds the drop and the surface by itself, measures D<sub>0</sub> and V before contact and the spreading diameter after, predicts β<sub>max</sub> from D<sub>0</sub> and V for the fluid and surface set in the predictor, and checks the measurement against the 90% interval. No clicks on the video are needed.</p>
+    </div>
+    <div class="lab">
+      <div class="controls">
+        <label class="drop" id="vdrop" for="vfile"><strong>Choose or drop a video</strong><span>MP4 (H.264) or WebM · backlit side view</span><input type="file" id="vfile" accept="video/*,.mp4,.webm,.mov"></label>
+        <div class="field"><span class="lbl">Or try a test video</span><div class="samples"><button type="button" class="btn sm" id="vsample">Synthetic impact (known answer)</button></div></div>
+        <div class="pair">
+          <div class="field"><label for="vfps">Camera frame rate, fps</label><input type="number" id="vfps" value="5000" min="1" step="1"></div>
+          <div class="field"><label for="vscale">Scale, mm per pixel</label><input type="number" id="vscale" value="0.03" min="0.0001" step="0.0001"></div>
+        </div>
+        <div class="field"><label for="vbase">Substrate row, px (blank = automatic)</label><input type="number" id="vbase" min="1" step="1" placeholder="automatic"></div>
+        <p class="note">Frame rate is the camera's capture rate, not the playback rate of the file. Scale comes from a calibration image of a known object. Uses the fluid and surface from the predictor: <span id="v-ctx"></span>.</p>
+      </div>
+      <div class="readout" aria-live="polite">
+        <div class="big">
+          <div class="beta"><small>MEASURED β<sub>max</sub> · PREDICTED</small><span id="v-meas">—</span></div>
+          <div style="display:grid;gap:10px"><div class="lbl">Model prediction, 90% interval</div><div style="font-family:var(--font-head);font-weight:700;font-size:28px;font-variant-numeric:tabular-nums" id="v-pred">waiting for a video</div><span class="chip ok" id="v-status" hidden></span></div>
+        </div>
+        <p class="err" id="v-err" hidden></p>
+        <div class="stats" id="v-stats"></div>
+        <div class="chart" id="v-chart"></div>
+        <canvas class="overlay" id="v-canvas" hidden></canvas>
+        <p class="note" id="v-truth"></p>
       </div>
     </div>
   </div>
@@ -425,6 +457,7 @@ python -m droplet.serve --port 8000</pre></div>
 <script type="module">
 import { GP } from './engine.mjs';
 import { decodeFile, roughness, phiFrom, loadImageGP } from './imagereader.mjs';
+import { grabFrames, analyse as analyseVideo } from './video.mjs';
 const $ = id => document.getElementById(id);
 const drawer = $('drawer');
 $('burger').onclick = () => drawer.classList.add('open');
@@ -500,6 +533,7 @@ async function run() {
     $('phys').innerHTML = `<div><b>Re</b><span>${fmt(q.Re, 0)}</span></div><div><b>We</b><span>${fmt(q.We, 1)}</span></div><div><b>Oh</b><span>${fmt(q.Oh, 4)}</span></div><div><b>φ</b><span>${fmt(q.phi, 3)}</span></div><div><b>V<sub>tex</sub>, µm</b><span>${fmt(q.texvol, 1)}</span></div>`;
     chart(p, pred);
     upPredict();
+    vPredict();
   } catch (e) {
     $('err').hidden = false; $('err').textContent = e.message + '. Check the inputs.';
     $('beta').textContent = '—'; $('interval').textContent = '—';
@@ -644,6 +678,67 @@ const dz = $('drop');
 dz.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if (f) upLoad(f, f.name); });
 document.querySelectorAll('[data-sample]').forEach(b => b.onclick = async () => { const n = b.dataset.sample; $('up-int').textContent = 'Loading sample…'; const blob = await fetch(`./samples/${n}.png`).then(r => r.blob()); upLoad(blob, n + '.png'); });
 ['umpx', 'footer', 'force'].forEach(id => $(id).onchange = upAnalyse);
+
+// ---------- Impact video ----------
+let vData = null, vRes = null, vTruth = null;
+function vError(msg) { $('v-err').hidden = !msg; $('v-err').textContent = msg || ''; if (msg) { $('v-status').hidden = true; $('v-stats').innerHTML = ''; $('v-chart').innerHTML = ''; $('v-canvas').hidden = true; } }
+function vChart(series, measured, pred) {
+  const W = 760, H = 280, l = 52, r = 18, t = 16, b = 46, x1 = Math.max(...series.map(s => s.t_ms)) || 1;
+  const ys = series.map(s => s.D_mm / vRes.D0_mm), y1 = Math.max(...ys, pred.hi) * 1.08;
+  const X = v => l + v / x1 * (W - l - r), Y = v => H - b - v / y1 * (H - t - b);
+  let s = `<rect x="${l}" y="${Y(pred.hi)}" width="${W - l - r}" height="${Y(pred.lo) - Y(pred.hi)}" fill="var(--band)"/><line x1="${l}" x2="${W - r}" y1="${Y(pred.beta)}" y2="${Y(pred.beta)}" stroke="var(--accent)" stroke-dasharray="5 4"/>`;
+  for (let i = 0; i <= 4; i++) { const y = y1 * i / 4; s += `<text x="${l - 8}" y="${Y(y) + 4}" text-anchor="end" fill="var(--muted)" font-size="12" font-family="IBM Plex Mono, monospace">${fmt(y, 1)}</text>`; }
+  for (let i = 0; i <= 4; i++) { const x = x1 * i / 4; s += `<text x="${X(x)}" y="${H - b + 20}" text-anchor="middle" fill="var(--muted)" font-size="12" font-family="IBM Plex Mono, monospace">${fmt(x, 1)}</text>`; }
+  s += `<path d="${series.map((p, i) => `${i ? 'L' : 'M'}${X(p.t_ms).toFixed(1)},${Y(p.D_mm / vRes.D0_mm).toFixed(1)}`).join(' ')}" fill="none" stroke="var(--fg)" stroke-width="2"/>`;
+  s += `<text x="${(W + l) / 2}" y="${H - 6}" text-anchor="middle" fill="var(--muted)" font-size="12" font-family="IBM Plex Mono, monospace">TIME AFTER CONTACT, ms · white: measured D/D₀ · blue: predicted β_max and interval</text>`;
+  $('v-chart').innerHTML = `<svg viewBox="0 0 ${W} ${H}" aria-hidden="true">${s}</svg>`;
+}
+function vOverlay() {
+  const { W, H, frames } = vData, i = vRes.series.length ? vRes.contact + vRes.series.reduce((b, p, k, a) => p.D_mm > a[b].D_mm ? k : b, 0) : 0;
+  const c = $('v-canvas'); c.width = W; c.height = H; const ctx = c.getContext('2d'), id = ctx.createImageData(W, H), g = frames[i];
+  for (let p = 0; p < W * H; p++) { id.data[4 * p] = id.data[4 * p + 1] = id.data[4 * p + 2] = g[p]; id.data[4 * p + 3] = 255; }
+  ctx.putImageData(id, 0, 0); const r = vRes.recs[i];
+  ctx.strokeStyle = '#8fd3ff'; ctx.lineWidth = 2; if (r) ctx.strokeRect(r.left, r.top, r.right - r.left, r.bottom - r.top);
+  ctx.strokeStyle = '#f2b45a'; ctx.beginPath(); ctx.moveTo(0, vRes.baseline); ctx.lineTo(W, vRes.baseline); ctx.stroke();
+  c.hidden = false;
+}
+function vPredict() {
+  if (release) $('v-ctx').textContent = `${$('fluid').selectedOptions[0].text}, surface ${$('surface').value}`;
+  if (!vRes || !gp) return;
+  try {
+    const f = release.fluids[$('fluid').value], p = gp.predict({ D_mm: vRes.D0_mm, V: vRes.V, rho: f.rho, mu: f.mu, sigma: f.sigma, surface: $('surface').value }, release);
+    const pred = { beta: p.beta_max, lo: p.interval.lower, hi: p.interval.upper }, inside = vRes.beta_max >= pred.lo && vRes.beta_max <= pred.hi;
+    $('v-meas').textContent = fmt(vRes.beta_max, 3);
+    $('v-pred').textContent = `${fmt(pred.beta, 3)} · ${fmt(pred.lo, 2)} to ${fmt(pred.hi, 2)}`;
+    $('v-status').hidden = false; $('v-status').className = 'chip ' + (inside ? 'ok' : 'warn');
+    $('v-status').textContent = inside ? 'Measurement inside interval' : 'Measurement outside interval';
+    $('v-stats').innerHTML = `<div><b>D₀, mm</b><span>${fmt(vRes.D0_mm, 3)}</span></div><div><b>V, m/s</b><span>${fmt(vRes.V, 3)}</span></div><div><b>Re</b><span>${fmt(p.physics.Re, 0)}</span></div><div><b>We</b><span>${fmt(p.physics.We, 1)}</span></div><div><b>t at β<sub>max</sub>, ms</b><span>${fmt(vRes.t_max_ms, 2)}</span></div><div><b>Frames</b><span>${vRes.frames}</span></div>`;
+    vChart(vRes.series, vRes.beta_max, pred);
+  } catch (e) { vError(e.message); }
+}
+async function vRun(file) {
+  vError(''); $('v-pred').textContent = 'Reading frames…'; $('v-meas').textContent = '…';
+  try {
+    vData = await grabFrames(file, { onProgress: q => { $('v-pred').textContent = `Reading frames… ${Math.round(q * 100)}%`; } });
+    await vMeasure();
+  } catch (e) { vData = null; vError(e.message); $('v-pred').textContent = '—'; $('v-meas').textContent = '—'; }
+}
+async function vMeasure() {
+  if (!vData) return;
+  try {
+    const scale = Number($('vscale').value) / vData.scale, base = $('vbase').value ? Math.round(Number($('vbase').value) * vData.scale) : null;
+    vRes = analyseVideo(vData, Number($('vfps').value), scale, { baseline: base });
+    vOverlay(); vPredict();
+    $('v-truth').textContent = vTruth ? `Test video ground truth: D₀ ${vTruth.D0_mm} mm, V ${vTruth.V} m/s, β_max ${vTruth.beta_max}. Its β_max is an arbitrary test value, so the model may disagree with it.` : '';
+  } catch (e) { vRes = null; vError(e.message); $('v-pred').textContent = '—'; $('v-meas').textContent = '—'; }
+}
+$('vfile').onchange = () => { const f = $('vfile').files[0]; if (f) { vTruth = null; vRun(f); } };
+const vdz = $('vdrop');
+['dragenter', 'dragover'].forEach(ev => vdz.addEventListener(ev, e => { e.preventDefault(); vdz.classList.add('over'); }));
+['dragleave', 'drop'].forEach(ev => vdz.addEventListener(ev, e => { e.preventDefault(); vdz.classList.remove('over'); }));
+vdz.addEventListener('drop', e => { const f = e.dataTransfer.files[0]; if (f) { vTruth = null; vRun(f); } });
+$('vsample').onclick = async () => { $('vfps').value = 5000; $('vscale').value = 0.03; $('vbase').value = ''; $('v-pred').textContent = 'Loading test video…'; vTruth = await fetch('./samples/impact_sample.truth.json').then(r => r.json()); vRun(await fetch('./samples/impact_sample.webm').then(r => r.blob())); };
+['vfps', 'vscale', 'vbase'].forEach(id => $(id).onchange = vMeasure);
 
 $('form').addEventListener('submit', e => e.preventDefault());
 $('fluid').onchange = () => { fluidNote(); run(); };
