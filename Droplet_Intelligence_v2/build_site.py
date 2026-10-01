@@ -1,4 +1,4 @@
-"""Build the public website from showcase/ (one source for Vercel and the Claude artifact).
+"""Build the public website from showcase/ (one source for Vercel and a self-contained copy).
 
     python build_site.py                      # -> ../site  (Vercel service "site"; binary model factors)
     python build_site.py --artifact OUTDIR    # -> artifact folder (page fragment, base64 model factors)
@@ -59,6 +59,6 @@ def build(out, artifact):
 
 
 if __name__ == '__main__':
-    ap = argparse.ArgumentParser(); ap.add_argument('--artifact', help='build the Claude artifact folder here instead')
+    ap = argparse.ArgumentParser(); ap.add_argument('--artifact', help='build a self-contained copy (base64 model files) here instead')
     a = ap.parse_args()
     build(Path(a.artifact).resolve() if a.artifact else (ROOT.parent / 'site'), bool(a.artifact))

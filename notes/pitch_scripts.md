@@ -39,7 +39,7 @@ Second, adding contact angle. It does not work on this data: the Lee correction 
 I also automated the measurement: a pipeline reads D₀, V and β_max from an impact video and checks them against the prediction, with no manual steps.
 
 ## Live demo (≈90 s, laptop next to the poster)
-Open https://iisc-droplet.vercel.app (or the Claude artifact). Everything runs in the browser.
+Open https://iisc-droplet.vercel.app (or the offline copy). Everything runs in the browser.
 1. **Predict.** Water, D200, 2.5 mm, 1.5 m/s: β_max ≈ 2.86, 90% band 2.81 to 2.91. Push V past 1.71 m/s: status turns to extrapolation with reasons.
 2. **Compare all five models.** They agree to within about 0.01.
 3. **Your image.** Click "Smooth plate": φ reads 1.000 from the image and the tool warns that wettability is not modelled. Click "D200 textured": φ 0.48, β ≈ 2.84.
