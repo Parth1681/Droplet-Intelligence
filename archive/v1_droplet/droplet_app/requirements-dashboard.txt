@@ -1,0 +1,7 @@
+# Local dashboard (Streamlit) + API. The deployed API only needs requirements.txt.
+-r requirements.txt
+scipy>=1.10
+pandas>=2.0
+plotly>=5.18
+streamlit>=1.32
+uvicorn>=0.27

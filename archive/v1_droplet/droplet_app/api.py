@@ -1,15 +1,21 @@
 """REST API for beta_max predictions.
 
 Run:   uvicorn api:app --port 8000        (from inside droplet_app/)
-Docs:  http://localhost:8000/docs
+Docs:  http://localhost:8000/v1/api/docs
+
+Routes live under /v1/api (the public path on Vercel) and are also answered at the bare paths
+(/predict, /health, ...) so local scripts and a prefix-stripping proxy both work.
 """
 from typing import Optional
-from fastapi import FastAPI, HTTPException
+from fastapi import APIRouter, FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from core import Predictor, fluids, surfaces
 
+PREFIX = "/v1/api"
 app = FastAPI(title="Droplet β_max API", version="1.0",
-              description="Maximum spreading ratio of a droplet impacting a laser-textured or smooth surface.")
+              description="Maximum spreading ratio of a droplet impacting a laser-textured or smooth surface.",
+              docs_url=f"{PREFIX}/docs", redoc_url=None, openapi_url=f"{PREFIX}/openapi.json")
+router = APIRouter()
 P = Predictor()
 FL, SF = fluids(), surfaces()
 
@@ -26,20 +32,20 @@ class Impact(BaseModel):
     depth_um: Optional[float] = Field(None, ge=0, description="Channel depth in µm (if no surface name)")
 
 
-@app.get("/health")
+@router.get("/health")
 def health():
     return {"status": "ok", "model": P.meta["model_name"], "model_key": P.meta["model_key"]}
 
 
-@app.get("/fluids")
+@router.get("/fluids")
 def get_fluids(): return FL
 
 
-@app.get("/surfaces")
+@router.get("/surfaces")
 def get_surfaces(): return SF
 
 
-@app.post("/predict")
+@router.post("/predict")
 def predict(x: Impact):
     if x.fluid:
         if x.fluid not in FL: raise HTTPException(422, f"Unknown fluid. Choose one of: {list(FL)}")
@@ -56,3 +62,7 @@ def predict(x: Impact):
     else:
         sp, dp = x.spacing_um or 0.0, x.depth_um or 0.0
     return P.predict(x.D_mm, x.V, rho, sigma, mu, sp, dp)
+
+
+app.include_router(router, prefix=PREFIX)
+app.include_router(router, include_in_schema=False)

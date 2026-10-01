@@ -59,6 +59,12 @@ python -m droplet.serve --port 8000        # or double-click run_demo.bat on Win
 ```
 Open http://127.0.0.1:8000. As a check, POST to `/api/predict` with `{"D_mm":2.5,"V":1.5,"rho":997.2375,"mu":0.000943923,"sigma":0.07246,"surface":"D200"}`. It should return β_max 2.859, interval [2.807, 2.913], status `within_measured_support`.
 
+**Vercel deployment** (root `vercel.json`, Vercel "services" mode, added 1 Oct 2026):
+- `site`: `Droplet_Intelligence_v2/`, static. `python3 build_site.py` assembles `public/` (web UI at the root, plus `models/`, `results/`, `data/sem/` and the package zip, the same layout `droplet.serve` serves). The GP runs in the browser, so the site needs no backend. Public on `/(.*)`.
+- `v1_api`: `archive/v1_droplet/droplet_app/api.py` (FastAPI, the v1 model). Public on `/v1/api/*`, e.g. `POST /v1/api/predict`, docs at `/v1/api/docs`. Its `requirements.txt` is API only; the Streamlit dashboard uses `requirements-dashboard.txt`.
+- No bindings: neither service calls the other. `.vercelignore` keeps the SEM TIFFs, paper, posters and the rest of the archive out of the upload.
+- Checked locally: the built site predicts 2.859 [2.81, 2.91] for water/D200/2.5 mm/1.5 m/s in headless Chromium with no errors; `v1_api` returns 2.859 at `/v1/api/predict`.
+
 **Tests** (re-checked 1 Oct 2026 on Linux, Python 3.11: all 18 tests pass with the SEM originals in place, demo check returns 2.859 [2.807, 2.913], JS parity ≤3.1×10⁻¹²):
 ```
 cd Droplet_Intelligence_v2
@@ -87,7 +93,7 @@ python render.py --pdf    # Playwright + Chromium → Parth_Sharma_Droplet_Poste
 ```
 `render.py` prints the slack for each column. A negative slack, or `scroll` > 0, means a column overflows the A0 page. It needs `pip install playwright` and `playwright install chromium`. Verified on 1 Oct: running this chain from a clean copy reproduces `poster.html` and every figure exactly.
 
-**Backup dashboard (v1):** `cd archive/v1_droplet/droplet_app`, then `pip install -r requirements.txt` and `streamlit run Overview.py`, or run `run_dashboard.bat`.
+**Backup dashboard (v1):** `cd archive/v1_droplet/droplet_app`, then `pip install -r requirements-dashboard.txt` and `streamlit run Overview.py`, or run `run_dashboard.bat`.
 
 ## Notes on provenance and paths
 

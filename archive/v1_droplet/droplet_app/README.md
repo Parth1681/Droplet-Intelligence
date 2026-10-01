@@ -7,8 +7,8 @@ Double-click `run_dashboard.bat`. It installs the packages, starts the API in a 
     ./run_dashboard.sh
 
 ## Run by hand
-    pip install -r requirements.txt
-    uvicorn api:app --port 8000          # API, docs at http://localhost:8000/docs
+    pip install -r requirements-dashboard.txt
+    uvicorn api:app --port 8000          # API under /v1/api, docs at http://localhost:8000/v1/api/docs
     streamlit run Overview.py            # dashboard at http://localhost:8501
 
 ## Pages
@@ -21,7 +21,8 @@ Double-click `run_dashboard.bat`. It installs the packages, starts the API in a 
 
 ## Files
 - `core.py`: numpy-only predictor (no sklearn needed; checked against sklearn to 1e-6 at export)
-- `api.py`: FastAPI service
+- `api.py`: FastAPI service. Routes are under `/v1/api` (also answered at the bare paths). Deployed on Vercel as service `v1_api`.
+- `requirements.txt`: API only (numpy, fastapi), used by Vercel. `requirements-dashboard.txt` adds Streamlit and plotting for the local dashboard.
 - `model/`: exported GP (bundle.npz) and metadata (meta.json)
 - `data/`: result files the dashboard shows
 - `export_model.py`: regenerates `model/` from the research repo (not needed to run the app)

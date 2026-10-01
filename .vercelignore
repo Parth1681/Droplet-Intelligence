@@ -1,0 +1,17 @@
+# Not needed by the two deployed services (site, v1_api)
+Droplet_Intelligence_v2/data/sem_original/
+Droplet_Intelligence_v2/public/
+paper/
+poster/
+live_model/
+notes/
+archive/v1_droplet/data/
+archive/v1_droplet/results/
+archive/v1_droplet/src/
+archive/v1_droplet/live/
+archive/v1_droplet/logs/
+archive/v1_droplet/poster/
+archive/v1_droplet/webdash/
+archive/v1_droplet/droplet_app/data/
+archive/v1_droplet/droplet_app/pages/
+**/__pycache__/

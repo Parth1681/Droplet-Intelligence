@@ -51,4 +51,4 @@ with st.expander("Same request through the API"):
     body.update({"fluid": fl} if fl != "Custom" else {"rho": rho, "sigma": sigma, "mu": mu})
     body.update({"surface": sf} if sf != "Custom geometry" else {"spacing_um": sp, "depth_um": dp})
     import json
-    st.code(f"curl -X POST http://localhost:8000/predict -H 'Content-Type: application/json' -d '{json.dumps(body)}'", language="bash")
+    st.code(f"curl -X POST http://localhost:8000/v1/api/predict -H 'Content-Type: application/json' -d '{json.dumps(body)}'", language="bash")

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "site": {
+      "root": "Droplet_Intelligence_v2",
+      "installCommand": "",
+      "buildCommand": "python3 build_site.py",
+      "outputDirectory": "public"
+    },
+    "v1_api": {
+      "root": "archive/v1_droplet/droplet_app",
+      "framework": "fastapi",
+      "entrypoint": "api.py"
+    }
+  },
+  "rewrites": [
+    { "source": "/v1/api/(.*)", "destination": { "service": "v1_api" } },
+    { "source": "/(.*)", "destination": { "service": "site" } }
+  ]
+}
