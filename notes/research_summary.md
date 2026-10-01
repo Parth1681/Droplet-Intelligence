@@ -106,7 +106,8 @@ Re and We recomputed from the raw data match the dataset to 5×10⁻⁷. Laan sc
 |---|---|
 | Paper (11 pages) | `paper/Droplet_Spreading_Paper_v2.docx` and `.pdf`; text in `paper/research_paper_v2.md` |
 | A0 poster, submitted (portrait) | `poster/final_A0_portrait/Parth_Sharma_Droplet_Poster_A0_Portrait.pdf` |
-| Earlier A0 landscape poster (28 Sept) and portrait v1 + cover (24 Sept) | superseded; not in this copy of the project |
+| Earlier A0 landscape poster (28 Sept) | `poster/landscape_A0/` |
+| Earlier A0 portrait poster + cover (24 Sept) | `poster/portrait_v1_with_cover/` |
 | Pitch scripts | `notes/pitch_scripts.md` |
 | Live browser model | claude.ai artifact "Droplet Spread Predictor" (source `live_model/`) |
 | Local demo app | `python -m droplet.serve --port 8000` in `Droplet_Intelligence_v2/` |

@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Cross-Surface Droplet Poster</title>
+<style>@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-greek-400-italic.woff2") format("woff2");font-weight:400;font-style:italic;unicode-range:U+0370-03FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-greek-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;unicode-range:U+0370-03FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-greek-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;unicode-range:U+0370-03FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-greek-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;unicode-range:U+0370-03FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-greek-600-italic.woff2") format("woff2");font-weight:600;font-style:italic;unicode-range:U+0370-03FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-greek-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;unicode-range:U+0370-03FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-greek-700-italic.woff2") format("woff2");font-weight:700;font-style:italic;unicode-range:U+0370-03FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-greek-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;unicode-range:U+0370-03FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-400-italic.woff2") format("woff2");font-weight:400;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-600-italic.woff2") format("woff2");font-weight:600;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-700-italic.woff2") format("woff2");font-weight:700;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-ext-400-italic.woff2") format("woff2");font-weight:400;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-ext-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-ext-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-ext-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-ext-600-italic.woff2") format("woff2");font-weight:600;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-ext-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-ext-700-italic.woff2") format("woff2");font-weight:700;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Sans";src:url("fonts/ibm-plex-sans-latin-ext-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-400-italic.woff2") format("woff2");font-weight:400;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-600-italic.woff2") format("woff2");font-weight:600;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-700-italic.woff2") format("woff2");font-weight:700;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-ext-400-italic.woff2") format("woff2");font-weight:400;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-ext-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-ext-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-ext-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-ext-600-italic.woff2") format("woff2");font-weight:600;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-ext-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-ext-700-italic.woff2") format("woff2");font-weight:700;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Serif";src:url("fonts/ibm-plex-serif-latin-ext-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-400-italic.woff2") format("woff2");font-weight:400;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-600-italic.woff2") format("woff2");font-weight:600;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-700-italic.woff2") format("woff2");font-weight:700;font-style:italic;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-ext-400-italic.woff2") format("woff2");font-weight:400;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-ext-400-normal.woff2") format("woff2");font-weight:400;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-ext-500-italic.woff2") format("woff2");font-weight:500;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-ext-500-normal.woff2") format("woff2");font-weight:500;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-ext-600-italic.woff2") format("woff2");font-weight:600;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-ext-600-normal.woff2") format("woff2");font-weight:600;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-ext-700-italic.woff2") format("woff2");font-weight:700;font-style:italic;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:"Plex Mono";src:url("fonts/ibm-plex-mono-latin-ext-700-normal.woff2") format("woff2");font-weight:700;font-style:normal;unicode-range:U+0100-024F,U+1E00-1EFF,U+2020,U+20A0-20AB,U+20AD-20CF,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@page { size: 841mm 1189mm; margin: 0; }
+:root { --colh:800mm; --navy:#0c1f3a; --navy2:#12325a; --ink:#13294b; --ink2:#4a5268; --muted:#8a90a0; --rule:#d9dde6;
+        --tint:#eef3f9; --accent:#0e7cb5; --cyan:#43c6ec; --orange:#e2622b; --blue:#2a78d6; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html,body { background:#fff; }
+body { width:841mm; height:1189mm; font-family:"Plex Sans",sans-serif; color:var(--ink); font-size:27pt; line-height:1.34;
+       -webkit-print-color-adjust:exact; print-color-adjust:exact; overflow:hidden; position:relative; }
+/* logo strip */
+.strip { height:74mm; display:flex; align-items:center; justify-content:space-between; padding:0 30mm; }
+.conf { display:flex; align-items:center; gap:9mm; }
+.conf img { height:46mm; }
+.conf .t1 { font-family:"Plex Mono",monospace; font-size:24pt; letter-spacing:0.22em; color:var(--accent); font-weight:600; text-transform:uppercase; }
+.conf .t2 { font-size:22pt; letter-spacing:0.08em; color:var(--ink2); margin-top:2mm; text-transform:uppercase; }
+.insts { display:flex; align-items:center; gap:12mm; }
+.inst { height:56mm; width:auto; }
+.inst.slot { width:62mm; border:0.7mm dashed var(--muted); display:grid; place-items:center; text-align:center; color:var(--muted);
+             font-size:22pt; font-weight:600; line-height:1.15; padding:3mm; }
+.inst.slot small { font-size:13pt; font-weight:400; }
+/* title band */
+.band { position:relative; background:radial-gradient(120% 160% at 50% 0%, #163a63 0%, var(--navy) 55%, #081629 100%); color:#fff;
+        padding:17mm 30mm 15mm; overflow:hidden; }
+.band::after { content:""; position:absolute; left:0; right:0; bottom:0; height:1.6mm; background:linear-gradient(90deg, transparent, var(--cyan), transparent); }
+.title { font-family:"Plex Serif",serif; font-weight:700; font-size:76pt; line-height:1.1; letter-spacing:-0.01em; max-width:790mm; }
+.authors { margin-top:9mm; font-size:36pt; font-weight:600; letter-spacing:0.01em; }
+.authors .dot { color:var(--cyan); margin:0 5mm; }
+.affil { margin-top:2.5mm; font-size:25pt; color:#c5d4e6; }
+.ripple { position:absolute; right:26mm; top:50%; transform:translateY(-38%); width:150mm; opacity:0.55; }
+/* columns */
+.cols { display:grid; grid-template-columns:repeat(3,250mm); column-gap:15.5mm; padding:12mm 30mm 0; height:var(--colh); }
+.col { display:flex; flex-direction:column; justify-content:space-between; gap:9mm; }
+section h2 { font-family:"Plex Serif",serif; font-size:40pt; font-weight:700; color:var(--ink); line-height:1.1;
+             display:flex; align-items:center; gap:4.5mm; padding-bottom:3mm; margin-bottom:4.5mm; border-bottom:0.9mm solid var(--rule); }
+section h2 .n { flex:none; width:14mm; height:14mm; border-radius:50%; background:var(--accent); color:#fff; font-family:"Plex Sans";
+                font-size:24pt; font-weight:700; display:grid; place-items:center; }
+p + p { margin-top:3mm; }
+b { font-weight:600; }
+.q { background:var(--tint); border-left:2.2mm solid var(--accent); padding:5.5mm 7mm; font-family:"Plex Serif",serif; font-size:31pt; font-weight:600; line-height:1.24; }
+.stats { display:grid; grid-template-columns:repeat(3,1fr); gap:3.5mm; margin-top:5mm; }
+.stat { background:var(--tint); padding:4.5mm 4.5mm 4mm; }
+.stat .v { font-size:44pt; font-weight:700; color:var(--ink); line-height:1; font-feature-settings:"tnum" 1; letter-spacing:-0.01em; }
+.stat .l { font-size:19pt; color:var(--ink2); margin-top:1.8mm; line-height:1.2; }
+.cap { font-size:19.5pt; color:var(--ink2); line-height:1.27; margin-top:2.5mm; }
+.cap b { color:var(--ink); }
+.eqrow { display:flex; justify-content:space-around; align-items:center; background:var(--tint); padding:4mm 3mm; margin:4mm 0; font-family:"Plex Serif",serif; font-size:29pt; }
+.eq { font-family:"Plex Serif",serif; font-size:28pt; text-align:center; margin:3.5mm 0; }
+i { font-style:italic; }
+frac { display:inline-flex; flex-direction:column; vertical-align:middle; text-align:center; font-size:0.84em; margin:0 0.12em; }
+frac > span:first-child { border-bottom:0.08em solid currentColor; padding:0 0.12em; }
+.fig { width:100%; display:block; }
+.sem { display:grid; grid-template-columns:1fr 1fr; gap:3mm; }
+.sem figure { position:relative; }
+.sem img { width:100%; display:block; aspect-ratio:1/1; object-fit:cover; }
+.sem .wide { grid-column:1/-1; } .sem .wide img { aspect-ratio:1300/520; object-position:50% 40%; }
+.tag { position:absolute; left:3mm; top:3mm; background:rgba(12,31,58,0.88); color:#fff; font-size:18pt; font-weight:600; padding:1mm 3mm; }
+.tag.o { background:var(--orange); }
+.bar { position:absolute; right:4mm; bottom:3.5mm; color:#fff; font-size:15pt; font-weight:600; text-align:center; text-shadow:0 0 2mm rgba(0,0,0,.7); }
+.bar span { display:block; height:1.1mm; background:#fff; margin-top:1mm; box-shadow:0 0 1.5mm rgba(0,0,0,.6); }
+.pair { display:grid; grid-template-columns:118mm 1fr; gap:6mm; align-items:start; }
+.pair.p9 { grid-template-columns:148mm 1fr; align-items:center; }
+.flow { display:flex; flex-direction:column; margin-top:2mm; }
+.step { display:grid; grid-template-columns:15mm 1fr; gap:5mm; align-items:center; background:var(--tint); padding:4mm 5.5mm; }
+.step .k { width:15mm; height:15mm; border-radius:50%; background:var(--ink); color:#fff; font-weight:700; font-size:24pt; display:grid; place-items:center; }
+.step.hl { background:#e3f1fa; } .step.hl .k { background:var(--accent); }
+.step .t { font-size:23.5pt; line-height:1.22; }
+.arrow { height:6mm; display:grid; place-items:center; }
+.arrow::after { content:""; border-left:4.5mm solid transparent; border-right:4.5mm solid transparent; border-top:4.5mm solid var(--muted); }
+.kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:4mm; margin-top:4mm; }
+.kpi { border-top:1.1mm solid var(--ink); padding-top:2.6mm; }
+.kpi.a { border-top-color:var(--accent); } .kpi.o { border-top-color:var(--orange); }
+.kpi .v { font-size:42pt; font-weight:700; line-height:1; font-feature-settings:"tnum" 1; }
+.kpi.a .v { color:var(--accent); } .kpi.o .v { color:var(--orange); }
+.kpi .l { font-size:18.5pt; color:var(--ink2); margin-top:1.8mm; line-height:1.2; }
+.note { margin-top:3.5mm; font-size:21.5pt; line-height:1.28; background:#fdf1eb; border-left:1.6mm solid var(--orange); padding:3.5mm 5mm; }
+.hyp { display:inline-block; font-size:14.5pt; font-weight:700; letter-spacing:0.08em; color:var(--orange); border:0.5mm solid var(--orange); padding:0 2mm; vertical-align:0.2em; }
+/* bottom band */
+.bottom { position:absolute; left:0; right:0; bottom:20mm; height:92mm; background:var(--navy); color:#fff; padding:11mm 30mm 0;
+          display:grid; grid-template-columns:250mm 250mm 250mm; column-gap:15.5mm; }
+.bottom h3 { font-family:"Plex Serif",serif; font-size:30pt; font-weight:700; margin-bottom:4mm; padding-bottom:2.5mm; border-bottom:0.8mm solid rgba(255,255,255,.35); }
+.bottom h3 .c { color:var(--cyan); }
+.bottom ol { list-style:none; counter-reset:c; }
+.bottom li { counter-increment:c; position:relative; padding-left:12mm; margin-top:3.2mm; font-size:24.5pt; line-height:1.27; }
+.bottom ol li::before { content:counter(c); position:absolute; left:0; top:0.15em; width:8.5mm; height:8.5mm; border-radius:50%; background:var(--cyan);
+                        color:var(--navy); font-weight:700; font-size:17pt; display:grid; place-items:center; }
+.bottom ul { list-style:none; } .bottom ul li { padding-left:7mm; font-size:22.5pt; }
+.bottom ul li::before { content:""; position:absolute; left:0; top:0.52em; width:3mm; height:3mm; border-radius:50%; background:var(--cyan); }
+.bottom .sw { font-size:21pt; line-height:1.3; color:#dbe6f2; }
+.bottom .sw code { font-family:"Plex Mono"; font-size:18pt; background:rgba(255,255,255,.1); padding:0.5mm 2mm; color:#fff; }
+.refs { margin-top:0; font-size:18pt; line-height:1.3; color:#b8c7da; }
+.refs div { margin-top:1mm; padding-left:6mm; text-indent:-6mm; }
+.take { background:var(--navy); color:#fff; padding:7mm 8mm 8mm; }
+.take h3 { font-family:"Plex Serif",serif; font-size:38pt; font-weight:700; margin-bottom:3mm; padding-bottom:2.5mm; border-bottom:0.8mm solid rgba(255,255,255,.35); }
+.take h3 .c { color:var(--cyan); }
+.take ol { list-style:none; counter-reset:c; }
+.take li { counter-increment:c; position:relative; padding-left:12mm; margin-top:3.4mm; font-size:24pt; line-height:1.27; }
+.take li::before { content:counter(c); position:absolute; left:0; top:0.15em; width:8.5mm; height:8.5mm; border-radius:50%; background:var(--cyan); color:var(--navy); font-weight:700; font-size:17pt; display:grid; place-items:center; }
+.footer { position:absolute; left:30mm; right:30mm; bottom:7mm; display:flex; justify-content:space-between; font-size:16pt; color:var(--muted); }
+</style></head><body>
+<header>
+ <div class="strip">
+  <div class="conf"><img src="logo_ws.png" alt="Workshop logo"><div><div class="t1">Workshop on Interfacial Phenomena in Droplets</div>
+   <div class="t2">Indian Institute of Science · Bengaluru · 5–7 October 2026</div></div></div>
+  <div class="insts"><img class="inst" src="logo_iisc.png" alt="IISc Bengaluru logo"><img class="inst" src="logo_tiet.png" alt="Thapar Institute logo"></div>
+ </div>
+ <div class="band">
+  <div class="title">Physics-Informed Machine Learning for Cross-Surface Generalization in Droplet Impact Prediction</div>
+  <div class="authors">Parth Sharma</div>
+  <div class="affil">Thapar Institute of Engineering and Technology, Patiala, Punjab, India</div>
+ </div>
+</header>
+
+<main class="cols">
+ <div class="col">
+  <section><h2><span class="n">1</span>The question</h2>
+   <div class="q">Can a model trained on 12 laser-textured surfaces predict how far a droplet spreads on a surface it has never seen?</div>
+   <p style="margin-top:4.5mm">Droplet-impact models are usually scored on random splits, where every surface is in training. Surface design needs the opposite: a prediction <b>before</b> the surface is made.</p>
+   <div class="stats">
+    <div class="stat"><div class="v">1,498</div><div class="l">impacts on 12 textured aluminium surfaces</div></div>
+    <div class="stat"><div class="v">125</div><div class="l">impacts on the smooth plate REF-H</div></div>
+    <div class="stat"><div class="v">1–160</div><div class="l">mPa·s, water to 91 wt% glycerol</div></div>
+    <div class="stat"><div class="v">8–119</div><div class="l">Weber number</div></div>
+    <div class="stat"><div class="v">9–4,435</div><div class="l">Reynolds number</div></div>
+    <div class="stat"><div class="v">50–800</div><div class="l">µm channel pitch; depth 6 or 25 µm</div></div>
+   </div>
+   <p class="cap">Public dataset of Može et al. [1], University of Ljubljana: nanosecond-laser channels on aluminium 1050A, 5,000 fps imaging. Target: maximum spreading β<sub>max</sub> = D<sub>max</sub>/D<sub>0</sub>.</p>
+  </section>
+  <section><h2><span class="n">2</span>Reading the surface from SEM</h2>
+   <div class="sem">
+    <figure><img src="D200_43.jpg" alt="SEM of D200 at 43x"><span class="tag">D200 · 43×</span><div class="bar">500 µm<span style="width:36.6mm"></span></div></figure>
+    <figure><img src="REF-H_43.jpg" alt="SEM of REF-H at 43x"><span class="tag o">REF-H · 43×</span><div class="bar">500 µm<span style="width:36.6mm"></span></div></figure>
+    <figure class="wide"><img src="D200_350.jpg" alt="SEM of D200 at 350x"><span class="tag">D200 · 350× · rough track, smooth plateau</span><div class="bar">50 µm<span style="width:31.1mm"></span></div></figure>
+   </div>
+   <p style="margin-top:4mm">Plateaus between laser tracks look like the smooth plate. Track widths from SEM (<b>≈45 µm</b> deep, <b>30 µm</b> shallow) give every surface two descriptors:</p>
+   <div class="eq"><i>φ</i> = ( max(<i>s</i> − <i>w</i>, 0) / <i>s</i> )<sup>2</sup>, &nbsp; <i>V</i><sub>tex</sub> = (1 − <i>φ</i>) <i>h</i></div>
+   <p>Textured φ runs from 0.01 (D50) to 0.93 (S800); <b>REF-H is simply φ = 1</b>. Invented spacing/depth codes moved REF-H error by up to 0.022; with φ, ±10 µm in track width moves it by at most 0.005.</p>
+  </section>
+  <section><h2><span class="n">3</span>From SEM image to prediction</h2>
+   <div class="pair"><img class="fig" src="fig_cnn.svg" alt="CNN-read phi versus geometry phi for held-out surfaces">
+    <div style="font-size:22.5pt;line-height:1.3">A 9,070-parameter CNN reads three SEM views (43×, 100×, 350×) of a surface <b>it never saw</b> and estimates φ and <i>V</i><sub>tex</sub>. The GP on these gives <b>0.038</b> vs 0.040 on unseen surfaces, better on 8 of 12, but not significant. REF-H is read as φ ≈ 0.71: no training surface is smoother than 0.93.</div></div>
+  </section>
+ </div>
+
+ <div class="col">
+  <section><h2><span class="n">4</span>Physics inputs</h2>
+   <div class="eqrow">
+    <div><i>Re</i> = <frac><span><i>ρVD</i><sub>0</sub></span><span><i>μ</i></span></frac></div>
+    <div><i>We</i> = <frac><span><i>ρV</i><sup>2</sup><i>D</i><sub>0</sub></span><span><i>σ</i></span></frac></div>
+    <div>β<sub>max</sub><i>Re</i><sup>−1/5</sup> = <frac><span>√<i>P</i></span><span><i>A</i> + √<i>P</i></span></frac></div>
+   </div>
+   <p>Recomputed <i>Re</i> and <i>We</i> match the dataset to 5×10<sup>−7</sup>; <i>Oh</i> adds nothing new. The Laan scaling law [3] (<i>P</i> = <i>We</i> <i>Re</i><sup>−2/5</sup>) was derived on wettable surfaces: here it reaches only <b>R² = 0.71</b> and misses unseen surfaces by <b>11%</b> on average.</p>
+  </section>
+  <section><h2><span class="n">5</span>Leakage-safe evaluation</h2>
+   <p>Each condition was repeated five times, so a random split puts near-identical twins in train and test.</p>
+   <div class="flow">
+    <div class="step"><div class="k">1</div><div class="t"><b>Grouped 5-fold CV</b> over 297 replicate groups: accuracy on seen surfaces.</div></div><div class="arrow"></div>
+    <div class="step hl"><div class="k">2</div><div class="t"><b>Leave-one-surface-out</b>, 12 folds: the model-selection criterion.</div></div><div class="arrow"></div>
+    <div class="step"><div class="k">3</div><div class="t"><b>REF-H held out:</b> never used to train or choose a model (stress test).</div></div>
+   </div>
+   <p style="margin-top:4mm">Inputs for every model: ln <i>Re</i>, ln <i>We</i>, ln <i>D</i><sub>0</sub>, <i>φ</i>, <i>V</i><sub>tex</sub>; target ln β<sub>max</sub>. A change is accepted only if its 95% interval, from <b>resampling whole surfaces</b>, excludes zero.</p>
+  </section>
+  <section><h2><span class="n">6</span>13 models, one test</h2>
+   <img class="fig" src="fig_models.svg" alt="Unseen-surface RMSE of 13 learners; Gaussian process lowest at 0.040">
+   <div class="kpis">
+    <div class="kpi"><div class="v">0.036</div><div class="l">GP error, seen surfaces (R² = 0.993)</div></div>
+    <div class="kpi a"><div class="v">0.040</div><div class="l">GP error, unseen surface (1.1% mean abs. error)</div></div>
+    <div class="kpi o"><div class="v">0.056</div><div class="l">XGBoost, same inputs, unseen surface</div></div>
+   </div>
+   <p class="cap"><b>Gaussian process</b> (Matérn 3/2, one length scale per input): 29% lower error than XGBoost on unseen surfaces (95% CI of difference 0.006–0.028). Every learner's hardest surface is D50, the densest texture.</p>
+  </section>
+  <section><h2><span class="n">7</span>What did not help</h2>
+   <img class="fig" src="fig_forest.svg" alt="Change in unseen-surface error for model variants with 95% intervals">
+   <p class="cap">Paired surface-bootstrap 95% intervals (4,000 draws). Only XGBoost is significantly different (worse). The Laan law alone is off the scale (+210×10<sup>−3</sup>).</p>
+   <p style="margin-top:3mm">A <b>Laan-law backbone</b>, other kernels, nested selection and SEM-CNN descriptors each change the error by under 0.002. Removing <i>φ</i> and <i>V</i><sub>tex</sub>: 0.040 → <b>0.046</b> (REF-H 0.059 → 0.069), mostly on D50; with 12 surfaces, a hint, not proof. <b>The simple GP stays.</b></p>
+  </section>
+ </div>
+
+ <div class="col">
+  <section><h2><span class="n">8</span>Knowing when not to trust it</h2>
+   <img class="fig" src="fig_fluid.svg" alt="Share of impacts inside the 90% interval by glycerol content">
+   <p style="margin-top:3mm">On unseen surfaces, <b>90.1%</b> of impacts fall inside the 90% interval (84–96% per surface; 92.6% with nested calibration). But one noise level does not fit all fluids: <b>76%</b> for water, <b>98%</b> for 91 wt% glycerol. Thin liquids feel the surface more. The OOD check flags D50 and S50, the hardest surfaces.</p>
+  </section>
+  <section><h2><span class="n">9</span>Surface by surface</h2>
+   <img class="fig" src="fig_surface.svg" alt="RMSE for each held-out surface for GP, GP without descriptors and XGBoost">
+   <p class="cap">D50 (φ = 0.01, the edge of the range) is hardest for every learner. The descriptors cut its error from 0.091 to 0.059, but hurt on S50 and D200.</p>
+  </section>
+  <section><h2><span class="n">10</span>Smooth-plate stress test</h2>
+   <div class="pair p9"><img class="fig" src="fig_parity.svg" alt="REF-H predicted versus measured beta max">
+    <div>
+     <div class="kpi o" style="margin-bottom:4mm"><div class="v">0.059</div><div class="l">REF-H RMSE (1.9% mean abs. error)</div></div>
+     <div class="kpi o" style="margin-bottom:4mm"><div class="v">62%</div><div class="l">inside the 90% interval</div></div>
+     <div class="kpi o"><div class="v">+0.041</div><div class="l">over-prediction in the highest-<i>We</i> third</div></div>
+    </div></div>
+   <div class="note">Misses concentrate at high <i>We</i> and in water, 20% and 60% glycerol (24–56% coverage); viscous fluids stay at 96%. REF-H is hydrophobic; the textures are superhydrophobic (water advancing angle 162–167°). <b>Wettability is the missing input.</b> Less friction over trapped air may explain why textures spread further <span class="hyp">HYPOTHESIS</span></div>
+  </section>
+  <section class="take"><h3><span class="c">★</span> Take-aways</h3><ol>
+  <li>Judge droplet models on <b>unseen surfaces</b>. Random splits hide the gap.</li>
+  <li>Describe surfaces with quantities every surface has: the plateau fraction <b>φ</b> makes the smooth plate the limit of the textured family.</li>
+  <li>A <b>Gaussian process</b> beats 12 alternatives on unseen surfaces (0.040); physics backbones and bigger models add no significant gain.</li>
+  <li>Intervals are calibrated on average, not per fluid, and fail on a different wettability. <b>Say so on the tool.</b></li>
+ </ol></section>
+ </div>
+</main>
+
+<div class="bottom">
+ <div><h3>Next steps</h3><ul>
+  <li>Measured advancing and receding angles for every fluid–surface pair as an input.</li>
+  <li>Noise that depends on viscosity (Ohnesorge number).</li>
+  <li>New surfaces, with a test set held back before any tuning.</li>
+ </ul></div>
+ <div><h3>Try it</h3>
+  <div class="sw">Python API and browser app with all five trained GPs. Every prediction carries a 90% interval and flags extrapolation and smooth surfaces. Browser and Python agree to 3×10<sup>−12</sup>; 18 tests pass.<br><code>python -m droplet.serve</code></div>
+ </div>
+ <div><h3>References</h3>
+  <div class="refs">
+   <div>[1] M. Može et al., Data in Brief 61 (2025) 111697; data doi:10.17632/wsh8rxwd38.1</div>
+   <div>[2] S. Jereb et al., Biomimetics 10 (2025) 357 (random-split GP on the same data)</div>
+   <div>[3] N. Laan et al., Phys. Rev. Applied 2 (2014) 044018</div>
+  </div>
+ </div>
+</div>
+<div class="footer"><span>Data: Može et al. (2025), University of Ljubljana · Analysis, models and software: Parth Sharma</span><span>Workshop on Interfacial Phenomena in Droplets · IISc Bengaluru · 2026</span></div>
+</body></html>
