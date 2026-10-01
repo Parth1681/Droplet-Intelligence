@@ -1,0 +1,176 @@
+1/48 baseline D400 12.1s
+2/48 baseline D100 13.0s
+3/48 baseline D200 13.8s
+4/48 baseline D800 10.1s
+5/48 baseline D50 12.0s
+6/48 baseline D600 12.4s
+7/48 baseline S400 10.0s
+8/48 baseline S200 11.5s
+9/48 baseline S100 12.6s
+10/48 baseline S600 10.0s
+11/48 baseline S50 11.6s
+12/48 baseline S800 12.1s
+13/48 matern52 D400 9.3s
+14/48 matern52 D100 12.4s
+15/48 matern52 D200 13.0s
+16/48 matern52 D50 11.6s
+17/48 matern52 D600 12.3s
+18/48 matern52 D800 11.9s
+19/48 matern52 S100 11.4s
+20/48 matern52 S200 11.9s
+21/48 matern52 S400 11.0s
+22/48 matern52 S50 10.2s
+23/48 matern52 S600 9.0s
+24/48 matern52 S800 10.0s
+25/48 structured D100 21.7s
+26/48 structured D200 26.5s
+27/48 structured D400 26.4s
+28/48 structured D50 22.1s
+29/48 structured D600 30.8s
+30/48 structured D800 29.1s
+31/48 structured S100 30.9s
+32/48 structured S400 24.0s
+33/48 structured S200 32.9s
+34/48 structured S50 33.7s
+35/48 structured S600 30.8s
+36/48 physics_residual D100 13.1s
+37/48 structured S800 32.3s
+38/48 physics_residual D200 11.9s
+39/48 physics_residual D400 16.3s
+40/48 physics_residual D50 17.1s
+41/48 physics_residual D600 18.7s
+42/48 physics_residual D800 13.1s
+43/48 physics_residual S100 13.4s
+44/48 physics_residual S200 15.3s
+45/48 physics_residual S400 14.3s
+46/48 physics_residual S50 13.2s
+47/48 physics_residual S600 11.5s
+48/48 physics_residual S800 14.6s
+{
+  "run_id": "ba3e8ddd8e5b1bae93df45c2a53fa2bc99d241f9b81b742529943109046b1165",
+  "protocol": "Fixed-candidate LOSO development comparison, independent fold initialization; conditional on supplied geometry descriptors. No nested model-family selection claim.",
+  "selected": "baseline",
+  "lowest_rmse_candidate": "physics_residual",
+  "selection_rule": "Lowest LOSO RMSE, promoted only if paired surface-bootstrap 95% difference interval excludes zero; otherwise retain baseline.",
+  "selection_limitation": "Selection and ranking share LOSO results: descriptive development estimates, not unbiased post-selection performance.",
+  "metrics": [
+    {
+      "model": "baseline",
+      "label": "Baseline Mat\u00e9rn 3/2 GP",
+      "loso_rmse": 0.03997278053909427,
+      "macro_rmse": 0.03913644679409927,
+      "worst_rmse": 0.059353164801708706,
+      "per_surface": {
+        "D100": 0.03512788045238787,
+        "D200": 0.028587400927966924,
+        "D400": 0.041447815512114405,
+        "D50": 0.059353164801708706,
+        "D600": 0.040309772795707854,
+        "D800": 0.03917661121449497,
+        "S100": 0.03402839465897091,
+        "S200": 0.04011977286596941,
+        "S400": 0.035873159501247594,
+        "S50": 0.05006244681390747,
+        "S600": 0.03477925524909357,
+        "S800": 0.030771686735621556
+      },
+      "mae": 0.024207119474414094,
+      "bias": -0.004443792442732249,
+      "nominal_coverage": 0.9012016021361816,
+      "delta_vs_baseline_ci95": [
+        0.0,
+        0.0
+      ],
+      "improvement_pct": 0.0
+    },
+    {
+      "model": "matern52",
+      "label": "Mat\u00e9rn 5/2 GP",
+      "loso_rmse": 0.03976704416376472,
+      "macro_rmse": 0.03891101865498508,
+      "worst_rmse": 0.05774347982090567,
+      "per_surface": {
+        "D100": 0.03509427778682034,
+        "D200": 0.030047752275176018,
+        "D400": 0.04275134930834351,
+        "D50": 0.05774347982090567,
+        "D600": 0.04052687719543462,
+        "D800": 0.03866420161598808,
+        "S100": 0.03306776804329033,
+        "S200": 0.03972715785223637,
+        "S400": 0.03572309123355553,
+        "S50": 0.05168481145608283,
+        "S600": 0.032082215060818285,
+        "S800": 0.029819242211169356
+      },
+      "mae": 0.02400492635698486,
+      "bias": -0.00404492575935484,
+      "nominal_coverage": 0.8965287049399199,
+      "delta_vs_baseline_ci95": [
+        -0.000929143465027963,
+        0.0004964609873601378
+      ],
+      "improvement_pct": 0.5146911787343278
+    },
+    {
+      "model": "structured",
+      "label": "Fluid\u2013surface interaction GP",
+      "loso_rmse": 0.0411558385225457,
+      "macro_rmse": 0.038749538526799535,
+      "worst_rmse": 0.08156010574517975,
+      "per_surface": {
+        "D100": 0.038041086593837835,
+        "D200": 0.02291753635631804,
+        "D400": 0.031348534577851805,
+        "D50": 0.08156010574517975,
+        "D600": 0.04083980270948509,
+        "D800": 0.035165372548425604,
+        "S100": 0.033540770298302165,
+        "S200": 0.04018804012684739,
+        "S400": 0.037001149146176034,
+        "S50": 0.041434380481280474,
+        "S600": 0.03143514260819812,
+        "S800": 0.03152254112969216
+      },
+      "mae": 0.024207021119614196,
+      "bias": -0.004082924249557153,
+      "nominal_coverage": 0.9058744993324432,
+      "delta_vs_baseline_ci95": [
+        -0.004318338958847034,
+        0.007626731356105591
+      ],
+      "improvement_pct": -2.9596589666670114
+    },
+    {
+      "model": "physics_residual",
+      "label": "Laan + residual GP",
+      "loso_rmse": 0.03876733897182211,
+      "macro_rmse": 0.0382567706589118,
+      "worst_rmse": 0.051282758030937466,
+      "per_surface": {
+        "D100": 0.03435870744682709,
+        "D200": 0.028538064558619243,
+        "D400": 0.04129589687146201,
+        "D50": 0.051282758030937466,
+        "D600": 0.04039376606699027,
+        "D800": 0.03938853019506695,
+        "S100": 0.03404131932309548,
+        "S200": 0.04047434799872734,
+        "S400": 0.035831639952137215,
+        "S50": 0.047415022970357705,
+        "S600": 0.03493404167383925,
+        "S800": 0.03112715281888162
+      },
+      "mae": 0.02357859818184122,
+      "bias": -0.0038445907541558304,
+      "nominal_coverage": 0.9025367156208278,
+      "delta_vs_baseline_ci95": [
+        -0.0029576007808567338,
+        8.059740352130212e-05
+      ],
+      "improvement_pct": 3.01565603146674
+    }
+  ],
+  "bootstrap_draws": 4000,
+  "seed": 23
+}

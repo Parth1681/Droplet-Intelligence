@@ -1,0 +1,513 @@
+<meta charset="utf-8">
+<title>Droplet β_max Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+<style>
+:root{
+  --bg:#f4f6f9; --panel:#ffffff; --ink:#14213d; --ink2:#4a5268; --muted:#7d8497; --line:#e0e4eb; --soft:#edf1f7;
+  --navy:#2f4574; --blue:#2a78d6; --orange:#eb6834; --aqua:#16a06f; --amber:#b7791f; --red:#c2412d; --hi:#e8f0fb;
+  --band:rgba(42,120,214,.16); --range:rgba(22,160,111,.08);
+  --sans:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  color-scheme:dark; --bg:#0e1420; --panel:#151d2c; --ink:#e6ebf4; --ink2:#b1bacb; --muted:#8089a0; --line:#263044; --soft:#1b2436;
+  --navy:#8ea8dc; --blue:#5b9bea; --orange:#f08457; --aqua:#3fcf98; --amber:#e0a84a; --red:#ef7a66; --hi:#1a2940;
+  --band:rgba(91,155,234,.20); --range:rgba(63,207,152,.08);}}
+:root[data-theme="dark"]{
+  color-scheme:dark; --bg:#0e1420; --panel:#151d2c; --ink:#e6ebf4; --ink2:#b1bacb; --muted:#8089a0; --line:#263044; --soft:#1b2436;
+  --navy:#8ea8dc; --blue:#5b9bea; --orange:#f08457; --aqua:#3fcf98; --amber:#e0a84a; --red:#ef7a66; --hi:#1a2940;
+  --band:rgba(91,155,234,.20); --range:rgba(63,207,152,.08);}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);padding-inline:16px;padding-block:0 56px}
+.wrap{max-width:1180px;margin:0 auto}
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-top:18px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.brand{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px}
+.brand b{font-size:20px;letter-spacing:-.01em}
+.brand span{color:var(--muted);font-size:13px}
+nav{display:flex;gap:2px;overflow-x:auto;margin-top:10px;scrollbar-width:none}
+nav::-webkit-scrollbar{display:none}
+nav button{font:500 14px var(--sans);color:var(--ink2);background:none;border:0;padding:10px 14px;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+nav button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--orange);font-weight:600}
+nav button:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.page{display:grid;gap:22px}
+h1{font-size:28px;line-height:1.2;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:17px;margin:0;text-wrap:balance}
+.lede{color:var(--ink2);max-width:72ch;margin:6px 0 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px}
+.card>h2{margin-bottom:10px}
+.cap{color:var(--muted);font-size:13px;margin:8px 0 0;max-width:90ch}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:4px;align-content:start}
+.kpi .v{font:600 28px/1.1 var(--mono);font-variant-numeric:tabular-nums}
+.kpi .l{color:var(--ink2);font-size:13px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.chart{width:100%;min-height:340px}
+ul.plain{margin:0;padding-left:20px;display:grid;gap:6px;max-width:80ch}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th{font:600 11.5px var(--sans);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+td.n,th.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hi td{background:var(--hi)}
+tbody tr:last-child td{border-bottom:0}
+/* predict */
+.pred{display:grid;grid-template-columns:minmax(260px,320px) minmax(0,1fr);gap:16px;align-items:start}
+.ctl{display:grid;gap:14px}
+.ctl label{display:grid;gap:5px;font-size:13px;font-weight:600;color:var(--ink2)}
+.ctl input[type=number],.ctl select{font:15px var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:8px 10px;width:100%}
+.ctl input[type=range]{width:100%;accent-color:var(--orange)}
+.rowv{display:flex;justify-content:space-between;align-items:baseline}
+.rowv output{font:600 15px var(--mono);color:var(--ink)}
+.sub3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sub2{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.hint{font-weight:400;color:var(--muted);font-size:12px}
+.out{display:grid;gap:14px}
+.big{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:end}
+.big .beta{font:600 46px/1 var(--mono);letter-spacing:-.02em}
+.big .lab{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.big .iv{font:500 20px var(--mono)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 13px var(--mono);padding:4px 10px;border-radius:99px;background:var(--soft);color:var(--ink2)}
+.chip.ok{color:var(--aqua)} .chip.warn{color:var(--amber)} .chip.bad{color:var(--red)}
+.warns{display:grid;gap:6px}
+.warn{border-left:3px solid var(--amber);background:var(--soft);padding:8px 12px;border-radius:0 6px 6px 0;font-size:14px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{font:500 13px var(--sans);background:var(--panel);color:var(--ink2);border:0;padding:6px 12px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--navy);color:var(--panel)}
+.verdict{border-left:4px solid var(--aqua);padding:10px 14px;background:var(--panel);border-radius:0 8px 8px 0;border-top:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.verdict b.m{font:700 18px var(--mono)}
+.sem{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.sem figure{margin:0}
+.sem img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:8px;display:block;border:1px solid var(--line)}
+.sem figcaption{font-size:13px;color:var(--ink2);margin-top:6px}
+pre{margin:0;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto;font:12.5px/1.5 var(--mono);color:var(--ink)}
+.codehead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:8px}
+.copy{font:500 12px var(--sans);border:1px solid var(--line);background:var(--panel);color:var(--ink2);border-radius:6px;padding:4px 10px;cursor:pointer}
+.loading{color:var(--muted);font-size:13px}
+footer{color:var(--muted);font-size:13px;margin-top:32px}
+@media (max-width:760px){.pred{grid-template-columns:1fr} .big .beta{font-size:38px} h1{font-size:23px}}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <div class="brand"><b>Droplet β<sub>max</sub></b><span>Maximum spreading on laser-textured and smooth aluminium · Gaussian process, SEM surface descriptors</span></div>
+  <nav role="tablist" id="tabs">
+    <button role="tab" data-t="overview">Overview</button>
+    <button role="tab" data-t="predict">Predict</button>
+    <button role="tab" data-t="benchmark">Benchmark</button>
+    <button role="tab" data-t="uncertainty">Uncertainty &amp; OOD</button>
+    <button role="tab" data-t="surfaces">Surfaces &amp; SEM</button>
+    <button role="tab" data-t="api">API</button>
+  </nav>
+</header>
+
+<!-- OVERVIEW -->
+<section class="page" id="p-overview" hidden>
+  <div><h1>How far will the droplet spread on a surface the model has never seen?</h1>
+  <p class="lede">The model predicts β<sub>max</sub> = D<sub>max</sub>/D<sub>0</sub> from droplet size, speed, fluid and surface. It describes each surface by two quantities measured from SEM images: the smooth-plateau fraction φ and the texture volume V<sub>tex</sub>. A smooth plate is simply φ = 1.</p></div>
+  <div class="kpis" id="ov-kpis"></div>
+  <div class="grid2">
+    <div class="card"><h2>How the model was chosen</h2><ul class="plain" id="ov-how"></ul></div>
+    <div class="card"><h2>Where not to trust it</h2><ul class="plain" id="ov-trust"></ul></div>
+  </div>
+  <div class="card"><h2>Gaussian process vs XGBoost, same five inputs</h2><div class="chart" id="ov-gx"></div>
+  <p class="cap" id="ov-gx-cap"></p></div>
+</section>
+
+<!-- PREDICT -->
+<section class="page" id="p-predict" hidden>
+  <div class="pred">
+    <div class="card ctl">
+      <label>Droplet diameter D<sub>0</sub> (mm)<input type="number" id="in-d" min="1" max="4" step="0.05" value="2.5"></label>
+      <label><span class="rowv">Impact velocity V (m/s)<output id="out-v">1.50</output></span>
+        <input type="range" id="in-v" min="0.3" max="2.5" step="0.02" value="1.5"><span class="hint">Measured range 0.48–1.71 m/s. Outside it the model extrapolates.</span></label>
+      <label>Fluid<select id="in-fl"></select></label>
+      <div class="sub3" id="fl-custom" hidden>
+        <label>ρ kg/m³<input type="number" id="in-rho" value="1000" step="10"></label>
+        <label>σ N/m<input type="number" id="in-sig" value="0.072" step="0.001"></label>
+        <label>μ Pa·s<input type="number" id="in-mu" value="0.001" step="0.0005"></label>
+      </div>
+      <label>Surface<select id="in-sf"></select></label>
+      <div class="sub2" id="sf-custom" hidden>
+        <label>Pitch µm<input type="number" id="in-sp" value="300" step="10" min="0"></label>
+        <label>Depth µm<input type="number" id="in-dp" value="25" step="1" min="0"></label>
+      </div>
+    </div>
+    <div class="out">
+      <div class="card">
+        <div class="big">
+          <div><div class="lab">Predicted β<sub>max</sub></div><div class="beta" id="o-beta">–</div></div>
+          <div><div class="lab">90% interval</div><div class="iv" id="o-iv">–</div></div>
+          <div><div class="lab">Wide band (worst surface)</div><div class="iv" id="o-wide">–</div></div>
+        </div>
+        <div class="chips" style="margin-top:12px" id="o-chips"></div>
+        <div class="warns" style="margin-top:10px" id="o-warn"></div>
+        <p class="loading" id="o-load">Loading the GP covariance factor (4.5 MB) for the intervals…</p>
+      </div>
+      <div class="card"><h2>β<sub>max</sub> across impact velocity</h2><div class="chart" id="pr-sweep"></div></div>
+      <div class="card"><h2>Same impact on every surface</h2><div class="chart" id="pr-surf" style="min-height:300px"></div>
+      <p class="cap">Surfaces sorted by φ. The smooth plate (REF-H, φ = 1) sits at the right. Error bars are 90% intervals.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- BENCHMARK -->
+<section class="page" id="p-benchmark" hidden>
+  <div><h1>Benchmark</h1><p class="lede">Every model is scored three ways: grouped 5-fold CV over replicate conditions (ID), leave-one-surface-out over the 12 textured surfaces (LOSO, the selection criterion), and one blind prediction of the smooth REF-H plate that is never used for tuning.</p></div>
+  <div class="card"><h2>Model ladder</h2><div class="tw" id="bm-table"></div><div class="verdict" style="margin-top:12px" id="bm-verdict"></div></div>
+  <div class="card"><h2>GPR vs XGBoost on identical inputs</h2><div class="chart" id="bm-gx" style="min-height:380px"></div><p class="cap" id="bm-gx-cap"></p></div>
+  <div class="grid2">
+    <div class="card"><h2>Physics residual vs M2</h2><div class="chart" id="bm-ci"></div><p class="cap">RMSE difference from M2 with 95% CI. LOSO resamples the 12 surfaces; REF-H resamples its 25 replicate conditions. Left of zero = lower error than M2.</p></div>
+    <div class="card"><h2>13-model zoo, same inputs</h2><div class="tw" id="bm-zoo"></div></div>
+  </div>
+  <div class="card"><h2>Error on each held-out surface</h2><div class="chart" id="bm-per"></div></div>
+</section>
+
+<!-- UNCERTAINTY -->
+<section class="page" id="p-uncertainty" hidden>
+  <div><h1>Uncertainty and out-of-distribution warnings</h1><p class="lede" id="un-lede"></p></div>
+  <div class="kpis" id="un-kpis"></div>
+  <div class="grid2">
+    <div class="card"><div class="codehead"><h2>Parity with 90% intervals</h2>
+      <div class="seg" role="group" aria-label="Data set"><button id="seg-lo" aria-pressed="true">Unseen textured</button><button id="seg-rf" aria-pressed="false">Smooth REF-H</button></div></div>
+      <div class="chart" id="un-par" style="min-height:400px"></div></div>
+    <div class="card"><h2>Coverage per held-out surface</h2><div class="chart" id="un-cov" style="min-height:400px"></div><p class="cap">The multiplier for each surface is calibrated on the other 11 surfaces only. Dashed line: 90% target.</p></div>
+  </div>
+  <div class="card"><h2>Does the OOD score warn when error is high?</h2><div class="chart" id="un-ood"></div><p class="cap" id="un-ood-cap"></p></div>
+</section>
+
+<!-- SURFACES -->
+<section class="page" id="p-surfaces" hidden>
+  <div><h1>Surfaces and what the model sees</h1><p class="lede">Each surface is a square grid of laser tracks, deep (≈25 µm) or shallow (≈6 µm), at a given pitch. The model does not see pitch and depth directly. It sees φ = (max(s − w, 0)/s)², with track width w measured from SEM (45 µm deep, 30 µm shallow), and V<sub>tex</sub> = (1 − φ) × depth.</p></div>
+  <div class="sem">
+    <figure><img src="D200_43.jpg" alt="SEM image of surface D200 at 43x"><figcaption>D200 · deep tracks, 200 µm pitch · 43×</figcaption></figure>
+    <figure><img src="S800_43.jpg" alt="SEM image of surface S800 at 43x"><figcaption>S800 · shallow tracks, 800 µm pitch · 43×</figcaption></figure>
+    <figure><img src="REF-H_43.jpg" alt="SEM image of the smooth REF-H surface at 43x"><figcaption>REF-H · smooth plate, φ = 1 · 43×</figcaption></figure>
+    <figure><img src="D200_350.jpg" alt="SEM image of D200 at 350x showing a rough track and smooth plateau"><figcaption>D200 · 350× · rough track, smooth plateau</figcaption></figure>
+  </div>
+  <div class="grid2">
+    <div class="card"><h2>Descriptors per surface</h2><div class="tw" id="sf-table"></div></div>
+    <div class="card"><h2>What drives the prediction (SHAP)</h2><div class="chart" id="sf-shap" style="min-height:300px"></div>
+      <p class="cap">Mean |SHAP| on log β<sub>max</sub>. Re and We carry most of the signal; φ and V<sub>tex</sub> are a small correction, yet removing surface inputs nearly doubles in-distribution error for XGBoost (0.086 vs 0.051).</p></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><div class="codehead"><h2>SHAP dependence</h2><select id="sf-dep" aria-label="Feature" style="font:14px var(--sans);padding:5px 8px;border-radius:6px;border:1px solid var(--line);background:var(--bg);color:var(--ink)"></select></div><div class="chart" id="sf-depc"></div></div>
+    <div class="card"><h2>Reading φ from an SEM image (CNN)</h2><div class="chart" id="sf-cnn"></div><p class="cap">Each textured surface is scored by a CNN trained only on the other surfaces. REF-H was never shown in training; it is read as φ ≈ 0.69 because no training surface is smoother than φ = 0.93.</p></div>
+  </div>
+</section>
+
+<!-- API -->
+<section class="page" id="p-api" hidden>
+  <div><h1>API</h1><p class="lede">The downloadable package serves the same model over HTTP with FastAPI. Start it on your computer with <code>uvicorn api:app --port 8000</code> inside <code>droplet_app/</code>; interactive docs are then at http://localhost:8000/docs. The request below follows your current settings on the Predict tab.</p></div>
+  <div class="card"><h2>Endpoints</h2><div class="tw"><table><thead><tr><th>Method</th><th>Path</th><th>Returns</th></tr></thead><tbody>
+    <tr><td>GET</td><td><code>/health</code></td><td>model name and status</td></tr>
+    <tr><td>GET</td><td><code>/fluids</code></td><td>the five water–glycerol mixtures with ρ, σ, μ</td></tr>
+    <tr><td>GET</td><td><code>/surfaces</code></td><td>the 13 surfaces with pitch, depth, φ, V<sub>tex</sub></td></tr>
+    <tr><td>POST</td><td><code>/predict</code></td><td>β<sub>max</sub>, 90% interval, wide interval, Re, We, φ, OOD percentile, warnings</td></tr></tbody></table></div></div>
+  <div class="grid2">
+    <div class="card"><div class="codehead"><h2>Request</h2><button class="copy" data-copy="api-req">Copy</button></div><pre id="api-req"></pre></div>
+    <div class="card"><div class="codehead"><h2>Response (computed here)</h2><button class="copy" data-copy="api-res">Copy</button></div><pre id="api-res"></pre></div>
+  </div>
+  <div class="card"><div class="codehead"><h2>From Python</h2><button class="copy" data-copy="api-py">Copy</button></div><pre id="api-py"></pre></div>
+</section>
+
+<footer>Data: Može et al., <i>Data in Brief</i> 61 (2025) 111697, Mendeley Data doi:10.17632/wsh8rxwd38.1 · 1,498 textured and 125 smooth-plate impacts · RMSE is in units of β<sub>max</sub>.</footer>
+</div>
+
+<script type="application/json" id="data">/*%%DATA%%*/</script>
+<script>
+const DATA = JSON.parse(document.getElementById('data').textContent);
+const M = DATA.model, META = DATA.meta, N = M.n, NF = 5, S3 = Math.sqrt(3);
+const XTR = new Float64Array(N * NF); M.Xtr.forEach((r, i) => r.forEach((v, j) => XTR[i * NF + j] = v));
+const ALPHA = Float64Array.from(M.alpha);
+let LP = null;
+const FEATS = META.features, FL = META.fluids, SF = META.surfaces;
+const $ = id => document.getElementById(id);
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const f3 = x => x.toFixed(3), f4 = x => x.toFixed(4), pc = x => Math.round(x * 100) + '%';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------------- model (port of droplet_app/core.py) ---------------- */
+function phiSmooth(sp, dp) {
+  if (dp <= 0 || sp <= 0) return 1.0;
+  const w = dp >= 15 ? META.track_width_um['25'] : META.track_width_um['6'];
+  return Math.pow(Math.max(sp - w, 0) / sp, 2);
+}
+function gpLog(x) {
+  const xs = x.map((v, j) => (v - M.mu_x[j]) / M.sd_x[j]);
+  const k = new Float64Array(N); let mean = 0;
+  for (let i = 0; i < N; i++) {
+    let r2 = 0; for (let j = 0; j < NF; j++) { const d = (xs[j] - XTR[i * NF + j]) / M.ls[j]; r2 += d * d; }
+    const r = Math.sqrt(r2); k[i] = M.c * (1 + S3 * r) * Math.exp(-S3 * r); mean += k[i] * ALPHA[i];
+  }
+  mean = mean * M.y_std + M.y_mean;
+  if (!LP) return { mean, sd: null };
+  const v = new Float64Array(N); let off = 0, ss = 0;
+  for (let i = 0; i < N; i++) {
+    let s = k[i]; for (let j = 0; j < i; j++) s -= LP[off + j] * v[j];
+    v[i] = s / LP[off + i]; ss += v[i] * v[i]; off += i + 1;
+  }
+  return { mean, sd: Math.sqrt(Math.max(M.c + M.noise - ss, 1e-12)) * M.y_std };
+}
+function backbone(Re, We) {
+  const b = META.backbone; if (!b) return 0;
+  const s = Math.sqrt(We * Math.pow(Re, -0.4)); return Math.log(Math.pow(Re, 0.2) * s / (b.A + s));
+}
+function oodPct(x) {
+  const d = x.map((v, j) => v - M.mcd_loc[j]); let m = 0;
+  for (let a = 0; a < NF; a++) for (let b = 0; b < NF; b++) m += d[a] * M.mcd_prec[a][b] * d[b];
+  m = Math.sqrt(m); const s = M.mah_sorted; let lo = 0, hi = s.length;
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (s[mid] < m) lo = mid + 1; else hi = mid; }
+  return lo / s.length * 100;
+}
+function predict(Dmm, V, rho, sigma, mu, sp, dp) {
+  const D = Dmm * 1e-3, Re = rho * V * D / mu, We = rho * V * V * D / sigma;
+  const phi = phiSmooth(sp, dp), texvol = (1 - phi) * dp;
+  const f = { logRe: Math.log(Re), logWe: Math.log(We), logD: Math.log(Dmm), phi, texvol };
+  const x = FEATS.map(k => f[k]); const g = gpLog(x); const m = g.mean + backbone(Re, We);
+  const pct = oodPct(x), warn = [], rng = META.train_ranges;
+  if (pct >= 99.5) warn.push('Strong shift from the training data (Mahalanobis ≥ 99.5th percentile).');
+  else if (pct >= 95) warn.push('Moderate shift from the training data (Mahalanobis ≥ 95th percentile).');
+  if (Re < 70) warn.push('Re < 70: below the fitted range of the Laan scaling.');
+  for (const [k, v] of [['Re', Re], ['We', We], ['D_mm', Dmm]])
+    if (!(rng[k][0] <= v && v <= rng[k][1])) warn.push(`${k === 'D_mm' ? 'D₀' : k} = ${+v.toPrecision(3)} is outside the training range ${+rng[k][0].toPrecision(3)}–${+rng[k][1].toPrecision(3)}.`);
+  if (phi > 0.999) warn.push(`Smooth surface: its wettability differs from the textured training surfaces. On the blind test the 90% band covered only ${pc(META.refh_coverage)} of impacts, so use the wide band.`);
+  const out = { beta_max: Math.exp(m), Re, We, phi, texvol_um: texvol, ood_percentile: pct, warnings: warn, model: META.model_name };
+  if (g.sd !== null) {
+    const h = META.conformal_q * g.sd, hw = Math.max(META.surface_halfwidth_log, h);
+    out.interval90 = [Math.exp(m - h), Math.exp(m + h)]; out.interval90_wide = [Math.exp(m - hw), Math.exp(m + hw)];
+  }
+  return out;
+}
+window.__predict = predict;
+
+/* ---------------- plotting helpers ---------------- */
+function base(extra = {}) {
+  const ink2 = css('--ink2'), line = css('--line');
+  return Object.assign({
+    paper_bgcolor: 'rgba(0,0,0,0)', plot_bgcolor: 'rgba(0,0,0,0)',
+    font: { family: 'Inter, system-ui, sans-serif', size: 13, color: ink2 },
+    margin: { l: 56, r: 16, t: 16, b: 48 }, showlegend: false,
+    xaxis: { gridcolor: line, zerolinecolor: line, linecolor: line },
+    yaxis: { gridcolor: line, zerolinecolor: line, linecolor: line },
+    legend: { orientation: 'h', y: 1.12, x: 0, font: { size: 12 } },
+    hoverlabel: { font: { family: 'IBM Plex Mono, monospace' } }
+  }, extra);
+}
+const CFG = { displayModeBar: false, responsive: true };
+function ax(extra) { const line = css('--line'); return Object.assign({ gridcolor: line, zerolinecolor: line, linecolor: line }, extra); }
+function plot(id, traces, layout) { if (window.Plotly) Plotly.react(id, traces, base(layout), CFG); else $(id).innerHTML = '<p class="loading">Charts need the Plotly library, which did not load.</p>'; }
+
+/* ---------------- overview ---------------- */
+const P7 = DATA.p7, P5 = DATA.p5, P34 = DATA.p34, GX = DATA.gx, KEY = META.model_key;
+const FIN = P7.table.find(d => d.id === KEY);
+function kpis(el, items) { $(el).innerHTML = items.map(([v, l]) => `<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join(''); }
+function renderOverview() {
+  kpis('ov-kpis', [[f3(FIN.ID), 'RMSE on seen surfaces (grouped CV)'], [f3(FIN.LOSO), 'RMSE on an unseen textured surface'],
+    [f3(FIN.REFH), `RMSE on the smooth plate, never trained on (${FIN.REFH_MAPE.toFixed(1)}% mean error)`], [pc(P5[KEY].cov_conformal_LOSO), 'of impacts inside the 90% interval, unseen textured surface']]);
+  $('ov-how').innerHTML = [
+    'Three tests: grouped CV over the 297 replicate conditions, leave-one-surface-out over the 12 textured surfaces, and one blind prediction of the smooth plate.',
+    'The pick uses leave-one-surface-out only. The smooth plate is never used for tuning.',
+    `Rule: ${esc(P7.rule)}.`,
+    `Result: <b>${esc(FIN.model)}</b>. It had the lowest error of 13 learners. Adding a Laan scaling-law backbone (M6) scored ${f4(P34.M6.LOSO)} vs ${f4(P34.GPR.LOSO)}, but the CI over surfaces includes zero, so the simpler model stays.`
+  ].map(s => `<li>${s}</li>`).join('');
+  $('ov-trust').innerHTML = [
+    `<b>Smooth or less water-repellent surfaces.</b> All textured surfaces are superhydrophobic (θ ≈ 162–167°). On the smooth plate the 90% band held only ${pc(P5[KEY].cov_conformal_REFH)} of impacts. Use the wide band there.`,
+    '<b>The OOD score does not catch that.</b> It sees only flow and geometry inputs, and the smooth plate looks ordinary to it.',
+    `<b>The densest textures</b> (D50, S50) are the hardest; they are also the ones the OOD score flags.`,
+    '<b>Outside the measured ranges</b> of Re, We and D₀. The Predict tab warns when an input leaves them.'
+  ].map(s => `<li>${s}</li>`).join('');
+  gxBars('ov-gx');
+  $('ov-gx-cap').textContent = `On unseen surfaces the GP's error is ${f3(GX.GPR.LOSO)} vs ${f3(GX.XGB.LOSO)} for XGBoost (paired 95% CI of the difference ${GX.LOSO_GPR_minus_XGB_CI.map(f3).join(' to ')}). On the smooth plate they tie (${f3(GX.GPR.REFH)} vs ${f3(GX.XGB.REFH)}). Error bars: 95% bootstrap CI.`;
+}
+function gxBars(id) {
+  const cats = ['Seen surfaces', 'Unseen surface', 'Smooth plate'], keys = ['ID', 'LOSO', 'REFH'];
+  const tr = (k, name, col) => ({ type: 'bar', name, x: cats, y: keys.map(m => GX[k][m]), marker: { color: col },
+    text: keys.map(m => f3(GX[k][m])), textposition: 'inside', insidetextanchor: 'start', textfont: { color: '#fff', family: 'IBM Plex Mono' },
+    error_y: { type: 'data', symmetric: false, array: keys.map(m => GX[k][m + '_CI'][1] - GX[k][m]), arrayminus: keys.map(m => GX[k][m] - GX[k][m + '_CI'][0]), color: css('--ink2'), thickness: 1.5, width: 5 },
+    hovertemplate: `${name}<br>%{x}: %{y:.4f}<extra></extra>` });
+  plot(id, [tr('GPR', 'Gaussian process', css('--navy')), tr('XGB', 'XGBoost', css('--orange'))],
+    { barmode: 'group', showlegend: true, yaxis: ax({ title: 'RMSE of β_max', rangemode: 'tozero' }), xaxis: ax({}) });
+}
+
+/* ---------------- predict ---------------- */
+const inD = $('in-d'), inV = $('in-v'), inFl = $('in-fl'), inSf = $('in-sf');
+inFl.innerHTML = Object.keys(FL).map(k => `<option>${esc(k)}</option>`).join('') + '<option value="custom">Custom fluid…</option>';
+const SFK = Object.keys(SF);
+inSf.innerHTML = SFK.map(k => `<option>${esc(k)}</option>`).join('') + '<option value="custom">Custom geometry…</option>';
+inSf.value = 'D200';
+function state() {
+  const fl = inFl.value, sf = inSf.value;
+  const fp = fl === 'custom' ? { rho: +$('in-rho').value, sigma: +$('in-sig').value, mu: +$('in-mu').value } : FL[fl];
+  const g = sf === 'custom' ? { spacing_um: +$('in-sp').value, depth_um: +$('in-dp').value } : SF[sf];
+  return { D: +inD.value, V: +inV.value, fl, sf, ...fp, sp: g.spacing_um, dp: g.depth_um };
+}
+let pending = false;
+function schedule() { $('out-v').textContent = (+inV.value).toFixed(2); $('fl-custom').hidden = inFl.value !== 'custom'; $('sf-custom').hidden = inSf.value !== 'custom';
+  if (!pending) { pending = true; requestAnimationFrame(() => { pending = false; renderPredict(); renderApi(); }); } }
+[inD, inV, inFl, inSf, $('in-rho'), $('in-sig'), $('in-mu'), $('in-sp'), $('in-dp')].forEach(e => e.addEventListener('input', schedule));
+function renderPredict() {
+  const s = state(); if (!(s.D > 0 && s.V > 0 && s.rho > 0 && s.sigma > 0 && s.mu > 0)) return;
+  const o = predict(s.D, s.V, s.rho, s.sigma, s.mu, s.sp, s.dp);
+  $('o-beta').textContent = f3(o.beta_max);
+  $('o-iv').textContent = o.interval90 ? `${o.interval90[0].toFixed(2)} – ${o.interval90[1].toFixed(2)}` : '…';
+  $('o-wide').textContent = o.interval90_wide ? `${o.interval90_wide[0].toFixed(2)} – ${o.interval90_wide[1].toFixed(2)}` : '…';
+  const oc = o.ood_percentile >= 99.5 ? 'bad' : o.ood_percentile >= 95 ? 'warn' : 'ok';
+  $('o-chips').innerHTML = [`Re ${o.Re.toFixed(0)}`, `We ${o.We.toFixed(1)}`, `φ ${o.phi.toFixed(3)}`, `V_tex ${o.texvol_um.toFixed(2)} µm`]
+    .map(t => `<span class="chip">${t}</span>`).join('') + `<span class="chip ${oc}">OOD ${o.ood_percentile.toFixed(0)}th pct</span>`;
+  $('o-warn').innerHTML = o.warnings.map(w => `<div class="warn">${esc(w)}</div>`).join('');
+  $('o-load').hidden = !!LP;
+  // velocity sweep
+  const vs = Array.from({ length: 45 }, (_, i) => 0.3 + i * 2.2 / 44);
+  const rows = vs.map(v => predict(s.D, v, s.rho, s.sigma, s.mu, s.sp, s.dp));
+  const tr = [];
+  if (LP) tr.push({ x: vs.concat(vs.slice().reverse()), y: rows.map(r => r.interval90[1]).concat(rows.map(r => r.interval90[0]).reverse()),
+    fill: 'toself', fillcolor: css('--band'), line: { width: 0 }, name: '90% interval', hoverinfo: 'skip' });
+  tr.push({ x: vs, y: rows.map(r => r.beta_max), line: { color: css('--navy'), width: 3 }, name: 'β_max', hovertemplate: 'V %{x:.2f} m/s<br>β_max %{y:.3f}<extra></extra>' });
+  tr.push({ x: [s.V], y: [o.beta_max], mode: 'markers', marker: { size: 12, color: css('--orange'), line: { color: css('--panel'), width: 2 } }, name: 'this impact', hoverinfo: 'skip' });
+  plot('pr-sweep', tr, { showlegend: true, xaxis: ax({ title: 'Impact velocity V (m/s)', range: [0.3, 2.5] }), yaxis: ax({ title: 'β_max' }),
+    shapes: [{ type: 'rect', xref: 'x', yref: 'paper', x0: 0.48, x1: 1.71, y0: 0, y1: 1, fillcolor: css('--range'), line: { width: 0 }, layer: 'below' }],
+    annotations: [{ x: 0.5, y: 1, xref: 'x', yref: 'paper', text: 'measured range', showarrow: false, xanchor: 'left', yanchor: 'top', font: { size: 11, color: css('--aqua') } }] });
+  // all surfaces
+  const ss = SFK.slice().sort((a, b) => SF[a].phi - SF[b].phi);
+  const ps = ss.map(k => predict(s.D, s.V, s.rho, s.sigma, s.mu, SF[k].spacing_um, SF[k].depth_um));
+  const cols = ss.map(k => k === s.sf ? css('--orange') : k === 'REF-H' ? css('--muted') : css('--navy'));
+  plot('pr-surf', [{ type: 'scatter', mode: 'markers', x: ss, y: ps.map(p => p.beta_max), marker: { size: 11, color: cols },
+    error_y: LP ? { type: 'data', symmetric: false, array: ps.map(p => p.interval90[1] - p.beta_max), arrayminus: ps.map(p => p.beta_max - p.interval90[0]), color: css('--muted'), thickness: 1.4, width: 4 } : undefined,
+    customdata: ss.map(k => SF[k].phi), hovertemplate: '%{x} (φ %{customdata:.2f})<br>β_max %{y:.3f}<extra></extra>' }],
+    { xaxis: ax({ type: 'category' }), yaxis: ax({ title: 'β_max' }), margin: { l: 56, r: 16, t: 10, b: 40 } });
+}
+
+/* ---------------- benchmark ---------------- */
+function renderBenchmark() {
+  $('bm-table').innerHTML = `<table><thead><tr><th>Model</th><th class="n">Seen</th><th class="n">Unseen</th><th class="n">Worst surface</th><th class="n">Smooth plate</th><th class="n">MAPE</th></tr></thead><tbody>` +
+    P7.table.map(d => `<tr class="${d.id === KEY ? 'hi' : ''}"><td><b>${esc(d.id)}</b> ${esc(d.model)}</td><td class="n">${f4(d.ID)}</td><td class="n">${f4(d.LOSO)}</td><td class="n">${esc(d.LOSO_worst)}</td><td class="n">${f4(d.REFH)}</td><td class="n">${d.REFH_MAPE.toFixed(2)}%</td></tr>`).join('') + '</tbody></table>';
+  const ci = P7.best_minus_runner_up_LOSO_CI95;
+  $('bm-verdict').innerHTML = `Final model <b class="m">${esc(KEY)}</b>. Lowest unseen-surface error: ${esc(P7.lowest_LOSO)}. ${esc(P7.lowest_LOSO)} − ${esc(P7.runner_up)}, 95% CI over surfaces [${ci[0].toFixed(4)}, ${ci[1].toFixed(4)}]: ${P7.tie ? 'a tie, so the simpler model is kept' : 'a clear winner'}.`;
+  // GPR vs XGB three panels
+  const ps = Object.keys(GX.GPR.per_surface).sort((a, b) => GX.XGB.per_surface[a] - GX.XGB.per_surface[b]);
+  const e = Array.from({ length: 101 }, (_, i) => i * 0.002), cdf = a => e.map(v => { let lo = 0, hi = a.length; while (lo < hi) { const m = (lo + hi) >> 1; if (a[m] <= v) lo = m + 1; else hi = m; } return lo / a.length; });
+  const nv = css('--navy'), og = css('--orange'), ln = css('--line');
+  const traces = [];
+  ['GPR', 'XGB'].forEach((k, j) => {
+    const c = j ? og : nv, name = j ? 'XGBoost' : 'Gaussian process';
+    traces.push({ type: 'bar', x: ['Seen', 'Unseen', 'Smooth'], y: ['ID', 'LOSO', 'REFH'].map(m => GX[k][m]), marker: { color: c }, name, legendgroup: k,
+      error_y: { type: 'data', symmetric: false, array: ['ID', 'LOSO', 'REFH'].map(m => GX[k][m + '_CI'][1] - GX[k][m]), arrayminus: ['ID', 'LOSO', 'REFH'].map(m => GX[k][m] - GX[k][m + '_CI'][0]), color: css('--ink2'), thickness: 1.4, width: 4 },
+      xaxis: 'x', yaxis: 'y', hovertemplate: `${name}: %{y:.4f}<extra></extra>` });
+    traces.push({ type: 'scatter', mode: 'markers', x: ps.map(s => GX[k].per_surface[s]), y: ps, marker: { size: 10, color: c }, name, legendgroup: k, showlegend: false, xaxis: 'x2', yaxis: 'y2', hovertemplate: `${name} · %{y}: %{x:.3f}<extra></extra>` });
+    traces.push({ type: 'scatter', mode: 'lines', x: e, y: cdf(DATA.gx_abs[k]), line: { color: c, width: 3 }, name, legendgroup: k, showlegend: false, xaxis: 'x3', yaxis: 'y3', hovertemplate: `${name}: %{y:.0%} within %{x:.3f}<extra></extra>` });
+  });
+  const narrow = $('bm-gx').clientWidth < 700;
+  plot('bm-gx', traces, { showlegend: true, barmode: 'group', margin: { l: 56, r: 16, t: 40, b: 48 },
+    grid: narrow ? { rows: 3, columns: 1, pattern: 'independent', ygap: 0.28 } : { rows: 1, columns: 3, pattern: 'independent', xgap: 0.12 },
+    height: narrow ? 900 : 380,
+    xaxis: ax({}), yaxis: ax({ title: 'RMSE', rangemode: 'tozero' }),
+    xaxis2: ax({ title: 'RMSE, surface held out' }), yaxis2: ax({ type: 'category', automargin: true }),
+    xaxis3: ax({ title: '|error| in β_max', range: [0, 0.2] }), yaxis3: ax({ title: 'share of impacts', tickformat: '.0%', range: [0, 1.02] }),
+    annotations: [['A  RMSE, 95% CI', 'x domain', 'y domain'], [`B  GPR lower on ${GX.GPR_wins_surfaces}/12`, 'x2 domain', 'y2 domain'], ['C  Every impact, unseen surface', 'x3 domain', 'y3 domain']]
+      .map(([t, xr, yr]) => ({ text: t, xref: xr, yref: yr, x: 0, y: 1.08, showarrow: false, xanchor: 'left', font: { size: 13, color: css('--ink') } })) });
+  $('bm-gx-cap').textContent = `Both learners get exactly the same five inputs. On unseen surfaces the GP's error is ${f3(GX.GPR.LOSO)} vs ${f3(GX.XGB.LOSO)} (paired CI of the difference over surfaces ${GX.LOSO_GPR_minus_XGB_CI.map(f3).join(' to ')}), ${pc(GX['LOSO_within_0.05'].GPR)} vs ${pc(GX['LOSO_within_0.05'].XGB)} of impacts within 0.05, and the worst 5% of errors is ${f3(GX.LOSO_p95_abs_err.GPR)} vs ${f3(GX.LOSO_p95_abs_err.XGB)}. On the smooth plate they tie.`;
+  // CI vs M2
+  const rows = [];
+  ['M5', 'M6', 'GPR'].forEach(k => { const v = P34[k];
+    rows.push({ k, t: 'Smooth plate', m: v.REFH_minus_M2, c: v.REFH_minus_M2_CI95 }, { k, t: 'Unseen surface', m: v.LOSO_minus_M2, c: v.LOSO_minus_M2_CI95 }); });
+  const mk = (t, col, sym) => { const r = rows.filter(x => x.t === t); return { type: 'scatter', mode: 'markers', name: t, x: r.map(x => x.m), y: r.map(x => x.k),
+    marker: { size: 11, color: col, symbol: sym }, error_x: { type: 'data', symmetric: false, array: r.map(x => x.c[1] - x.m), arrayminus: r.map(x => x.m - x.c[0]), color: col, thickness: 2, width: 5 },
+    hovertemplate: `${t} %{y}: %{x:+.4f}<extra></extra>` }; };
+  plot('bm-ci', [mk('Unseen surface', css('--blue'), 'circle-open'), mk('Smooth plate', nv, 'circle')], { showlegend: true, yaxis: ax({ type: 'category', autorange: 'reversed' }), xaxis: ax({ title: 'RMSE − RMSE of M2', zeroline: true, zerolinecolor: css('--ink2'), zerolinewidth: 1.5 }) });
+  $('bm-zoo').innerHTML = `<table><thead><tr><th>Learner</th><th class="n">Seen</th><th class="n">Unseen</th><th class="n">Smooth</th></tr></thead><tbody>` +
+    DATA.zoo.map(d => `<tr class="${d.name === 'Gaussian process' ? 'hi' : ''}"><td>${esc(d.name)}</td><td class="n">${f4(d['ID RMSE'])}</td><td class="n">${f4(d['LOSO RMSE'])}</td><td class="n">${f4(d['REF-H RMSE'])}</td></tr>`).join('') + '</tbody></table>';
+  const surf = Object.keys(P34.GPR.LOSO_per_surface), pal = { M2: css('--muted'), M5: css('--amber'), M6: css('--blue'), GPR: nv };
+  plot('bm-per', ['M2', 'M5', 'M6', 'GPR'].map(k => ({ type: 'bar', name: k === 'GPR' ? 'GPR (final)' : k, x: surf, y: surf.map(s => P34[k].LOSO_per_surface[s]), marker: { color: pal[k] }, hovertemplate: `${k} · %{x}: %{y:.3f}<extra></extra>` })),
+    { barmode: 'group', showlegend: true, yaxis: ax({ title: 'RMSE, surface held out' }), xaxis: ax({ type: 'category' }) });
+}
+
+/* ---------------- uncertainty ---------------- */
+let parSet = 'lo';
+function renderUncertainty() {
+  const g = P5[KEY];
+  $('un-lede').innerHTML = `The GP gives a predictive standard deviation. The 90% interval multiplies it by q = ${g.q_conformal.toFixed(2)}, calibrated on leave-one-surface-out residuals. That is almost exactly the Gaussian 1.645, so the GP's own uncertainty is already well calibrated on textured surfaces.`;
+  kpis('un-kpis', [[pc(g.cov_conformal_LOSO), 'coverage of the 90% interval, unseen textured surface'], [`${pc(g.min_surface_coverage)}`, `lowest single surface (${esc(g.worst_surface)})`],
+    [pc(g.cov_conformal_REFH), 'coverage on the smooth plate'], [pc(g.cov_surface_conformal_REFH), 'wide (worst-surface) band on the smooth plate']]);
+  const d = parSet === 'lo' ? DATA.loso : DATA.refh;
+  const lo = Math.min(...d.beta), hi = Math.max(...d.beta);
+  plot('un-par', [{ type: 'scatter', mode: 'markers', x: d.beta, y: d.pred,
+    marker: { size: parSet === 'lo' ? 5 : 7, color: d.gly, colorscale: [[0, '#9cc3f2'], [1, '#0d366b']], cmin: 0, cmax: 91, showscale: true, colorbar: { title: { text: 'glycerol %', side: 'right' }, thickness: 10, len: 0.8 } },
+    error_y: { type: 'data', symmetric: false, array: d.hi.map((h, i) => h - d.pred[i]), arrayminus: d.lo.map((l, i) => d.pred[i] - l), color: 'rgba(125,132,151,.35)', thickness: 1, width: 0 },
+    hovertemplate: 'measured %{x:.3f}<br>predicted %{y:.3f}<extra></extra>' },
+    { x: [lo, hi], y: [lo, hi], mode: 'lines', line: { dash: 'dash', color: css('--muted'), width: 1.5 }, hoverinfo: 'skip' }],
+    { xaxis: ax({ title: 'measured β_max' }), yaxis: ax({ title: 'predicted β_max', scaleanchor: 'x' }) });
+  const cs = g.cov_conformal_per_surface, ks = Object.keys(cs);
+  plot('un-cov', [{ type: 'bar', x: ks, y: ks.map(k => cs[k]), marker: { color: ks.map(k => cs[k] < 0.85 ? css('--amber') : css('--navy')) }, hovertemplate: '%{x}: %{y:.0%}<extra></extra>' }],
+    { yaxis: ax({ tickformat: '.0%', range: [0.5, 1.02], title: 'share inside 90% interval' }), xaxis: ax({ type: 'category' }),
+      shapes: [{ type: 'line', xref: 'paper', x0: 0, x1: 1, y0: 0.9, y1: 0.9, line: { dash: 'dash', color: css('--ink2'), width: 1.5 } }] });
+  const O = P5.ood, sp = P5.ood_spearman_flag_vs_rmse;
+  plot('un-ood', [{ type: 'scatter', mode: 'markers+text', x: O.map(o => o.flagged), y: O.map(o => o.rmse), text: O.map(o => o.surface), textposition: 'top center',
+    marker: { size: O.map(o => o.surface === 'REF-H' ? 14 : 10), symbol: O.map(o => o.surface === 'REF-H' ? 'diamond' : 'circle'), color: O.map(o => o.surface === 'REF-H' ? css('--navy') : o.flagged > 0.5 ? css('--orange') : css('--muted')) },
+    textfont: { size: 11, color: css('--ink2') }, hovertemplate: '%{text}<br>flagged %{x:.0%}<br>RMSE %{y:.3f}<extra></extra>' }],
+    { xaxis: ax({ tickformat: '.0%', title: 'share of impacts flagged (≥ 95th percentile)', range: [-0.06, 1.08] }), yaxis: ax({ title: 'GP error (RMSE)' }) });
+  $('un-ood-cap').textContent = `Isolation Forest + Mahalanobis distance, fitted without the held-out surface. It flags D50 and S50, the two hardest surfaces. Across the 12 textured surfaces the link is weak (Spearman ρ = ${sp.rho.toFixed(2)}, p = ${sp.p.toFixed(2)}), and 8 surfaces have no flags at all. The smooth plate has the largest error but is not flagged: its shift is in wettability, which no input describes.`;
+}
+$('seg-lo').onclick = () => { parSet = 'lo'; $('seg-lo').setAttribute('aria-pressed', 'true'); $('seg-rf').setAttribute('aria-pressed', 'false'); renderUncertainty(); };
+$('seg-rf').onclick = () => { parSet = 'rf'; $('seg-rf').setAttribute('aria-pressed', 'true'); $('seg-lo').setAttribute('aria-pressed', 'false'); renderUncertainty(); };
+
+/* ---------------- surfaces ---------------- */
+const NM = { logRe: 'log Re', logWe: 'log We', logD: 'log D₀', phi: 'φ', texvol: 'V_tex' };
+$('sf-dep').innerHTML = FEATS.map(f => `<option value="${f}">${NM[f]}</option>`).join('');
+$('sf-dep').addEventListener('change', renderSurfaces);
+function renderSurfaces() {
+  $('sf-table').innerHTML = `<table><thead><tr><th>Surface</th><th class="n">Pitch µm</th><th class="n">Depth µm</th><th class="n">φ</th><th class="n">V_tex µm</th></tr></thead><tbody>` +
+    SFK.map(k => `<tr class="${k === 'REF-H' ? 'hi' : ''}"><td>${esc(k)}</td><td class="n">${SF[k].spacing_um || '–'}</td><td class="n">${SF[k].depth_um || '–'}</td><td class="n">${SF[k].phi.toFixed(3)}</td><td class="n">${SF[k].texvol_um.toFixed(2)}</td></tr>`).join('') + '</tbody></table>';
+  const s = DATA.p6, fs = FEATS.slice().sort((a, b) => s.mean_abs_shap_textured[a] - s.mean_abs_shap_textured[b]);
+  plot('sf-shap', [{ type: 'bar', orientation: 'h', name: 'textured', y: fs.map(f => NM[f]), x: fs.map(f => s.mean_abs_shap_textured[f]), marker: { color: css('--navy') }, hovertemplate: 'textured · %{y}: %{x:.4f}<extra></extra>' },
+    { type: 'bar', orientation: 'h', name: 'smooth plate', y: fs.map(f => NM[f]), x: fs.map(f => s.mean_abs_shap_REFH[f]), marker: { color: css('--orange') }, hovertemplate: 'REF-H · %{y}: %{x:.4f}<extra></extra>' }],
+    { barmode: 'group', showlegend: true, xaxis: ax({ title: 'mean |SHAP| on log β_max' }), yaxis: ax({ automargin: true }), margin: { l: 70, r: 16, t: 16, b: 48 } });
+  const f = $('sf-dep').value, i = FEATS.indexOf(f), sh = DATA.shap;
+  plot('sf-depc', [{ type: 'scatter', mode: 'markers', x: sh.X.map(r => r[i]), y: sh.sv.map(r => r[i]), marker: { size: 6, color: css('--navy'), opacity: 0.7 }, hovertemplate: `${NM[f]} %{x:.3f}<br>SHAP %{y:.4f}<extra></extra>` }],
+    { xaxis: ax({ title: NM[f] }), yaxis: ax({ title: `SHAP of ${NM[f]} (log β)` }) });
+  const C = DATA.cnn, ck = Object.keys(C);
+  plot('sf-cnn', [{ type: 'scatter', mode: 'markers+text', x: ck.map(k => C[k].true[0]), y: ck.map(k => C[k].pred[0]), text: ck, textposition: 'top center', textfont: { size: 10, color: css('--ink2') },
+    marker: { size: ck.map(k => k === 'REF-H' ? 14 : 9), symbol: ck.map(k => k === 'REF-H' ? 'diamond' : k[0] === 'D' ? 'circle' : 'square'), color: ck.map(k => k === 'REF-H' ? css('--orange') : k[0] === 'D' ? css('--navy') : css('--blue')) },
+    hovertemplate: '%{text}<br>geometry φ %{x:.3f}<br>CNN φ %{y:.3f}<extra></extra>' },
+    { x: [0, 1.05], y: [0, 1.05], mode: 'lines', line: { dash: 'dash', color: css('--muted'), width: 1.5 }, hoverinfo: 'skip' }],
+    { xaxis: ax({ title: 'φ from geometry', range: [-0.03, 1.08] }), yaxis: ax({ title: 'φ read by the CNN', range: [-0.03, 1.08] }) });
+}
+
+/* ---------------- API ---------------- */
+function renderApi() {
+  const s = state(), body = { D_mm: s.D, V: s.V };
+  if (s.fl === 'custom') Object.assign(body, { rho: s.rho, sigma: s.sigma, mu: s.mu }); else body.fluid = s.fl;
+  if (s.sf === 'custom') Object.assign(body, { spacing_um: s.sp, depth_um: s.dp }); else body.surface = s.sf;
+  $('api-req').textContent = `curl -X POST http://localhost:8000/predict \\\n  -H 'Content-Type: application/json' \\\n  -d '${JSON.stringify(body)}'`;
+  const o = predict(s.D, s.V, s.rho, s.sigma, s.mu, s.sp, s.dp);
+  $('api-res').textContent = JSON.stringify(o, (k, v) => typeof v === 'number' ? +v.toPrecision(6) : v, 2);
+  $('api-py').textContent = `import requests\n\nr = requests.post("http://localhost:8000/predict",\n                  json=${JSON.stringify(body)})\nprint(r.json()["beta_max"], r.json()["interval90"])`;
+}
+document.querySelectorAll('.copy').forEach(b => b.addEventListener('click', () => {
+  const t = $(b.dataset.copy).textContent;
+  const done = () => { b.textContent = 'Copied'; setTimeout(() => b.textContent = 'Copy', 1400); };
+  navigator.clipboard.writeText(t).then(done).catch(() => { const r = document.createRange(); r.selectNodeContents($(b.dataset.copy)); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); b.textContent = 'Selected'; });
+}));
+
+/* ---------------- tabs ---------------- */
+const RENDER = { overview: renderOverview, predict: renderPredict, benchmark: renderBenchmark, uncertainty: renderUncertainty, surfaces: renderSurfaces, api: renderApi };
+let cur = null;
+function show(t) {
+  if (!RENDER[t]) t = 'overview'; cur = t;
+  document.querySelectorAll('#tabs button').forEach(b => b.setAttribute('aria-selected', b.dataset.t === t ? 'true' : 'false'));
+  document.querySelectorAll('.page').forEach(p => p.hidden = p.id !== 'p-' + t);
+  RENDER[t]();
+  try { history.replaceState(null, '', '#' + t); } catch (e) {}
+}
+document.querySelectorAll('#tabs button').forEach(b => b.addEventListener('click', () => show(b.dataset.t)));
+window.addEventListener('hashchange', () => show(location.hash.slice(1)));
+const rerender = () => cur && RENDER[cur]();
+try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', rerender); } catch (e) {}
+new MutationObserver(rerender).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+schedule();
+show((location.hash || '#overview').slice(1));
+fetch('gp_L.b64.txt').then(r => { if (!r.ok) throw 0; return r.text(); }).then(t => { const s = atob(t.trim()), u = new Uint8Array(s.length); for (let i = 0; i < s.length; i++) u[i] = s.charCodeAt(i); LP = new Float32Array(u.buffer); window.__ready = true; rerender(); if (cur !== 'predict') renderPredict(); renderApi(); })
+  .catch(() => { $('o-load').textContent = 'The interval data did not load; β_max is exact but the intervals are unavailable.'; window.__ready = true; });
+</script>

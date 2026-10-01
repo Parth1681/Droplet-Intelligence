@@ -1,0 +1,303 @@
+Dataset Description
+
+
+
+
+  Dataset on droplet spreading and rebound behavior of
+     water and viscous water-glycerol mixtures on
+  superhydrophobic surfaces with laser-made channels
+
+   Matic Može*, Samo Jereb, Robert Lovšin, Jure Berce, Matevž Zupančič, Iztok Golobič
+
+
+
+
+University of Ljubljana, Faculty of Mechanical Engineering, Aškerčeva cesta 6, SI-1000
+Ljubljana, Slovenia
+
+
+
+
+Corresponding author:
+* E-mail: matic.moze@fs.uni-lj.si (Matic Može)
+
+
+
+
+                   This dataset is organized within 5 files and 1 folder.
+
+
+
+
+                      DOI: http://dx.doi.org/10.17632/wsh8rxwd38.1
+Table of Contents
+Table of Contents........................................................................................................................ 2
+File 1: Rebound Data.................................................................................................................. 3
+File 2: Rebound Data - REF-H ................................................................................................... 5
+File 3: Contact angles - Water .................................................................................................... 6
+File 4: Contact angles - Water-Glycerol_91wtPerc .................................................................... 7
+File 5: Advancing contact angles - Water-glycerol mixtures ..................................................... 8
+Folder 1: SEM images of the test surfaces ................................................................................. 9
+
+
+
+
+                                                                    2
+File 1: Rebound Data
+Description:              This file contains a table consisting of 1498 water-glycerol
+                          droplet impact experiments on monolayer-functionalized laser-
+                          textured aluminum samples, where each row represents a single
+                          measurement and includes the following parameters:
+                          a) sample name,
+                          b) droplet diameter (in m),
+                          c) droplet impact velocity (in m s-1),
+                          d) density of the droplet (in kg m-3),
+                          e) surface tension of the droplet (in N m-1),
+                          f) dynamic viscosity of the droplet (in Pa∙s),
+                          g) distance between adjacent laser beam passes (in μm),
+                          h) approximate average depth of laser-made channels (in μm),
+                          i) Reynolds number (dimensionless),
+                          j) Weber number (dimensionless),
+                          k) droplet-surface contact time (in seconds),
+                          l) rebound efficiency (dimensionless),
+                          m) droplet maximum spreading factor (dimensionless), and
+                          n) maximum lamella velocity during the spreading phase
+                             (in m s-1).
+
+Type of data:             Processed data.
+
+Data format:              Data in .csv.
+
+How data were acquired:   The superhydrophobic surfaces were prepared on aluminum
+                          alloy (1050A H24, ≥99.5% Al) plates via two-step fabrication
+                          process comprising laser texturing and hydrophobization. A
+                          nanosecond faber laser system (FL Mark-C with JPT Opto-
+                          electronics "M7 30 W" MOPA source) was used to fabricate 6
+                          and 25 μm deep microchannels. The laser beam was scanned in
+                          a crosshatch pattern with a center-to-center distance of 50, 100,
+                          200, 400, 600 and 800 μm distance between successive passes.
+                          Following laser texturing, the surfaces were hydrophobized by
+                          drop-casting a 3 mM solution of 1H,1H',2H,2H'-
+                          perfluorododecil-1-phosphonic acid (FDPA) in isopropanol.
+
+                          Droplet impact measurements were conducted using water-
+                          glycerol binary mixtures with 0, 20, 60, 78 and 91 wt.%
+                          glycerol. The mixtures were infused through a blunt G27
+                          needle with a syringe pump (Harvard Apparatus PHD 2000)
+                          operated at a constant flow rate of 150 μL min-1 to produce
+                          droplet of controlled size. The droplets were released onto the
+                          samples from five different heights to vary the impact
+                          velocities. Droplet impact was captured using a high-speed
+                          optical camera (Photron FASTCAM Mini UX100) equipped
+                          with a macro lens (Laowa 100mm f/2.8 2x Ultra Macro APO)
+                          at a frame rate of 5000 fps and spatial resolution of
+                          ~12 μm px-1. A white LED backlight (Thorlabs SOLIS-2C
+
+                                            3
+                        powered by a DC2200 controller) was used for illumination.
+                        Prior to each measurement, the temperature was recorded using
+                        a SparkFun SHTC3 (Qwiic) sensor and a SparkFun RedBoard
+                        Qwiic Arduino controller.
+
+Data source location:   Faculty of Mechanical Engineering, University of Ljubljana,
+                        Aškerčeva cesta 6, 1000 Ljubljana, Slovenia.
+
+                        The data were acquired in the period between Apr – Dec
+                        2024.
+
+
+
+
+                                       4
+File 2: Rebound Data - REF-H
+Description:              This file contains a table consisting of 125 water-glycerol
+                          droplet impact experiments on a monolayer-functionalized
+                          smooth aluminum sample, where each row represents a single
+                          measurement and includes the following parameters:
+                          a) sample name,
+                          b) droplet diameter (in m),
+                          c) droplet impact velocity (in m s-1),
+                          d) density of the droplet (in kg m-3),
+                          e) surface tension of the droplet (in N m-1),
+                          f) dynamic viscosity of the droplet (in Pa∙s),
+                          g) Reynolds number (dimensionless),
+                          h) Weber number (dimensionless),
+                          i) droplet maximum spreading factor (dimensionless), and
+                          j) maximum lamella velocity during the spreading phase (in
+                             m s-1).
+
+Type of data:             Processed data.
+
+Data format:              Data in .csv.
+
+How data were acquired:   The samples were prepared using aluminum alloy (1050A H24,
+                          ≥99.5% Al) plates, which were hydrophobized by drop-casting
+                          a 3 mM solution of 1H,1H',2H,2H'-perfluorododecil-1-
+                          phosphonic acid (FDPA) in isopropanol.
+
+                          Droplet impact measurements were conducted using water-
+                          glycerol binary mixtures with 0, 20, 60, 78 and 91 wt.%
+                          glycerol. The mixtures were infused through a blunt G27
+                          needle with a syringe pump (Harvard Apparatus PHD 2000)
+                          operated at a constant flow rate of 150 μL min-1 to produce
+                          droplet of controlled size. The droplets were released onto the
+                          samples from five different heights to vary the impact
+                          velocities. Droplet impact was captured using a high-speed
+                          optical camera (Photron FASTCAM Mini UX100) equipped
+                          with a macro lens (Laowa 100mm f/2.8 2x Ultra Macro APO)
+                          at a frame rate of 5000 fps and spatial resolution of
+                          ~12 μm px-1. A white LED backlight (Thorlabs SOLIS-2C
+                          powered by a DC2200 controller) was used for illumination.
+                          Prior to each measurement, the temperature was recorded using
+                          a SparkFun SHTC3 (Qwiic) sensor and a SparkFun RedBoard
+                          Qwiic Arduino controller.
+
+Data source location:     Faculty of Mechanical Engineering, University of Ljubljana,
+                          Aškerčeva cesta 6, 1000 Ljubljana, Slovenia.
+
+                          The data were acquired in the period between Apr – Dec
+                          2024.
+
+
+                                            5
+File 3: Contact angles - Water
+Description:              The file contains a table presenting the average measured static
+                          and dynamic contact angles of water droplets on monolayer-
+                          functionalized laser-textured aluminum samples featuring 6
+                          and 25 μm deep microchannels. The center-to-center distances
+                          between adjacent microchannels are approximately 50, 100,
+                          200, 400, 600 and 800 μm.
+
+                          The table’s columns list sample names and the rows list the
+                          corresponding static, advancing, and receding contact angles,
+                          and contact angle hysteresis.
+
+Type of data:             Processed data.
+
+Data format:              Data in .csv.
+
+How data were acquired:   Static contact angles were measured using a goniometer
+                          (Ossila) by depositing water droplets onto the surfaces and
+                          observing the resulting contact angle. Each measurement was
+                          repeated 5 times. Processing of the videos was performed in
+                          Ossila’s proprietary software.
+
+                          Advancing and receding contact angles were measured using
+                          the droplet inflation/deflation method on a custom-made
+                          experimental setup for goniometry equipped with a CMOS
+                          camera and a strong LED backlight. A syringe pump was used
+                          to inflate and deflate the droplets while the movement of the
+                          triple contact line across the surface was recorded with the
+                          camera. Processing of the videos was performed using custom-
+                          developed algorithms in MathWorks MATLAB environment.
+
+Data source location:     Faculty of Mechanical Engineering, University of Ljubljana,
+                          Aškerčeva cesta 6, 1000 Ljubljana, Slovenia.
+
+                          The data were acquired in the period between Apr – Dec
+                          2024.
+
+
+
+
+                                            6
+File 4: Contact angles - Water-Glycerol_91wtPerc
+Description:              The file contains a table presenting the average measured static
+                          contact angles of water-glycerol droplets with 91 wt.% glycerol
+                          on monolayer-functionalized laser-textured aluminum samples
+                          featuring 6 and 25 μm deep microchannels. The center-to-
+                          center distances between adjacent microchannels are
+                          approximately 50, 100, 200, 400, 600 and 800 μm.
+
+                          The table’s columns list sample names and a single row lists the
+                          corresponding static contact angles.
+
+Type of data:             Processed data.
+
+Data format:              Data in .csv.
+
+How data were acquired:   Static contact angles were measured using a goniometer
+                          (Ossila) by depositing droplets of water-glycerol binary
+                          mixture with 91 wt.% glycerol onto the surfaces and observing
+                          the resulting contact angle. Each measurement was repeated 5
+                          times. Processing of the videos was performed in Ossila’s
+                          proprietary software.
+
+Data source location:     Faculty of Mechanical Engineering, University of Ljubljana,
+                          Aškerčeva cesta 6, 1000 Ljubljana, Slovenia.
+
+                          The data were acquired in the period between Apr – Dec
+                          2024.
+
+
+
+
+                                            7
+File 5: Advancing contact angles - Water-glycerol mixtures
+Description:              The file contains a table presenting the average measured
+                          advancing contact angles of water-glycerol droplets with 20,
+                          60, 78 and 91 wt.% glycerol on monolayer-functionalized laser-
+                          textured aluminum samples featuring microchannels with
+                          depths of 6 and 25 μm. The center-to-center distances between
+                          adjacent microchannels are approximately 50, 200 and 800 μm.
+
+                          The table’s rows list sample names and the corresponding
+                          advancing contact angles for the water-glycerol mixtures in the
+                          following other: 20, 60, 78 and 91 wt.% glycerol.
+
+Type of data:             Processed data.
+
+Data format:              Data in .csv.
+
+How data were acquired:   Advancing contact angles were measured using the droplet
+                          inflation method on a custom-made experimental setup for
+                          goniometry equipped with a CMOS camera and a strong LED
+                          backlight. A syringe pump was used to inflate the droplets
+                          while the movement of the triple contact line across the surface
+                          was recorded with the camera. Advancing contact angles were
+                          measured using water-glycerol binary mixtures with 20, 60, 78
+                          and 91 wt.% glycerol. Processing of the videos was performed
+                          using custom-developed algorithms in MathWorks MATLAB
+                          environment.
+
+Data source location:     Faculty of Mechanical Engineering, University of Ljubljana,
+                          Aškerčeva cesta 6, 1000 Ljubljana, Slovenia.
+
+                          The data were acquired in the period between Apr – Dec
+                          2024.
+
+
+
+
+                                            8
+Folder 1: SEM images of the test surfaces
+Description:              The folder contains 39 scanning electron microscopy (SEM)
+                          images of the monolayer-functionalized laser-textured
+                          aluminum samples featuring microchannels with depths of 6
+                          and 25 μm and center-to-center distances of approximately 50,
+                          100, 200, 400, 600 and 800 μm, and the monolayer-
+                          functionalized smooth aluminum sample. Each sample is
+                          imaged at 43×, 100× and 350× magnification.
+
+                          The name of each image is composed of the sample name and
+                          the magnification of the image.
+
+Type of data:             Raw data.
+
+Data format:              Data in .tif.
+
+How data were acquired:   SEM imaging was performed using a JCM-7000 NeoScope
+                          SEM, utilizing the secondary electron detector and operating at
+                          an accelerating voltage of 15 kV.
+
+Data source location:     Faculty of Mechanical Engineering, University of Ljubljana,
+                          Aškerčeva cesta 6, 1000 Ljubljana, Slovenia.
+
+                          The data were acquired in the period between Apr – Dec
+                          2024.
+
+
+
+
+                                          9
+

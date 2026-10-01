@@ -1,0 +1,6 @@
+{"model": "GPR | raw 7 (D,V,rho,sigma,mu,spacing,depth)", "ID": 0.037, "LOSO": 0.0372, "worst": "0.063 D50", "REFH": 0.0582, "REFH_bias": 0.005, "REFH_hiWe_bias": 0.0488, "REFH_MAPE": 2.1828}
+{"model": "GPR | Re,We,Oh + spacing,depth (paper PIML set)", "ID": 0.0429, "LOSO": 0.0445, "worst": "0.091 D50", "REFH": 0.0686, "REFH_bias": 0.0305, "REFH_hiWe_bias": 0.0787, "REFH_MAPE": 2.6695}
+{"model": "GPR | hybrid raw + Re,We,Oh", "ID": 0.0369, "LOSO": 0.0372, "worst": "0.063 D50", "REFH": 0.0582, "REFH_bias": 0.0051, "REFH_hiWe_bias": 0.0489, "REFH_MAPE": 2.1824}
+{"model": "XGBoost | raw 7 (D,V,rho,sigma,mu,spacing,depth)", "ID": 0.0464, "LOSO": 0.0513, "worst": "0.098 D50", "REFH": 0.0651, "REFH_bias": 0.014, "REFH_hiWe_bias": 0.0518, "REFH_MAPE": 2.3141}
+{"model": "XGBoost | Re,We,Oh + spacing,depth (paper PIML set)", "ID": 0.0505, "LOSO": 0.0535, "worst": "0.111 D50", "REFH": 0.0693, "REFH_bias": 0.0271, "REFH_hiWe_bias": 0.0795, "REFH_MAPE": 2.652}
+{"model": "XGBoost | hybrid raw + Re,We,Oh", "ID": 0.0436, "LOSO": 0.0487, "worst": "0.084 D50", "REFH": 0.064, "REFH_bias": 0.009, "REFH_hiWe_bias": 0.0567, "REFH_MAPE": 2.1269}

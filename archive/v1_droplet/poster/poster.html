@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Droplet Cross-Surface Poster</title>
+<style>
+@font-face { font-family: "Inter"; src: url("assets/fonts/InterVariable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; }
+@page { size: 841mm 1189mm; margin: 0; }
+:root {
+  --navy: #2f4574; --navy-dk: #1d2c4f; --ink: #14213d; --ink2: #4a5268; --muted: #8a90a0;
+  --rule: #d9dde6; --tint: #eef2f8; --orange: #eb6834; --blue: #2a78d6; --paper: #ffffff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--paper); }
+body { width: 841mm; height: 1189mm; font-family: "Inter", sans-serif; color: var(--ink); font-size: 29pt; line-height: 1.32;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact; overflow: hidden; position: relative; }
+
+/* ---------- header ---------- */
+.conf { display: flex; align-items: center; justify-content: space-between; padding: 20mm 28mm 0 28mm; }
+.conf-name { font-size: 58pt; font-weight: 750; color: var(--navy); letter-spacing: -0.01em; line-height: 1.08; }
+.conf-sub { font-size: 30pt; color: var(--ink2); margin-top: 3mm; font-weight: 500; }
+.logo { height: 62mm; width: auto; }
+.titleband { margin: 12mm 0 0; padding: 14mm 28mm 13mm; background: var(--navy); color: #fff; }
+.title { font-size: 84pt; font-weight: 780; line-height: 1.06; letter-spacing: -0.02em; }
+.authors { margin-top: 7mm; font-size: 38pt; font-weight: 600; }
+.authors u { text-decoration-thickness: 1.2mm; text-underline-offset: 2.4mm; }
+.affil { font-size: 28pt; font-weight: 400; opacity: 0.88; margin-top: 2mm; }
+
+/* ---------- body ---------- */
+.cols { display: grid; grid-template-columns: repeat(3, 250mm); column-gap: 17.5mm; padding: 14mm 28mm 0; }
+.col { display: flex; flex-direction: column; gap: 11mm; justify-content: space-between; height: 100%; }
+.cols { height: 924mm; }
+section h2 { font-size: 42pt; font-weight: 760; color: var(--navy); letter-spacing: -0.01em; line-height: 1.1;
+             padding-bottom: 3mm; border-bottom: 1.2mm solid var(--navy); margin-bottom: 5mm; display: flex; gap: 5mm; align-items: baseline; }
+section h2 .n { color: var(--orange); font-weight: 800; }
+p + p { margin-top: 3.5mm; }
+b, strong { font-weight: 680; }
+.lead { font-size: 33pt; line-height: 1.26; font-weight: 500; }
+.q { background: var(--tint); border-left: 2.4mm solid var(--orange); padding: 6mm 7mm; font-size: 33pt; font-weight: 620; line-height: 1.24; color: var(--navy-dk); }
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin-top: 6mm; }
+.stat { background: var(--tint); padding: 5mm 5mm 4.5mm; }
+.stat .v, .kpi .v { font-feature-settings: "tnum" 1; }
+.stat .v { font-size: 50pt; font-weight: 780; color: var(--navy); line-height: 1; letter-spacing: -0.02em; }
+.stat .l { font-size: 21pt; color: var(--ink2); margin-top: 2mm; line-height: 1.2; }
+.eq { font-family: "Latin Modern Math", "Latin Modern Roman", serif; font-size: 34pt; text-align: center; margin: 4mm 0; color: var(--ink); }
+.eq i { font-style: italic; }
+.eqrow { display: flex; justify-content: space-around; background: var(--tint); padding: 4mm 3mm; margin: 5mm 0; }
+.eqrow .eq { margin: 0; font-size: 31pt; }
+frac { display: inline-flex; flex-direction: column; vertical-align: middle; text-align: center; font-size: 0.86em; margin: 0 0.12em; }
+frac > span:first-child { border-bottom: 0.08em solid currentColor; padding: 0 0.12em; }
+.fig { width: 100%; display: block; }
+.cap { font-size: 21pt; color: var(--ink2); margin-top: 2.5mm; line-height: 1.25; }
+.cap b { color: var(--ink); }
+.sem { display: grid; grid-template-columns: 1fr 1fr; gap: 3mm; }
+.sem figure { position: relative; }
+.sem img { width: 100%; display: block; aspect-ratio: 1 / 1; object-fit: cover; }
+.sem .wide { grid-column: 1 / -1; }
+.sem .wide img { aspect-ratio: 1300 / 620; object-position: 50% 40%; }
+.tag { position: absolute; left: 3mm; top: 3mm; background: rgba(20,33,61,0.86); color: #fff; font-size: 20pt; font-weight: 620; padding: 1.2mm 3mm; }
+.tag.o { background: var(--orange); }
+.bar { position: absolute; right: 4mm; bottom: 4mm; color: #fff; font-size: 17pt; font-weight: 600; text-align: center; text-shadow: 0 0 2mm rgba(0,0,0,0.7); }
+.bar span { display: block; height: 1.2mm; background: #fff; margin-top: 1mm; box-shadow: 0 0 1.5mm rgba(0,0,0,0.6); }
+ul.b { list-style: none; }
+ul.b li { position: relative; padding-left: 8mm; margin-top: 2.6mm; }
+ul.b li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 3.2mm; height: 3.2mm; background: var(--orange); border-radius: 50%; }
+.pair { display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 6mm; align-items: start; }
+.kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4mm; margin: 5mm 0 2mm; }
+.kpi { border-top: 1.2mm solid var(--navy); padding-top: 3mm; }
+.kpi .v { font-size: 46pt; font-weight: 780; color: var(--navy); line-height: 1; letter-spacing: -0.02em; }
+.kpi .v small { font-size: 22pt; font-weight: 600; color: var(--ink2); letter-spacing: 0; }
+.kpi .l { font-size: 20pt; color: var(--ink2); margin-top: 2mm; line-height: 1.2; }
+.flow { display: flex; flex-direction: column; gap: 0; margin-top: 3mm; }
+.step { display: grid; grid-template-columns: 17mm 1fr; gap: 5mm; align-items: center; background: var(--tint); padding: 4.5mm 6mm; }
+.step .k { width: 17mm; height: 17mm; border-radius: 50%; background: var(--navy); color: #fff; font-weight: 780; font-size: 28pt; display: grid; place-items: center; }
+.step.hl { background: #fdeee7; } .step.hl .k { background: var(--orange); }
+.step .t { font-size: 25pt; line-height: 1.22; } .step .t b { color: var(--navy-dk); }
+.arrow { height: 7mm; display: grid; place-items: center; }
+.arrow::after { content: ""; border-left: 5mm solid transparent; border-right: 5mm solid transparent; border-top: 5mm solid var(--muted); }
+.warn { margin-top: 5mm; font-size: 23pt; color: var(--ink2); border: 0.6mm dashed var(--muted); padding: 4mm 5mm; line-height: 1.25; }
+.concl { background: var(--navy); color: #fff; padding: 8mm 9mm 9mm; }
+.concl h2 { color: #fff; border-bottom-color: rgba(255,255,255,0.5); }
+.concl h2 .n { color: #ffb08f; }
+.concl ol { list-style: none; counter-reset: c; }
+.concl li { counter-increment: c; position: relative; padding-left: 13mm; margin-top: 4mm; font-size: 28pt; line-height: 1.25; }
+.concl li::before { content: counter(c); position: absolute; left: 0; top: 0.1em; width: 9mm; height: 9mm; border-radius: 50%; background: var(--orange); color: #fff; font-weight: 780; font-size: 20pt; display: grid; place-items: center; }
+.next { font-size: 24pt; line-height: 1.28; }
+.next b { color: var(--navy); }
+.refs { font-size: 17.5pt; color: var(--ink2); line-height: 1.3; }
+.refs li { margin-top: 1.2mm; margin-left: 7mm; }
+.footer { position: absolute; left: 28mm; right: 28mm; bottom: 12mm; display: flex; justify-content: space-between; font-size: 19pt; color: var(--muted); border-top: 0.5mm solid var(--rule); padding-top: 3.5mm; }
+.col3 .pair { grid-template-columns: 1.45fr 1fr; }
+.lab { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; margin-top: 3mm; }
+.lab .bx { background: var(--tint); padding: 4mm 4mm; font-size: 20.5pt; line-height: 1.22; border-top: 1.2mm solid var(--navy); }
+.lab .bx b { display: block; color: var(--navy-dk); font-size: 22pt; margin-bottom: 1.5mm; }
+.lab .bx.o { border-top-color: var(--orange); }
+.hyp { display: inline-block; font-size: 17pt; font-weight: 700; letter-spacing: 0.06em; color: var(--orange); border: 0.5mm solid var(--orange); padding: 0.2mm 2mm; vertical-align: 0.25em; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="conf">
+    <div>
+      <div class="conf-name">International Conference on<br>Interfacial Phenomena in Droplets 2026</div>
+      <div class="conf-sub">Indian Institute of Science, Bengaluru · 5–7 October 2026</div>
+    </div>
+    <img class="logo" src="assets/logo.png" alt="Conference logo">
+  </div>
+  <div class="titleband">
+    <div class="title">Physics-Informed Machine Learning for Cross-Surface Generalization in Droplet Impact Prediction</div>
+    <div class="authors"><u>Parth Sharma</u></div>
+    <div class="affil">Department of Computer Science &amp; Engineering, Thapar Institute of Engineering &amp; Technology, Patiala, India</div>
+  </div>
+</header>
+
+<main class="cols">
+  <!-- ================= COLUMN 1 ================= -->
+  <div class="col">
+    <section>
+      <h2><span class="n">1</span>The question</h2>
+      <div class="q">Can a model trained on 12 laser-textured surfaces predict how far a droplet spreads on a surface it has never seen?</div>
+      <p style="margin-top:5mm">Models of droplet impact are usually scored on random train/test splits, where every surface appears in training. Surface design needs the opposite: predictions for a surface <b>before</b> it is made and tested.</p>
+      <div class="stats">
+        <div class="stat"><div class="v">1,498</div><div class="l">impacts on 12 textured Al surfaces</div></div>
+        <div class="stat"><div class="v">125</div><div class="l">impacts on smooth REF-H (held out)</div></div>
+        <div class="stat"><div class="v">1–160</div><div class="l">mPa·s: water–glycerol, 0–91 wt.%</div></div>
+        <div class="stat"><div class="v">8–119</div><div class="l">Weber number</div></div>
+        <div class="stat"><div class="v">9–4435</div><div class="l">Reynolds number</div></div>
+        <div class="stat"><div class="v">50–800</div><div class="l">µm channel pitch; depth 6 or 26 µm</div></div>
+      </div>
+      <p class="cap" style="margin-top:3mm">Open dataset of Može et al. [1]: FDPA-coated aluminium 1050A, square grids of laser channels, 5 000 fps imaging. Target: maximum spreading factor β<sub>max</sub> = D<sub>max</sub>/D<sub>0</sub>, the one outcome measured on both surface types.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">2</span>Physics inputs</h2>
+      <div class="eqrow">
+        <div class="eq"><i>Re</i> = <frac><span><i>ρVD</i><sub>0</sub></span><span><i>μ</i></span></frac></div>
+        <div class="eq"><i>We</i> = <frac><span><i>ρV</i><sup>2</sup><i>D</i><sub>0</sub></span><span><i>σ</i></span></frac></div>
+        <div class="eq"><i>Oh</i> = <frac><span>√<i>We</i></span><span><i>Re</i></span></frac></div>
+      </div>
+      <p>Recomputed <i>Re</i> and <i>We</i> match the dataset to 5×10<sup>−7</sup>. Because <i>Oh</i> is a function of <i>Re</i> and <i>We</i>, the dimensionless set carries two groups, not three.</p>
+      <p>Classic scaling laws fit this superhydrophobic data poorly: Laan et al. [3] gives R² = 0.71. As a backbone under the GP, Laan gave no significant gain, so the GP stands alone.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">3</span>Reading the surface from SEM</h2>
+      <div class="sem">
+        <figure><img src="assets/D200_43.jpg" alt="SEM of D200 surface at 43x"><span class="tag">D200 · 43×</span><div class="bar">500 µm<span style="width:36.6mm"></span></div></figure>
+        <figure><img src="assets/REF-H_43.jpg" alt="SEM of smooth REF-H surface at 43x"><span class="tag o">REF-H · 43×</span><div class="bar">500 µm<span style="width:36.6mm"></span></div></figure>
+        <figure class="wide"><img src="assets/D200_350.jpg" alt="SEM of D200 at 350x showing rough laser tracks and smooth plateaus"><span class="tag">D200 · 350× · rough track, smooth plateau</span><div class="bar">50 µm<span style="width:31.1mm"></span></div></figure>
+      </div>
+      <p style="margin-top:5mm">The plateaus between laser tracks are the <b>same smooth surface as REF-H</b> [1]. Segmenting 43× images by local texture gives track widths <b>w ≈ 45 µm</b> (deep) and <b>30 µm</b> (shallow), so every surface gets a smooth-plateau fraction:</p>
+      <div class="eq"><i>φ</i> = ( max(<i>s</i> − <i>w</i>, 0) / <i>s</i> )<sup>2</sup>, &nbsp; <i>V</i><sub>tex</sub> = (1 − <i>φ</i>) <i>h</i></div>
+      <p>Textured surfaces span φ = 0.01 (D50) to 0.93 (S800). <b>REF-H is simply φ = 1</b>: a physical value, not a made-up spacing or depth.</p>
+    </section>
+  </div>
+
+  <!-- ================= COLUMN 2 ================= -->
+  <div class="col">
+    <section>
+      <h2><span class="n">4</span>Leakage-safe evaluation</h2>
+      <p>Each condition was repeated 5×. A random split puts near-identical twins in train and test and flatters every model.</p>
+      <div class="flow">
+        <div class="step"><div class="k">1</div><div class="t"><b>Grouped 5-fold CV</b> over 297 replicate groups: in-distribution accuracy.</div></div>
+        <div class="arrow"></div>
+        <div class="step hl"><div class="k">2</div><div class="t"><b>Leave-one-surface-out</b>, 12 folds: the model-selection criterion.</div></div>
+        <div class="arrow"></div>
+        <div class="step"><div class="k">3</div><div class="t"><b>REF-H, predicted once</b> by models trained on all textured data. Never used for tuning.</div></div>
+      </div>
+      <p style="margin-top:5mm">All models get the same inputs: log <i>Re</i>, log <i>We</i>, log <i>D</i><sub>0</sub>, <i>φ</i>, <i>V</i><sub>tex</sub>. Target: log β<sub>max</sub>.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">5</span>13 models, one test</h2>
+      <img class="fig" src="assets/fig_loso.svg" alt="Dot plot of leave-one-surface-out RMSE for 13 models; Gaussian process lowest at 0.040">
+      <p class="cap"><b>Gaussian process regression</b> (Matérn 3/2, one length-scale per input) generalizes best to unseen surfaces: 29% lower error than XGBoost on the same inputs. Kernel ridge and SVR fit well in-distribution (≈0.045) but collapse on unseen surfaces. Every model's worst surface is D50, the densest texture.</p>
+      <div class="kpis">
+        <div class="kpi"><div class="v">0.036</div><div class="l">GPR RMSE, in-distribution (R² = 0.993)</div></div>
+        <div class="kpi"><div class="v">0.040</div><div class="l">GPR RMSE, unseen textured surface</div></div>
+        <div class="kpi"><div class="v">0.056</div><div class="l">XGBoost, unseen textured surface</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2><span class="n">6</span>Why the descriptor matters</h2>
+      <img class="fig" src="assets/fig_encoding.svg" alt="Range chart: REF-H error varies by up to 0.022 under arbitrary encodings but by at most 0.005 with the phi descriptor">
+      <p class="cap">A smooth plate has no channel spacing or depth. Encoding REF-H with invented values (0/0, 50/6, 800/25 µm…) moved its error by up to <b>0.022</b>. With φ = 1, changing the measured track width by ±10 µm moves it by at most <b>0.005</b>.</p>
+      <p style="margin-top:4mm">Geometry is not negligible: removing surface inputs nearly doubles in-distribution error (0.086 vs 0.051). Deep, dense textures spread further.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">7</span>Knowing when not to trust it</h2>
+      <div class="pair">
+        <div><img class="fig" src="assets/fig_ood.svg" alt="Scatter of share of impacts flagged out-of-distribution versus GPR error per surface"></div>
+        <div>
+          <p style="font-size:24pt; line-height:1.26">90% intervals hold <b>90%</b> of impacts on unseen textured surfaces (83–97% per surface). OOD scores flag D50 and S50, the densest textures.</p>
+          <p style="font-size:24pt; line-height:1.26">On REF-H they hold only <b>62%</b> and nothing flags it. Its shift is likely in wetting chemistry (≈114° smooth vs 160–166° textured), which no input describes.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ================= COLUMN 3 ================= -->
+  <div class="col col3">
+    <section>
+      <h2><span class="n">8</span>Blind test on the smooth surface</h2>
+      <div class="pair">
+        <div><img class="fig" src="assets/fig_parity.svg" alt="Parity plot of GPR predictions versus measured beta max on REF-H, coloured by glycerol content"></div>
+        <div>
+          <div class="kpis" style="grid-template-columns:1fr; margin-top:0; gap:4mm">
+            <div class="kpi"><div class="v">0.059</div><div class="l">REF-H RMSE; 95% CI 0.044–0.073 (bootstrap over 25 conditions)</div></div>
+            <div class="kpi"><div class="v">1.9%</div><div class="l">mean absolute error in β<sub>max</sub></div></div>
+            <div class="kpi"><div class="v">+0.041</div><div class="l">over-prediction in the highest-We third</div></div>
+          </div>
+        </div>
+      </div>
+      <p class="cap" style="margin-top:3mm">Spreading transfers well because it is inertia-driven. The residual error sits at high <i>We</i>, where textured surfaces spread further than the smooth plate. Possible cause: less friction over the air cushion <span class="hyp">HYPOTHESIS</span></p>
+    </section>
+
+    <section>
+      <h2><span class="n">9</span>From an SEM image to a prediction</h2>
+      <div class="pair">
+        <div><img class="fig" src="assets/fig_cnn.svg" alt="Scatter of phi read by a CNN from SEM images versus phi from geometry"></div>
+        <div>
+          <p style="font-size:24pt; line-height:1.26">A small CNN reads φ from 1.2 mm SEM patches. Each surface is scored by a network that never saw it.</p>
+          <p style="font-size:24pt; line-height:1.26">Feeding CNN-read φ to the GPR: unseen-surface RMSE <b>0.043</b> vs 0.039 with measured φ.</p>
+        </div>
+      </div>
+      <p class="cap" style="margin-top:3mm">REF-H is read as φ = 0.69 rather than 1.0, because no training surface is smoother than φ = 0.93. Image-derived descriptors work within the texture family they were trained on.</p>
+    </section>
+
+    <section>
+      <h2><span class="n">10</span>The virtual droplet lab</h2>
+      <p style="font-size:25pt;line-height:1.26">Runs locally as a 5-page dashboard and REST API: enter a fluid, an impact speed and a surface, get β<sub>max</sub> with a 90% interval and a trust flag.</p>
+      <div class="lab">
+        <div class="bx"><b>Inputs</b>D<sub>0</sub>, V, ρ, σ, μ + surface (SEM next)</div>
+        <div class="bx"><b>Physics</b><i>Re</i>, <i>We</i>; φ, V<sub>tex</sub> from geometry or CNN</div>
+        <div class="bx"><b>GPR</b>β<sub>max</sub> and predictive σ</div>
+        <div class="bx o"><b>OOD check</b>Mahalanobis percentile</div>
+        <div class="bx o"><b>Regime flags</b><i>Re</i> &lt; 70: outside scaling-law range</div>
+        <div class="bx"><b>Tested</b>unseen surfaces + blind REF-H</div>
+      </div>
+    </section>
+
+    <section class="concl">
+      <h2><span class="n">★</span>Take-aways</h2>
+      <ol>
+        <li>Judge droplet models on <b>unseen surfaces</b>. Random splits hide the gap.</li>
+        <li>Describe surfaces with quantities every surface has. The smooth-plateau fraction <b>φ</b> makes the smooth surface a limit of the textured family.</li>
+        <li>A <b>Gaussian process</b> on physics inputs beats 12 alternatives, including boosted trees and a transformer, and predicts the smooth surface to <b>1.9%</b>.</li>
+      </ol>
+    </section>
+
+    <section>
+      <p class="next"><b>Next:</b> a dynamic contact-angle descriptor (β<sub>0</sub> correction of Lee et al. [4]); a wettability input; rebound and contact-time targets.</p>
+      <ol class="refs" style="margin-top:4mm">
+        <li>M. Može et al., <i>Data in Brief</i> 61 (2025) 111697; data doi:10.17632/wsh8rxwd38.1</li>
+        <li>ML study on this dataset, <i>Biomimetics</i> 10 (2025) 357.</li>
+        <li>N. Laan et al., <i>Phys. Rev. Applied</i> 2 (2014) 044018.</li>
+        <li>J.B. Lee et al., <i>J. Fluid Mech.</i> 786 (2016) R4.</li>
+      </ol>
+    </section>
+  </div>
+</main>
+
+<div class="footer"><span>Data: Može et al. (2025), University of Ljubljana, via Mendeley Data · Analysis and models by the author</span><span>Interfacial Phenomena in Droplets 2026 · Poster</span></div>
+</body>
+</html>

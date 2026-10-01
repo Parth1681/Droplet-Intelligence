@@ -1,0 +1,156 @@
+{
+ "GPR": {
+  "q_conformal": 1.645320191888999,
+  "cov_nominal_LOSO": 0.9012016021361816,
+  "cov_conformal_LOSO": 0.8998664886515354,
+  "cov_nominal_REFH": 0.616,
+  "cov_conformal_REFH": 0.616,
+  "width_REFH_conformal": 0.08232176474770583,
+  "cov_conformal_per_surface": {
+   "D100": 0.944,
+   "D200": 0.952,
+   "D400": 0.88,
+   "D50": 0.968,
+   "D600": 0.856,
+   "D800": 0.832,
+   "S100": 0.944,
+   "S200": 0.9193548387096774,
+   "S400": 0.872,
+   "S50": 0.896,
+   "S600": 0.888,
+   "S800": 0.8467741935483871
+  },
+  "min_surface_coverage": 0.832,
+  "worst_surface": "D800",
+  "abs_conformal_halfwidth_log": 0.025702161291414567,
+  "cov_abs_conformal_REFH": 0.696,
+  "surface_conformal_halfwidth_log": 0.040120703563990896,
+  "cov_surface_conformal_REFH": 0.856
+ },
+ "M6": {
+  "q_conformal": 1.6288943667484006,
+  "cov_nominal_LOSO": 0.9025367156208278,
+  "cov_conformal_LOSO": 0.8985313751668892,
+  "cov_nominal_REFH": 0.608,
+  "cov_conformal_REFH": 0.608,
+  "width_REFH_conformal": 0.0815548996722986,
+  "cov_conformal_per_surface": {
+   "D100": 0.944,
+   "D200": 0.952,
+   "D400": 0.872,
+   "D50": 0.968,
+   "D600": 0.84,
+   "D800": 0.832,
+   "S100": 0.944,
+   "S200": 0.9193548387096774,
+   "S400": 0.872,
+   "S50": 0.912,
+   "S600": 0.888,
+   "S800": 0.8387096774193549
+  },
+  "min_surface_coverage": 0.832,
+  "worst_surface": "D800",
+  "abs_conformal_halfwidth_log": 0.025336580358029874,
+  "cov_abs_conformal_REFH": 0.688,
+  "surface_conformal_halfwidth_log": 0.035802640340865166,
+  "cov_surface_conformal_REFH": 0.824
+ },
+ "ood": [
+  {
+   "surface": "D100",
+   "flagged": 0.088,
+   "iso_med": 87.90968681718864,
+   "mah_med": 70.64821558630736,
+   "rmse": 0.035128088110717944
+  },
+  {
+   "surface": "D200",
+   "flagged": 0.04,
+   "iso_med": 60.81573197378004,
+   "mah_med": 56.80990531682447,
+   "rmse": 0.028587231295582397
+  },
+  {
+   "surface": "D400",
+   "flagged": 0.0,
+   "iso_med": 43.55426074289876,
+   "mah_med": 54.18790968681719,
+   "rmse": 0.041447748821533854
+  },
+  {
+   "surface": "D50",
+   "flagged": 0.856,
+   "iso_med": 98.32483612527312,
+   "mah_med": 90.89584850691915,
+   "rmse": 0.05935507675670225
+  },
+  {
+   "surface": "D600",
+   "flagged": 0.0,
+   "iso_med": 30.444282592862344,
+   "mah_med": 16.8244719592134,
+   "rmse": 0.0403104286973461
+  },
+  {
+   "surface": "D800",
+   "flagged": 0.0,
+   "iso_med": 28.55061908230153,
+   "mah_med": 30.80844865258558,
+   "rmse": 0.03917669178455074
+  },
+  {
+   "surface": "S100",
+   "flagged": 0.0,
+   "iso_med": 50.10924981791697,
+   "mah_med": 90.89584850691915,
+   "rmse": 0.0340286277557746
+  },
+  {
+   "surface": "S200",
+   "flagged": 0.0,
+   "iso_med": 35.1528384279476,
+   "mah_med": 60.33478893740902,
+   "rmse": 0.04011971763284209
+  },
+  {
+   "surface": "S400",
+   "flagged": 0.0,
+   "iso_med": 30.881281864530223,
+   "mah_med": 54.33357611070648,
+   "rmse": 0.035873168286485194
+  },
+  {
+   "surface": "S50",
+   "flagged": 1.0,
+   "iso_med": 76.40203932993444,
+   "mah_med": 100.0,
+   "rmse": 0.050059233567109195
+  },
+  {
+   "surface": "S600",
+   "flagged": 0.0,
+   "iso_med": 43.40859431900947,
+   "mah_med": 20.538965768390387,
+   "rmse": 0.03477923349563808
+  },
+  {
+   "surface": "S800",
+   "flagged": 0.0,
+   "iso_med": 48.98107714701601,
+   "mah_med": 33.33333333333333,
+   "rmse": 0.030772102959427727
+  },
+  {
+   "surface": "REF-H",
+   "flagged": 0.0,
+   "iso_med": 44.793057409879836,
+   "mah_med": 41.25500667556742,
+   "rmse": 0.059095751904100706
+  }
+ ],
+ "ood_spearman_flag_vs_rmse": {
+  "rho": 0.3037135434901484,
+  "p": 0.33720238349466036,
+  "n": 12
+ }
+}

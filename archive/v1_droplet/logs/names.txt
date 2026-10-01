@@ -1,0 +1,12 @@
+Ridge, quadratic in log-features
+kNN (k=10, distance-weighted)
+SVR (RBF)
+Kernel ridge (RBF)
+Gaussian process (Matern 3/2, ARD)
+Random forest
+Extra trees
+LightGBM
+CatBoost
+MLP (64-64, strong L2)
+Deep ensemble (5 x MLP)
+XGBoost (reference, same features)

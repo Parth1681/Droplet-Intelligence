@@ -1,0 +1,27 @@
+[
+ {
+  "model": "GPR | raw fluid/impact (D,V,rho,sigma,mu) + phi, texvol",
+  "ID": 0.0383706436779647,
+  "LOSO": 0.041412977877403695,
+  "worst": "0.069 D50",
+  "REFH": 0.05705972954574848,
+  "REFH_bias": 0.0030459365850558306,
+  "REFH_hiWe_bias": 0.03806408622711731,
+  "REFH_MAPE": 1.9047387229768424,
+  "cov90_LOSO": 0.8938584779706275,
+  "cov90_REFH": 0.6,
+  "width90_REFH": 0.0814711172122913,
+  "conformal_q": 1.6832436919235305,
+  "cov90_REFH_conformal": 0.624,
+  "width90_REFH_conformal": 0.0833730521786908,
+  "length_scales": {
+   "D": 23.842,
+   "V": 5.645,
+   "rho": 28.141,
+   "sigma": 132.267,
+   "mu": 117.931,
+   "phi": 32.122,
+   "texvol": 45.832
+  }
+ }
+]

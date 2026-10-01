@@ -1,0 +1,57 @@
+{
+ "fit_M1": {
+  "state": "done",
+  "note": "0s",
+  "time": "11:43:23"
+ },
+ "fit_M2": {
+  "state": "done",
+  "note": "0s",
+  "time": "11:43:23"
+ },
+ "fit_M3": {
+  "state": "done",
+  "note": "0s",
+  "time": "11:43:23"
+ },
+ "fit_M5": {
+  "state": "done",
+  "note": "0s",
+  "time": "11:43:23"
+ },
+ "fit_M6": {
+  "state": "done",
+  "note": "0s",
+  "time": "11:43:23"
+ },
+ "fit_GPR": {
+  "state": "done",
+  "note": "0s",
+  "time": "11:43:23"
+ },
+ "p34": {
+  "state": "done",
+  "note": "M6 REF-H 0.0593 vs M2 0.0693",
+  "time": "11:43:23"
+ },
+ "p5": {
+  "state": "done",
+  "note": "LOSO cov 90%, REF-H cov 62%",
+  "time": "11:43:38"
+ },
+ "p7": {
+  "state": "done",
+  "note": "final = GPR",
+  "time": "11:43:38"
+ },
+ "p6": {
+  "state": "done",
+  "note": "top feature logRe",
+  "time": "11:44:38"
+ },
+ "all": {
+  "state": "done",
+  "note": "",
+  "time": "11:44:38"
+ }
+}

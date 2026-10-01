@@ -1,0 +1,361 @@
+inner 1/144 matern52 D100 fold 0 3.5s
+inner 2/144 baseline D100 fold 0 4.2s
+inner 3/144 physics_residual D100 fold 0 4.0s
+inner 4/144 baseline D100 fold 1 3.9s
+inner 5/144 structured D100 fold 0 9.7s
+inner 6/144 matern52 D100 fold 1 4.7s
+inner 7/144 physics_residual D100 fold 1 4.6s
+inner 8/144 baseline D100 fold 2 5.7s
+inner 9/144 matern52 D100 fold 2 5.8s
+inner 10/144 structured D100 fold 1 13.0s
+inner 11/144 baseline D200 fold 0 3.5s
+inner 12/144 physics_residual D100 fold 2 5.4s
+inner 13/144 matern52 D200 fold 0 4.0s
+inner 14/144 physics_residual D200 fold 0 3.7s
+inner 15/144 structured D100 fold 2 15.9s
+inner 16/144 baseline D200 fold 1 5.2s
+inner 17/144 matern52 D200 fold 1 4.5s
+inner 18/144 structured D200 fold 0 16.1s
+inner 19/144 physics_residual D200 fold 1 5.6s
+inner 20/144 baseline D200 fold 2 5.6s
+inner 21/144 matern52 D200 fold 2 6.3s
+inner 22/144 structured D200 fold 1 17.0s
+inner 23/144 physics_residual D200 fold 2 6.0s
+inner 24/144 baseline D400 fold 0 5.0s
+inner 25/144 matern52 D400 fold 0 4.5s
+inner 26/144 structured D200 fold 2 16.0s
+inner 27/144 physics_residual D400 fold 0 3.9s
+inner 28/144 baseline D400 fold 1 4.5s
+inner 29/144 matern52 D400 fold 1 5.3s
+inner 30/144 structured D400 fold 0 13.1s
+inner 31/144 physics_residual D400 fold 1 5.4s
+inner 32/144 baseline D400 fold 2 6.3s
+inner 33/144 matern52 D400 fold 2 5.7s
+inner 34/144 structured D400 fold 1 14.3s
+inner 35/144 baseline D50 fold 0 4.2s
+inner 36/144 physics_residual D400 fold 2 4.7s
+inner 37/144 matern52 D50 fold 0 5.3s
+inner 38/144 physics_residual D50 fold 0 5.8s
+inner 39/144 structured D400 fold 2 20.3s
+inner 40/144 baseline D50 fold 1 5.5s
+inner 41/144 matern52 D50 fold 1 3.8s
+inner 42/144 structured D50 fold 0 18.0s
+inner 43/144 physics_residual D50 fold 1 4.4s
+inner 44/144 baseline D50 fold 2 6.4s
+inner 45/144 matern52 D50 fold 2 6.6s
+inner 46/144 physics_residual D50 fold 2 5.3s
+inner 47/144 structured D50 fold 1 18.6s
+inner 48/144 baseline D600 fold 0 5.5s
+inner 49/144 matern52 D600 fold 0 4.1s
+inner 50/144 structured D50 fold 2 15.3s
+inner 51/144 physics_residual D600 fold 0 4.2s
+inner 52/144 baseline D600 fold 1 5.9s
+inner 53/144 matern52 D600 fold 1 3.4s
+inner 54/144 physics_residual D600 fold 1 5.2s
+inner 55/144 structured D600 fold 0 13.4s
+inner 56/144 structured D600 fold 1 8.2s
+inner 57/144 matern52 D600 fold 2 5.9s
+inner 58/144 baseline D600 fold 2 7.1s
+inner 59/144 baseline D800 fold 0 4.1s
+inner 60/144 physics_residual D600 fold 2 5.3s
+inner 61/144 matern52 D800 fold 0 4.3s
+inner 62/144 physics_residual D800 fold 0 4.6s
+inner 63/144 structured D600 fold 2 20.8s
+inner 64/144 structured D800 fold 0 11.5s
+inner 65/144 baseline D800 fold 1 4.5s
+inner 66/144 matern52 D800 fold 1 3.7s
+inner 67/144 physics_residual D800 fold 1 3.9s
+inner 68/144 baseline D800 fold 2 5.8s
+inner 69/144 matern52 D800 fold 2 5.0s
+inner 70/144 physics_residual D800 fold 2 4.4s
+inner 71/144 structured D800 fold 1 19.2s
+inner 72/144 baseline S100 fold 0 4.8s
+inner 73/144 matern52 S100 fold 0 4.1s
+inner 74/144 physics_residual S100 fold 0 7.2s
+inner 75/144 structured D800 fold 2 26.6s
+inner 76/144 structured S100 fold 0 20.0s
+inner 77/144 baseline S100 fold 1 11.3s
+inner 78/144 matern52 S100 fold 1 7.8s
+inner 79/144 physics_residual S100 fold 1 4.5s
+inner 80/144 baseline S100 fold 2 4.5s
+inner 81/144 matern52 S100 fold 2 4.4s
+inner 82/144 physics_residual S100 fold 2 4.7s
+inner 83/144 structured S100 fold 1 16.9s
+inner 84/144 baseline S200 fold 0 4.2s
+inner 85/144 structured S100 fold 2 13.1s
+inner 86/144 matern52 S200 fold 0 4.3s
+inner 87/144 physics_residual S200 fold 0 4.1s
+inner 88/144 baseline S200 fold 1 5.0s
+inner 89/144 matern52 S200 fold 1 4.8s
+inner 90/144 structured S200 fold 0 10.6s
+inner 91/144 baseline S200 fold 2 4.4s
+inner 92/144 physics_residual S200 fold 1 5.2s
+inner 93/144 structured S200 fold 1 11.5s
+inner 94/144 matern52 S200 fold 2 5.1s
+inner 95/144 physics_residual S200 fold 2 4.8s
+inner 96/144 baseline S400 fold 0 3.9s
+inner 97/144 matern52 S400 fold 0 3.3s
+inner 98/144 physics_residual S400 fold 0 3.4s
+inner 99/144 structured S200 fold 2 15.5s
+inner 100/144 structured S400 fold 0 7.1s
+inner 101/144 baseline S400 fold 1 3.9s
+inner 102/144 matern52 S400 fold 1 4.4s
+inner 103/144 physics_residual S400 fold 1 4.8s
+inner 104/144 baseline S400 fold 2 4.0s
+inner 105/144 matern52 S400 fold 2 4.1s
+inner 106/144 structured S400 fold 1 11.4s
+inner 107/144 baseline S50 fold 0 3.6s
+inner 108/144 physics_residual S400 fold 2 4.5s
+inner 109/144 structured S400 fold 2 7.6s
+inner 110/144 matern52 S50 fold 0 4.0s
+inner 111/144 physics_residual S50 fold 0 3.4s
+inner 112/144 baseline S50 fold 1 4.7s
+inner 113/144 matern52 S50 fold 1 5.3s
+inner 114/144 structured S50 fold 0 10.8s
+inner 115/144 physics_residual S50 fold 1 5.7s
+inner 116/144 baseline S50 fold 2 4.9s
+inner 117/144 structured S50 fold 1 11.6s
+inner 118/144 matern52 S50 fold 2 4.9s
+inner 119/144 baseline S600 fold 0 3.0s
+inner 120/144 physics_residual S50 fold 2 4.6s
+inner 121/144 matern52 S600 fold 0 2.5s
+inner 122/144 physics_residual S600 fold 0 2.7s
+inner 123/144 structured S50 fold 2 13.2s
+inner 124/144 baseline S600 fold 1 4.1s
+inner 125/144 matern52 S600 fold 1 5.0s
+inner 126/144 structured S600 fold 0 10.6s
+inner 127/144 baseline S600 fold 2 4.2s
+inner 128/144 physics_residual S600 fold 1 5.2s
+inner 129/144 matern52 S600 fold 2 4.2s
+inner 130/144 structured S600 fold 1 11.6s
+inner 131/144 baseline S800 fold 0 3.2s
+inner 132/144 physics_residual S600 fold 2 4.8s
+inner 133/144 matern52 S800 fold 0 3.5s
+inner 134/144 structured S600 fold 2 12.0s
+inner 135/144 physics_residual S800 fold 0 3.3s
+inner 136/144 baseline S800 fold 1 4.6s
+inner 137/144 structured S800 fold 0 10.2s
+inner 138/144 matern52 S800 fold 1 4.6s
+inner 139/144 baseline S800 fold 2 4.5s
+inner 140/144 physics_residual S800 fold 1 5.7s
+inner 141/144 matern52 S800 fold 2 4.8s
+inner 142/144 structured S800 fold 1 12.0s
+inner 143/144 physics_residual S800 fold 2 4.3s
+inner 144/144 structured S800 fold 2 13.4s
+{
+  "protocol": "12 outer surfaces; three inner surface folds; four fixed GP candidates; all fitting, scaling, selection and empirical CV calibration exclude the outer surface.",
+  "calibration_method": "Nested cross-validated normalized log residuals. Empirical 90% target; no distribution-free guarantee for unseen surfaces.",
+  "selection_rule": "First candidate in baseline, matern52, structured, physics_residual order within 0.001 macro RMSE of inner best.",
+  "nested_rmse": 0.04147379673030123,
+  "baseline_rmse": 0.03997278053909427,
+  "delta_vs_baseline_ci95": [
+    -0.003964204358538448,
+    0.007769059119409545
+  ],
+  "coverage": 0.9259012016021362,
+  "mean_width": 0.11528931197746063,
+  "folds": [
+    {
+      "outer": "D100",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04943686016094027,
+        "matern52": 0.05439292741677786,
+        "structured": 0.04288987289684451,
+        "physics_residual": 0.05043962740531536
+      },
+      "q": 1.832487448023662,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.976,
+      "rmse": 0.03804108659383786,
+      "interval_width": 0.18134791172607753
+    },
+    {
+      "outer": "D200",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.05066931675647018,
+        "matern52": 0.05184216553237156,
+        "structured": 0.04293747056293216,
+        "physics_residual": 0.049476426721702584
+      },
+      "q": 1.6015160326882019,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.992,
+      "rmse": 0.022917536356317998,
+      "interval_width": 0.12573841244126618
+    },
+    {
+      "outer": "D400",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.048755067062432315,
+        "matern52": 0.04792901894026396,
+        "structured": 0.04412069250852291,
+        "physics_residual": 0.04788449292858923
+      },
+      "q": 1.8113246778185923,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.928,
+      "rmse": 0.0313485345778518,
+      "interval_width": 0.09385838679195231
+    },
+    {
+      "outer": "D50",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.05498974703019799,
+        "matern52": 0.046435251995734735,
+        "structured": 0.04420429243661563,
+        "physics_residual": 0.05522975642608527
+      },
+      "q": 2.0105181800626415,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.896,
+      "rmse": 0.08156010574517973,
+      "interval_width": 0.25432557913392345
+    },
+    {
+      "outer": "D600",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04335009570405673,
+        "matern52": 0.04287840220852353,
+        "structured": 0.04111456388164249,
+        "physics_residual": 0.04375250921370496
+      },
+      "q": 1.7530717842594967,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.864,
+      "rmse": 0.04083980270948509,
+      "interval_width": 0.075564036819139
+    },
+    {
+      "outer": "D800",
+      "selected": "physics_residual",
+      "inner_macro_rmse": {
+        "baseline": 0.046991667740961945,
+        "matern52": 0.046904407464696485,
+        "structured": 0.04714864715727408,
+        "physics_residual": 0.04450009301440864
+      },
+      "q": 1.8820659579273764,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.888,
+      "rmse": 0.03938853019506694,
+      "interval_width": 0.07979610726686068
+    },
+    {
+      "outer": "S100",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.05067337034762269,
+        "matern52": 0.0525207182962046,
+        "structured": 0.04581627361274274,
+        "physics_residual": 0.04748421242165004
+      },
+      "q": 1.8602229012928744,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.952,
+      "rmse": 0.033540770298302186,
+      "interval_width": 0.09746328458704943
+    },
+    {
+      "outer": "S200",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04865218541138541,
+        "matern52": 0.0484648898513419,
+        "structured": 0.04398282851831992,
+        "physics_residual": 0.04499169216792939
+      },
+      "q": 1.8640561530082034,
+      "calibration_rows": 1374,
+      "calibration_surface_count": 11,
+      "coverage": 0.9354838709677419,
+      "rmse": 0.04018804012684735,
+      "interval_width": 0.08248550936910246
+    },
+    {
+      "outer": "S400",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04656925756998214,
+        "matern52": 0.04726252784702407,
+        "structured": 0.04092205438694143,
+        "physics_residual": 0.0448415918545428
+      },
+      "q": 1.822880476977106,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.888,
+      "rmse": 0.03700114914617604,
+      "interval_width": 0.07761155632548612
+    },
+    {
+      "outer": "S50",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04409425729157163,
+        "matern52": 0.04611804062602795,
+        "structured": 0.041958503873866064,
+        "physics_residual": 0.04214667714037979
+      },
+      "q": 1.729471248026422,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.984,
+      "rmse": 0.04143438048128048,
+      "interval_width": 0.1610775815580397
+    },
+    {
+      "outer": "S600",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.045738369261570926,
+        "matern52": 0.04720076247529428,
+        "structured": 0.042375209197124925,
+        "physics_residual": 0.043660192267138756
+      },
+      "q": 1.5981774307519638,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.904,
+      "rmse": 0.031435142608198116,
+      "interval_width": 0.06793406249925828
+    },
+    {
+      "outer": "S800",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04608228852483575,
+        "matern52": 0.04624026259453784,
+        "structured": 0.041789751468312195,
+        "physics_residual": 0.044656335275719966
+      },
+      "q": 1.8640561530082034,
+      "calibration_rows": 1374,
+      "calibration_surface_count": 11,
+      "coverage": 0.9032258064516129,
+      "rmse": 0.031522541129692175,
+      "interval_width": 0.08577073618415909
+    }
+  ],
+  "deployment_model": "baseline",
+  "deployment_macro_scores": {
+    "baseline": 0.03913644679409927,
+    "matern52": 0.03891101865498508,
+    "structured": 0.038749538526799535,
+    "physics_residual": 0.0382567706589118
+  },
+  "deployment_q": 1.6445826902187324,
+  "deployment_absolute_log_width": 0.02570166621355885,
+  "limitation": "Conditional on supplied geometry proxies and fixed candidate set. REF-H is a previously inspected stress test, not fresh blind data. CV calibration does not imply per-surface guaranteed coverage."
+}

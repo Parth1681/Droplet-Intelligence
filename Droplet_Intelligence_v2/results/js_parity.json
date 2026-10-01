@@ -1,0 +1,8 @@
+{
+  "cases": 30,
+  "models": 5,
+  "max_absolute_beta_difference": 2.6996183066785306e-12,
+  "max_absolute_interval_difference": 3.083755473198835e-12,
+  "max_absolute_sd_log_difference": 4.4221570849600766e-14,
+  "invalid_inputs_rejected": 6
+}

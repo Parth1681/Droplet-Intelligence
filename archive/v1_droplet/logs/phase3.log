@@ -1,0 +1,12 @@
+{"model": "base: logRe, logWe, phi, texvol", "ID": null, "LOSO": 0.0477, "worst": "0.104 D50", "REFH": 0.0547, "REFH_bias": -0.0019, "REFH_hiWe_bias": 0.0311, "REFH_MAPE": 1.8598}
+{"model": "base + logD", "ID": null, "LOSO": 0.04, "worst": "0.059 D50", "REFH": 0.0591, "REFH_bias": 0.0037, "REFH_hiWe_bias": 0.041, "REFH_MAPE": 1.9449}
+{"model": "base + logOh", "ID": null, "LOSO": 0.0477, "worst": "0.104 D50", "REFH": 0.0547, "REFH_bias": -0.0019, "REFH_hiWe_bias": 0.0311, "REFH_MAPE": 1.8599}
+{"model": "base + logP", "ID": null, "LOSO": 0.0477, "worst": "0.104 D50", "REFH": 0.0547, "REFH_bias": -0.0019, "REFH_hiWe_bias": 0.0311, "REFH_MAPE": 1.8598}
+{"model": "base + logLaan", "ID": null, "LOSO": 0.0484, "worst": "0.106 D50", "REFH": 0.0552, "REFH_bias": -0.0018, "REFH_hiWe_bias": 0.0319, "REFH_MAPE": 1.8903}
+{"model": "base + Bo", "ID": null, "LOSO": 0.0425, "worst": "0.066 D50", "REFH": 0.0599, "REFH_bias": 0.0017, "REFH_hiWe_bias": 0.042, "REFH_MAPE": 1.9655}
+{"model": "base + logmu", "ID": null, "LOSO": 0.0478, "worst": "0.103 D50", "REFH": 0.0549, "REFH_bias": -0.0019, "REFH_hiWe_bias": 0.0315, "REFH_MAPE": 1.8692}
+{"model": "base + depth_D", "ID": null, "LOSO": 0.05, "worst": "0.106 D50", "REFH": 0.6087, "REFH_bias": -0.5216, "REFH_hiWe_bias": -0.7113, "REFH_MAPE": 23.6651}
+{"model": "base + sp_D", "ID": null, "LOSO": 0.0478, "worst": "0.112 D50", "REFH": 0.0626, "REFH_bias": -0.0139, "REFH_hiWe_bias": 0.0256, "REFH_MAPE": 2.1379}
+{"model": "base + costh", "ID": null, "LOSO": 0.0676, "worst": "0.171 D50", "REFH": 0.3924, "REFH_bias": -0.0059, "REFH_hiWe_bias": -0.2311, "REFH_MAPE": 16.5281}
+{"model": "final - phi", "ID": null, "LOSO": 0.0456, "worst": "0.096 D50", "REFH": 0.0655, "REFH_bias": 0.0103, "REFH_hiWe_bias": 0.0562, "REFH_MAPE": 2.2396}
+{"model": "final - texvol", "ID": null, "LOSO": 0.041, "worst": "0.058 D50", "REFH": 0.064, "REFH_bias": 0.0062, "REFH_hiWe_bias": 0.046, "REFH_MAPE": 2.1008}

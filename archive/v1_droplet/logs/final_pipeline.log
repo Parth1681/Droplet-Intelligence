@@ -1,0 +1,21 @@
+[11:22:32] fit_M1: running XGBoost, raw 7 inputs
+[11:22:34] fit_M1: done 2s
+[11:22:34] fit_M2: running XGBoost, Re/We/Oh + spacing/depth
+[11:22:36] fit_M2: done 2s
+[11:22:36] fit_M3: running XGBoost, hybrid raw + Re/We/Oh
+[11:22:39] fit_M3: done 3s
+[11:22:39] fit_M5: running Power-law backbone + XGBoost residual
+[11:22:41] fit_M5: done 2s
+[11:22:41] fit_M6: running Laan backbone + GPR residual (SEM descriptors)
+[11:25:34] fit_M6: done 173s
+[11:25:34] fit_GPR: running GPR, SEM descriptors (final candidate)
+[11:28:42] fit_GPR: done 189s
+[11:28:42] p34: running M5/M6 vs M2 on REF-H
+[11:28:43] p34: done M6 REF-H 0.0593 vs M2 0.0693
+[11:28:43] p5: running conformal + OOD
+[11:28:57] p5: done LOSO cov 90%, REF-H cov 62%
+[11:28:57] p7: running benchmark table
+[11:28:57] p7: done final = M6
+[11:28:57] p6: running SHAP on final GPR
+[11:29:18] p6: done top feature logRe
+[11:29:18] all: done 

@@ -1,0 +1,87 @@
+{
+  "textured_rows": 1498,
+  "reference_rows": 125,
+  "surfaces": [
+    "D100",
+    "D200",
+    "D400",
+    "D50",
+    "D600",
+    "D800",
+    "S100",
+    "S200",
+    "S400",
+    "S50",
+    "S600",
+    "S800"
+  ],
+  "textured_conditions": 297,
+  "reference_conditions": 25,
+  "target_range": [
+    1.442874313,
+    3.342236258
+  ],
+  "missing_cells": 0,
+  "duplicate_rows": 0,
+  "re_relative_recompute_error": 4.74455727594858e-07,
+  "we_relative_recompute_error": 2.281275286453166e-07,
+  "feature_support": {
+    "logRe": [
+      2.1909816766498778,
+      8.397251543046158
+    ],
+    "logWe": [
+      2.073846916182543,
+      4.780246037255678
+    ],
+    "logD": [
+      0.7633269474078477,
+      0.9580743119228226
+    ],
+    "phi": [
+      0.010000000000000002,
+      0.9264062500000001
+    ],
+    "texvol": [
+      0.4415624999999994,
+      24.75
+    ],
+    "D": [
+      0.002145402,
+      0.002606672
+    ],
+    "V": [
+      0.484219521,
+      1.711194094
+    ],
+    "Re": [
+      8.943988911567802,
+      4434.86095740111
+    ],
+    "We": [
+      7.9553679622045355,
+      119.13365775748487
+    ],
+    "mu": [
+      0.000943923,
+      0.159808968
+    ],
+    "rho": [
+      997.2375,
+      1231.2015
+    ],
+    "sigma": [
+      0.06569099,
+      0.07246
+    ]
+  },
+  "files_sha256": {
+    "01 - Rebound Data.csv": "d2089e7bc3c13e80772c82fc91af43c917bb981cd3d799afb4e1fd6ff27658fb",
+    "02 - Rebound Data - REF-H.csv": "7cd04f468daaf39ddff62320d633970ac58fdf7e471018e1278694d543c7a9c4",
+    "03 - Contact angles - Water.csv": "c12b891ce502408f3ea5a217af6eba1eb44c402fd2f51cc20dc35ed1bec3cf65",
+    "04 - Contact angles - Water-Glycerol_91wtPerc.csv": "bbc7be9fa72c4dc1fd2d1ae618ea121c52e66c17c84ac82941bb1c2da7cc1573",
+    "05 - Advancing contact angles \u2013 Water-glycerol mixtures-TlwNqi.csv": "d14d010036587432e4e0633d8decda8162367de674ef4accd909145a91f7a196"
+  },
+  "descriptor_note": "Existing fixed geometry proxy: width=45 um at depth>=15 um, else 30 um. No new SEM extraction. Conditional on these supplied descriptors.",
+  "contact_angles": "Water advancing angles on 12 surfaces; glycerol-mixture advancing angles on 6 surfaces; REF-H measured advancing angle not supplied in CSV files. Excluded from predictive candidates."
+}

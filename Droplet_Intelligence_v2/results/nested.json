@@ -1,0 +1,217 @@
+{
+  "protocol": "12 outer surfaces; three inner surface folds; four fixed GP candidates; all fitting, scaling, selection and empirical CV calibration exclude the outer surface.",
+  "calibration_method": "Nested cross-validated normalized log residuals. Empirical 90% target; no distribution-free guarantee for unseen surfaces.",
+  "selection_rule": "First candidate in baseline, matern52, structured, physics_residual order within 0.001 macro RMSE of inner best.",
+  "nested_rmse": 0.04147379673030123,
+  "baseline_rmse": 0.03997278053909427,
+  "delta_vs_baseline_ci95": [
+    -0.003964204358538448,
+    0.007769059119409545
+  ],
+  "coverage": 0.9259012016021362,
+  "mean_width": 0.11528931197746063,
+  "folds": [
+    {
+      "outer": "D100",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04943686016094027,
+        "matern52": 0.05439292741677786,
+        "structured": 0.04288987289684451,
+        "physics_residual": 0.05043962740531536
+      },
+      "q": 1.832487448023662,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.976,
+      "rmse": 0.03804108659383786,
+      "interval_width": 0.18134791172607753
+    },
+    {
+      "outer": "D200",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.05066931675647018,
+        "matern52": 0.05184216553237156,
+        "structured": 0.04293747056293216,
+        "physics_residual": 0.049476426721702584
+      },
+      "q": 1.6015160326882019,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.992,
+      "rmse": 0.022917536356317998,
+      "interval_width": 0.12573841244126618
+    },
+    {
+      "outer": "D400",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.048755067062432315,
+        "matern52": 0.04792901894026396,
+        "structured": 0.04412069250852291,
+        "physics_residual": 0.04788449292858923
+      },
+      "q": 1.8113246778185923,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.928,
+      "rmse": 0.0313485345778518,
+      "interval_width": 0.09385838679195231
+    },
+    {
+      "outer": "D50",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.05498974703019799,
+        "matern52": 0.046435251995734735,
+        "structured": 0.04420429243661563,
+        "physics_residual": 0.05522975642608527
+      },
+      "q": 2.0105181800626415,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.896,
+      "rmse": 0.08156010574517973,
+      "interval_width": 0.25432557913392345
+    },
+    {
+      "outer": "D600",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04335009570405673,
+        "matern52": 0.04287840220852353,
+        "structured": 0.04111456388164249,
+        "physics_residual": 0.04375250921370496
+      },
+      "q": 1.7530717842594967,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.864,
+      "rmse": 0.04083980270948509,
+      "interval_width": 0.075564036819139
+    },
+    {
+      "outer": "D800",
+      "selected": "physics_residual",
+      "inner_macro_rmse": {
+        "baseline": 0.046991667740961945,
+        "matern52": 0.046904407464696485,
+        "structured": 0.04714864715727408,
+        "physics_residual": 0.04450009301440864
+      },
+      "q": 1.8820659579273764,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.888,
+      "rmse": 0.03938853019506694,
+      "interval_width": 0.07979610726686068
+    },
+    {
+      "outer": "S100",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.05067337034762269,
+        "matern52": 0.0525207182962046,
+        "structured": 0.04581627361274274,
+        "physics_residual": 0.04748421242165004
+      },
+      "q": 1.8602229012928744,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.952,
+      "rmse": 0.033540770298302186,
+      "interval_width": 0.09746328458704943
+    },
+    {
+      "outer": "S200",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04865218541138541,
+        "matern52": 0.0484648898513419,
+        "structured": 0.04398282851831992,
+        "physics_residual": 0.04499169216792939
+      },
+      "q": 1.8640561530082034,
+      "calibration_rows": 1374,
+      "calibration_surface_count": 11,
+      "coverage": 0.9354838709677419,
+      "rmse": 0.04018804012684735,
+      "interval_width": 0.08248550936910246
+    },
+    {
+      "outer": "S400",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04656925756998214,
+        "matern52": 0.04726252784702407,
+        "structured": 0.04092205438694143,
+        "physics_residual": 0.0448415918545428
+      },
+      "q": 1.822880476977106,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.888,
+      "rmse": 0.03700114914617604,
+      "interval_width": 0.07761155632548612
+    },
+    {
+      "outer": "S50",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04409425729157163,
+        "matern52": 0.04611804062602795,
+        "structured": 0.041958503873866064,
+        "physics_residual": 0.04214667714037979
+      },
+      "q": 1.729471248026422,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.984,
+      "rmse": 0.04143438048128048,
+      "interval_width": 0.1610775815580397
+    },
+    {
+      "outer": "S600",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.045738369261570926,
+        "matern52": 0.04720076247529428,
+        "structured": 0.042375209197124925,
+        "physics_residual": 0.043660192267138756
+      },
+      "q": 1.5981774307519638,
+      "calibration_rows": 1373,
+      "calibration_surface_count": 11,
+      "coverage": 0.904,
+      "rmse": 0.031435142608198116,
+      "interval_width": 0.06793406249925828
+    },
+    {
+      "outer": "S800",
+      "selected": "structured",
+      "inner_macro_rmse": {
+        "baseline": 0.04608228852483575,
+        "matern52": 0.04624026259453784,
+        "structured": 0.041789751468312195,
+        "physics_residual": 0.044656335275719966
+      },
+      "q": 1.8640561530082034,
+      "calibration_rows": 1374,
+      "calibration_surface_count": 11,
+      "coverage": 0.9032258064516129,
+      "rmse": 0.031522541129692175,
+      "interval_width": 0.08577073618415909
+    }
+  ],
+  "deployment_model": "baseline",
+  "deployment_macro_scores": {
+    "baseline": 0.03913644679409927,
+    "matern52": 0.03891101865498508,
+    "structured": 0.038749538526799535,
+    "physics_residual": 0.0382567706589118
+  },
+  "deployment_q": 1.6445826902187324,
+  "deployment_absolute_log_width": 0.02570166621355885,
+  "limitation": "Conditional on supplied geometry proxies and fixed candidate set. REF-H is a previously inspected stress test, not fresh blind data. CV calibration does not imply per-surface guaranteed coverage."
+}

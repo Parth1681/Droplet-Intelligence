@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/
+.ipynb_checkpoints/
+# render checks written by the poster scripts
+poster/*/check.png

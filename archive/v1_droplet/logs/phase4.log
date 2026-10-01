@@ -1,0 +1,13 @@
+{"model": "SEM descriptors phi, texvol  [final]", "ID": 0.0363, "LOSO": 0.04, "worst": "0.059 D50", "REFH": 0.0591, "REFH_bias": 0.0037, "REFH_hiWe_bias": 0.041, "REFH_MAPE": 1.9449, "cov90_LOSO": 0.9012, "cov90_REFH": 0.616, "width90_REFH": 0.0823, "conformal_q": 1.6327, "cov90_REFH_conformal": 0.616, "width90_REFH_conformal": 0.0817, "length_scales": {"logRe": 9.388, "logWe": 8.521, "logD": 12.724, "phi": 25.171, "texvol": 23.798}}
+{"model": "surface-blind (logRe, logWe, logD)", "ID": null, "LOSO": 0.0458, "worst": "0.091 D50", "REFH": 0.069, "REFH_bias": 0.0141, "REFH_hiWe_bias": 0.0657, "REFH_MAPE": 2.3775}
+{"model": "raw geometry (spacing, depth; REF-H = 0/0)", "ID": null, "LOSO": 0.0411, "worst": "0.078 D50", "REFH": 0.0586, "REFH_bias": 0.0075, "REFH_hiWe_bias": 0.0498, "REFH_MAPE": 2.1533}
+{"model": "residual on power-law backbone", "ID": null, "LOSO": 0.041, "worst": "0.066 D50", "REFH": 0.0594, "REFH_bias": 0.0042, "REFH_hiWe_bias": 0.0419, "REFH_MAPE": 1.9648}
+{"model": "residual on Laan backbone (A refit)", "ID": null, "LOSO": 0.0388, "worst": "0.051 D50", "REFH": 0.0593, "REFH_bias": 0.004, "REFH_hiWe_bias": 0.0417, "REFH_MAPE": 1.9454}
+{"model": "XGBoost, SEM descriptors", "ID": null, "LOSO": 0.0563, "worst": "0.115 D50", "REFH": 0.0593, "REFH_bias": 0.01, "REFH_hiWe_bias": 0.0492, "REFH_MAPE": 2.0835}
+{"model": "XGBoost monotone (beta up in Re, We)", "ID": null, "LOSO": 0.0525, "worst": "0.098 D50", "REFH": 0.0655, "REFH_bias": 0.0098, "REFH_hiWe_bias": 0.0555, "REFH_MAPE": 2.2669}
+{"model": "wettability: + cos(theta), REF-H theta=110", "ID": null, "LOSO": 0.0474, "worst": "0.098 D50", "REFH": 0.3826, "REFH_bias": -0.035, "REFH_hiWe_bias": -0.2555, "REFH_MAPE": 15.7487}
+{"model": "Lee beta0 backbone + residual, REF-H theta=110", "ID": null, "LOSO": 0.039, "worst": "0.050 D50", "REFH": 0.2859, "REFH_bias": 0.26, "REFH_hiWe_bias": 0.2653, "REFH_MAPE": 14.0796}
+{"model": "wettability: + cos(theta), REF-H theta=114.5", "ID": null, "LOSO": 0.0474, "worst": "0.098 D50", "REFH": 0.3771, "REFH_bias": -0.0478, "REFH_hiWe_bias": -0.2653, "REFH_MAPE": 15.3272}
+{"model": "Lee beta0 backbone + residual, REF-H theta=114.5", "ID": null, "LOSO": 0.039, "worst": "0.050 D50", "REFH": 0.2594, "REFH_bias": 0.2345, "REFH_hiWe_bias": 0.2426, "REFH_MAPE": 12.7019}
+{"model": "wettability: + cos(theta), REF-H theta=120", "ID": null, "LOSO": 0.0474, "worst": "0.098 D50", "REFH": 0.3672, "REFH_bias": -0.0684, "REFH_hiWe_bias": -0.2799, "REFH_MAPE": 14.5512}
+{"model": "Lee beta0 backbone + residual, REF-H theta=120", "ID": null, "LOSO": 0.039, "worst": "0.050 D50", "REFH": 0.2276, "REFH_bias": 0.2038, "REFH_hiWe_bias": 0.2154, "REFH_MAPE": 11.0722}

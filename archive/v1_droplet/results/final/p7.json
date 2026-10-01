@@ -1,0 +1,73 @@
+{
+ "table": [
+  {
+   "id": "M6",
+   "model": "Laan backbone + GPR residual (SEM descriptors)",
+   "ID": 0.035587432996951364,
+   "LOSO": 0.0387675922868944,
+   "LOSO_worst": "0.051 (D50)",
+   "REFH": 0.05927812412547329,
+   "REFH_MAPE": 1.9453510802618996,
+   "REFH_bias": 0.003958658529274864
+  },
+  {
+   "id": "GPR",
+   "model": "GPR, SEM descriptors",
+   "ID": 0.03632698624161148,
+   "LOSO": 0.03997278032919057,
+   "LOSO_worst": "0.059 (D50)",
+   "REFH": 0.059095751904100706,
+   "REFH_MAPE": 1.9448553077782076,
+   "REFH_bias": 0.0036866892464242724
+  },
+  {
+   "id": "M3",
+   "model": "XGBoost, hybrid raw + Re/We/Oh",
+   "ID": 0.04359379977783886,
+   "LOSO": 0.048681289088659575,
+   "LOSO_worst": "0.084 (D50)",
+   "REFH": 0.06403275074843899,
+   "REFH_MAPE": 2.1269056426691186,
+   "REFH_bias": 0.00904842248367599
+  },
+  {
+   "id": "M1",
+   "model": "XGBoost, raw 7 inputs",
+   "ID": 0.04636152277078867,
+   "LOSO": 0.05125968440382689,
+   "LOSO_worst": "0.098 (D50)",
+   "REFH": 0.06506238429705102,
+   "REFH_MAPE": 2.3140562931185698,
+   "REFH_bias": 0.013959192224727258
+  },
+  {
+   "id": "M2",
+   "model": "XGBoost, Re/We/Oh + spacing/depth",
+   "ID": 0.050462253552988064,
+   "LOSO": 0.053537671811872134,
+   "LOSO_worst": "0.111 (D50)",
+   "REFH": 0.06929623186737412,
+   "REFH_MAPE": 2.6520370031543066,
+   "REFH_bias": 0.027101124246313363
+  },
+  {
+   "id": "M5",
+   "model": "Power-law backbone + XGBoost residual",
+   "ID": 0.04974638688478487,
+   "LOSO": 0.054083917320655664,
+   "LOSO_worst": "0.119 (D50)",
+   "REFH": 0.06909937638339889,
+   "REFH_MAPE": 2.7144703616761947,
+   "REFH_bias": 0.029861737988749755
+  }
+ ],
+ "lowest_LOSO": "M6",
+ "runner_up": "GPR",
+ "best_minus_runner_up_LOSO_CI95": [
+  -0.0028854269675109446,
+  7.360878828564525e-05
+ ],
+ "tie": true,
+ "final": "GPR",
+ "rule": "lowest LOSO RMSE; if the LOSO difference to the runner-up has a surface-bootstrap CI that includes 0, keep the simpler model (no backbone)"
+}

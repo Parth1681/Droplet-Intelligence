@@ -1,0 +1,8 @@
+import fs from 'node:fs';
+import {GP} from '../web/engine.mjs';
+import {fileURLToPath} from 'node:url';
+const root=fileURLToPath(new URL('../',import.meta.url)),r=JSON.parse(fs.readFileSync(root+'models/release.json')),cases=JSON.parse(fs.readFileSync(root+'results/parity_cases.json')),models={};let maxPoint=0,maxInterval=0,maxSd=0;
+for(const kind of Object.keys(r.candidates)){const meta=JSON.parse(fs.readFileSync(root+`models/${kind}.json`)),b=fs.readFileSync(root+`models/${kind}.L.bin`);models[kind]=new GP(meta,new Float64Array(b.buffer,b.byteOffset,b.byteLength/8))}
+for(const c of cases){const p=models[c.input.model].predict(c.input,r);maxPoint=Math.max(maxPoint,Math.abs(p.beta_max-c.expected.beta_max));maxInterval=Math.max(maxInterval,Math.abs(p.interval.lower-c.expected.interval.lower),Math.abs(p.interval.upper-c.expected.interval.upper));maxSd=Math.max(maxSd,Math.abs(p.sd_log-c.expected.sd_log));if(p.reliability.status!==c.expected.reliability.status)throw Error('Status mismatch')}
+const invalid=[{D_mm:0},{V:-1},{mu:NaN},{rho:true},{sigma:'0.07'},{surface:'UNKNOWN'}];let rejected=0;for(const patch of invalid){try{models.baseline.predict({...cases[0].input,...patch},r)}catch{rejected++}}if(rejected!==invalid.length)throw Error('Invalid input accepted');
+if(maxPoint>1e-8||maxInterval>1e-7)throw Error('Parity threshold exceeded');const result={cases:cases.length,models:Object.keys(models).length,max_absolute_beta_difference:maxPoint,max_absolute_interval_difference:maxInterval,max_absolute_sd_log_difference:maxSd,invalid_inputs_rejected:rejected};fs.writeFileSync(root+'results/js_parity.json',JSON.stringify(result,null,2));console.log(result);

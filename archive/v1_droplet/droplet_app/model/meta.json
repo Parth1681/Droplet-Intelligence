@@ -1,0 +1,140 @@
+{
+ "model_key": "GPR",
+ "model_name": "GPR, SEM descriptors",
+ "features": [
+  "logRe",
+  "logWe",
+  "logD",
+  "phi",
+  "texvol"
+ ],
+ "backbone": null,
+ "conformal_q": 1.645320191888999,
+ "surface_halfwidth_log": 0.040120703563990896,
+ "refh_coverage": 0.616,
+ "track_width_um": {
+  "25": 45.0,
+  "6": 30.0
+ },
+ "train_ranges": {
+  "Re": [
+   8.943988959,
+   4434.860357
+  ],
+  "We": [
+   7.955368754,
+   119.1336637
+  ],
+  "D_mm": [
+   2.145402,
+   2.606672
+  ]
+ },
+ "fluids": {
+  "0 wt.% glycerol": {
+   "rho": 997.2375,
+   "sigma": 0.07246,
+   "mu": 0.000943923
+  },
+  "20 wt.% glycerol": {
+   "rho": 1045.16375,
+   "sigma": 0.071097813,
+   "mu": 0.001596807
+  },
+  "60 wt.% glycerol": {
+   "rho": 1152.32,
+   "sigma": 0.06763525,
+   "mu": 0.009137186
+  },
+  "78 wt.% glycerol": {
+   "rho": 1199.3464,
+   "sigma": 0.06691104,
+   "mu": 0.036733188
+  },
+  "91 wt.% glycerol": {
+   "rho": 1230.554,
+   "sigma": 0.06575516,
+   "mu": 0.151242279
+  }
+ },
+ "surfaces": {
+  "D50": {
+   "spacing_um": 50.0,
+   "depth_um": 25.0,
+   "phi": 0.010000000000000002,
+   "texvol_um": 24.75
+  },
+  "D100": {
+   "spacing_um": 100.0,
+   "depth_um": 25.0,
+   "phi": 0.30250000000000005,
+   "texvol_um": 17.4375
+  },
+  "D200": {
+   "spacing_um": 200.0,
+   "depth_um": 25.0,
+   "phi": 0.6006250000000001,
+   "texvol_um": 9.984374999999998
+  },
+  "D400": {
+   "spacing_um": 400.0,
+   "depth_um": 25.0,
+   "phi": 0.78765625,
+   "texvol_um": 5.308593750000002
+  },
+  "D600": {
+   "spacing_um": 600.0,
+   "depth_um": 25.0,
+   "phi": 0.8556250000000001,
+   "texvol_um": 3.6093749999999982
+  },
+  "D800": {
+   "spacing_um": 800.0,
+   "depth_um": 25.0,
+   "phi": 0.8906640625,
+   "texvol_um": 2.733398437500001
+  },
+  "S50": {
+   "spacing_um": 50.0,
+   "depth_um": 6.0,
+   "phi": 0.16000000000000003,
+   "texvol_um": 5.04
+  },
+  "S100": {
+   "spacing_um": 100.0,
+   "depth_um": 6.0,
+   "phi": 0.48999999999999994,
+   "texvol_um": 3.06
+  },
+  "S200": {
+   "spacing_um": 200.0,
+   "depth_um": 6.0,
+   "phi": 0.7224999999999999,
+   "texvol_um": 1.6650000000000005
+  },
+  "S400": {
+   "spacing_um": 400.0,
+   "depth_um": 6.0,
+   "phi": 0.8556250000000001,
+   "texvol_um": 0.8662499999999995
+  },
+  "S600": {
+   "spacing_um": 600.0,
+   "depth_um": 6.0,
+   "phi": 0.9025,
+   "texvol_um": 0.5850000000000002
+  },
+  "S800": {
+   "spacing_um": 800.0,
+   "depth_um": 6.0,
+   "phi": 0.9264062500000001,
+   "texvol_um": 0.4415624999999994
+  },
+  "REF-H": {
+   "spacing_um": 0.0,
+   "depth_um": 0.0,
+   "phi": 1.0,
+   "texvol_um": 0.0
+  }
+ }
+}

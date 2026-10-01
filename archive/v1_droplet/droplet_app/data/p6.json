@@ -1,0 +1,25 @@
+{
+ "mean_abs_shap_textured": {
+  "logRe": 0.12899185245907838,
+  "logWe": 0.118960731849865,
+  "logD": 0.03274612596473256,
+  "phi": 0.0031419805147349543,
+  "texvol": 0.003749084811540211
+ },
+ "mean_abs_shap_REFH": {
+  "logRe": 0.12712019636755814,
+  "logWe": 0.11472249896427489,
+  "logD": 0.024061643460676973,
+  "phi": 0.003418159708916383,
+  "texvol": 0.005530337617278822
+ },
+ "ard_length_scales": {
+  "logRe": 9.387846207146085,
+  "logWe": 8.521023976408332,
+  "logD": 12.72369631125018,
+  "phi": 25.170796894279157,
+  "texvol": 23.79756952371023
+ },
+ "model": "GPR",
+ "note": "SHAP on the full log(beta) prediction incl. backbone, if the model has one; KernelExplainer, 20 k-means background points, 250 textured rows + all 125 REF-H rows"
+}

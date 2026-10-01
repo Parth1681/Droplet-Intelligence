@@ -1,0 +1,238 @@
+"""A0 portrait poster per conference spec, all 10 panels. Numbers from paper/numbers.json (v2.1 result files)."""
+from pathlib import Path as _P; _ROOT = _P(__file__).resolve().parents[2]  # repo root (droplet-intelligence/)
+import os, json
+N = json.load(open(str(_ROOT/'paper/numbers.json')))
+
+def font_faces():
+    out = []
+    for f in sorted(os.listdir('fonts')):
+        if not f.endswith('.woff2') or '-sans-' not in f: continue
+        parts = f.replace('.woff2', '').split('-'); w, st = parts[-2], parts[-1]
+        rng = 'U+0370-03FF' if 'greek' in f else ('U+0100-024F,U+1E00-1EFF,U+2113,U+2C60-2C7F' if 'latin-ext' in f else 'U+0000-00FF,U+0131,U+0152-0153,U+02C6,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2190-2193,U+2212,U+2215,U+221A,U+FEFF')
+        out.append(f'@font-face{{font-family:"Plex";src:url("fonts/{f}") format("woff2");font-weight:{w};font-style:{st};unicode-range:{rng};}}')
+    return '\n'.join(out)
+
+ICON = {
+ 'drop': '<path d="M24 7C24 7 13 20 13 28a11 11 0 0 0 22 0C35 20 24 7 24 7Z" fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round"/>',
+ 'band': '<g fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round"><path d="M9 33 C17 33 19 14 24 14 S31 33 39 33"/><line x1="24" y1="9" x2="24" y2="39" stroke-width="1.8" stroke-dasharray="2.5 3"/></g>',
+ 'check': '<path d="M13 25l7 7 15-16" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>',
+ 'layers': '<g fill="none" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"><path d="M24 10l14 7-14 7-14-7z"/><path d="M10 24l14 7 14-7"/><path d="M10 31l14 7 14-7"/></g>',
+}
+def icon(k): return f'<span class="ic"><svg viewBox="0 0 48 48">{ICON[k]}</svg></span>'
+def h3(n, t): return f'<h3><span class="n">{n}</span>{t}</h3>'
+
+CSS = r"""
+@page { size: 841mm 1189mm; margin: 0; }
+:root { --side:#7b6b5d; --ink:#2f2620; --ink2:#51463e; --brown:#7a4f32; --rule:#d8cec4; --tint:#f3eee8; --tint2:#e9e1d8; --foot:#4a3a2e; --cream:#efe6da; }
+* { box-sizing:border-box; margin:0; padding:0; }
+html,body { background:#fff; }
+body { width:841mm; height:1189mm; font-family:"Plex",sans-serif; color:var(--ink); font-size:28pt; line-height:1.33;
+       -webkit-print-color-adjust:exact; print-color-adjust:exact; overflow:hidden; display:grid; grid-template-rows:auto 1fr auto 13mm; }
+b { font-weight:600; }
+sub,sup { font-size:.7em; line-height:0; }
+i { font-style:italic; }
+/* sidebar */
+aside { background:var(--side); color:#fff; padding:16mm 18mm 14mm; display:flex; flex-direction:column; justify-content:space-between; gap:8mm; min-height:0; }
+.tb { display:flex; flex-direction:column; gap:6mm; }
+.brand { background:#fff; border-radius:3mm; padding:5mm 6mm; display:flex; align-items:center; gap:6mm; color:var(--ink); }
+.brand img { height:30mm; width:auto; flex:none; }
+.brand .t1 { font-size:22.5pt; font-weight:700; line-height:1.18; letter-spacing:.01em; color:#233a66; }
+.brand .t2 { font-size:18pt; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--brown); margin-top:1.5mm; }
+aside h1 { font-size:74pt; line-height:1.07; font-weight:700; letter-spacing:-.005em; text-wrap:balance; }
+aside .sub { font-size:32pt; line-height:1.22; font-weight:600; color:var(--cream); margin-top:-2mm; }
+aside .who { font-size:27pt; line-height:1.3; padding-bottom:6mm; border-bottom:1.1mm solid rgba(255,255,255,.35); }
+aside .who b { font-size:37pt; font-weight:700; display:block; margin-bottom:1mm; }
+aside h2 { font-size:27pt; letter-spacing:.08em; font-weight:700; color:var(--cream); text-transform:uppercase; margin-bottom:3.5mm; display:flex; align-items:center; gap:3mm; }
+aside h2 .n { background:#fff; color:var(--side); }
+aside .q { font-size:31pt; line-height:1.27; font-weight:700; margin-bottom:3mm; }
+aside p { font-size:26.5pt; line-height:1.36; }
+.stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:3mm; margin-top:4mm; }
+.stats div { background:rgba(255,255,255,.13); border-radius:2mm; padding:4mm 4mm; font-size:19pt; line-height:1.22; color:var(--cream); }
+.stats span { display:block; font-size:37pt; font-weight:700; color:#fff; line-height:1.1; white-space:nowrap; }
+aside .cap { font-size:20pt; color:var(--cream); margin-top:3mm; line-height:1.3; }
+.kt { display:flex; flex-direction:column; gap:7mm; }
+.kt div { display:grid; grid-template-columns:22mm 1fr; gap:5mm; align-items:center; font-size:26.5pt; line-height:1.28; }
+.ic { width:22mm; height:22mm; border-radius:50%; background:rgba(255,255,255,.18); display:grid; place-items:center; }
+.ic svg { width:14mm; height:14mm; }
+.logos { background:#fff; border-radius:3mm; padding:5mm 7mm; display:flex; align-items:center; justify-content:space-around; gap:6mm; }
+.logos img { height:32mm; width:auto; }
+.logos img.ws { height:26mm; }
+/* main */
+main { padding:9mm 18mm 7mm 18mm; min-height:0; }
+.cols { height:100%; display:grid; grid-template-columns:1fr 1fr 1fr; gap:13mm; min-height:0; }
+.col { display:flex; flex-direction:column; justify-content:space-between; gap:7mm; min-height:0; }
+.panel { display:flex; flex-direction:column; }
+section { display:flex; flex-direction:column; }
+h2 { font-size:38pt; font-weight:700; color:var(--brown); text-transform:uppercase; letter-spacing:.04em; padding-bottom:2mm; border-bottom:.7mm solid var(--rule); margin-bottom:4mm; }
+h3 { font-size:31.5pt; font-weight:700; color:var(--ink); margin-bottom:2mm; display:flex; align-items:center; gap:3mm; line-height:1.15; }
+.n { flex:none; width:12.5mm; height:12.5mm; border-radius:50%; background:var(--brown); color:#fff; font-size:19pt; font-weight:700; display:inline-grid; place-items:center; line-height:1; }
+
+p + p, p + .eq, .eq + p { margin-top:2.2mm; }
+.eq { background:var(--tint); border-radius:2mm; padding:3mm 4mm; font-size:29pt; text-align:center; }
+.eqrow { display:flex; justify-content:space-around; align-items:center; gap:4mm; background:var(--tint); border-radius:2mm; padding:3.5mm 4mm; font-size:28pt; }
+frac { display:inline-flex; flex-direction:column; align-items:center; vertical-align:middle; font-size:.9em; line-height:1.15; margin:0 1mm; }
+frac span:first-child { border-bottom:.35mm solid currentColor; padding:0 1mm; }
+.photos { display:grid; grid-template-columns:1fr 1fr 1fr; gap:3mm; margin-top:3mm; }
+.photos figure { display:flex; flex-direction:column; }
+.photos img { width:100%; aspect-ratio:0.78; object-fit:cover; display:block; }
+.photos figure.w { grid-column:1/-1; }
+.photos figure.w img { aspect-ratio:2.9; object-position:center 45%; }
+figcaption { background:var(--tint2); font-size:21pt; padding:1.2mm 2.5mm; color:var(--ink2); }
+.side { display:grid; grid-template-columns:130mm 1fr; gap:5mm; align-items:center; font-size:25.5pt; line-height:1.32; }
+.fig { display:grid; grid-template-columns:1fr 96mm; gap:4mm; align-items:center; }
+.fig img, .side img, img.full { width:100%; display:block; }
+.call { background:var(--tint); border-left:1.3mm solid var(--brown); padding:4mm 5mm; font-size:24pt; line-height:1.3; }
+.call .v { font-size:48pt; font-weight:700; color:var(--brown); line-height:1.05; display:block; margin-bottom:1mm; }
+.callrow { display:grid; grid-template-columns:auto 1fr; gap:5mm; align-items:center; margin-top:3mm; }
+.callrow .v { margin:0; }
+.note { font-size:24pt; color:var(--ink2); margin-top:2mm; line-height:1.3; }
+.flow { display:flex; flex-direction:column; gap:2mm; margin:3mm 0; }
+.step { display:grid; grid-template-columns:10mm 1fr; gap:3.5mm; align-items:center; background:var(--tint); border-radius:2mm; padding:2.8mm 4mm; font-size:25pt; line-height:1.28; }
+.step.hl { background:var(--tint2); outline:.5mm solid var(--brown); }
+.step .k { width:10mm; height:10mm; border-radius:50%; background:var(--ink); color:#fff; font-size:15pt; font-weight:700; display:grid; place-items:center; }
+.warn { background:#f6ece2; border-left:1.3mm solid #b8672e; padding:3.5mm 4.5mm; font-size:24pt; line-height:1.3; margin-top:3mm; }
+.hyp { font-size:11.5pt; font-weight:700; letter-spacing:.08em; color:var(--brown); border:.4mm solid var(--brown); padding:0 1.2mm; border-radius:1mm; vertical-align:.15em; white-space:nowrap; }
+ul.b { list-style:none; display:flex; flex-direction:column; gap:1.4mm; }
+ul.b li { padding-left:5.5mm; position:relative; }
+ul.b li::before { content:""; position:absolute; left:0; top:.55em; width:2.1mm; height:2.1mm; border-radius:50%; background:var(--brown); }
+.refs { font-size:inherit; line-height:inherit; display:flex; flex-direction:column; gap:2mm; color:var(--ink); }
+.refs div { padding-left:9mm; text-indent:-9mm; }
+
+header { background:var(--side); color:#fff; }
+.conf { display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:10mm; background:#fff; padding:7mm 18mm 6mm; border-bottom:2.2mm solid var(--brown); }
+.conf .cn { text-align:center; }
+.conf .cn .a { font-size:60pt; font-weight:700; line-height:1.08; color:#233a66; letter-spacing:.005em; }
+.conf .cn .b { font-size:28pt; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--brown); margin-top:2.5mm; }
+.conf img.l { height:44mm; width:auto; }
+.conf img.r { height:50mm; width:auto; }
+.ttl { padding:9mm 18mm 9mm; text-align:center; }
+.ttl h1 { font-size:88pt; line-height:1.06; font-weight:700; letter-spacing:-.005em; text-wrap:balance; }
+.ttl .sub { font-size:38pt; font-weight:600; color:var(--cream); margin-top:3.5mm; }
+.ttl .who { margin-top:8mm; line-height:1.2; }
+.ttl .who u { font-size:60pt; font-weight:700; text-decoration-thickness:1.3mm; text-underline-offset:3.2mm; }
+.ttl .who .aff { display:block; font-size:38pt; font-weight:500; color:var(--cream); margin-top:4mm; }
+.qbox .obj { background:var(--tint); border-left:1.3mm solid var(--brown); padding:4mm 5mm; margin:3mm 0 1mm; font-size:29pt; line-height:1.3; }
+.qbox .obj .lbl { display:block; font-size:21pt; letter-spacing:.1em; text-transform:uppercase; color:var(--brown); margin-bottom:1.5mm; }
+.qbox .q { font-size:31pt; line-height:1.25; font-weight:700; margin-bottom:2.5mm; color:var(--ink); }
+.qbox .stats div { background:var(--tint); color:var(--ink2); }
+.qbox .stats span { color:var(--brown); }
+.qbox .cap { color:var(--ink2); }
+.ktband { background:var(--side); color:#fff; padding:7mm 18mm 8mm; }
+.ktband h2 { color:var(--cream); border-bottom:.7mm solid rgba(255,255,255,.35); }
+.ktband .kt { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:9mm; }
+.ktband .kt div { grid-template-columns:22mm 1fr; align-items:start; font-size:25pt; }
+.logos2 { display:flex; align-items:center; gap:10mm; background:#fff; border-radius:2mm; padding:3mm 6mm; }
+footer { background:var(--foot); color:#e6dcd1; display:flex; justify-content:space-between; align-items:center; padding:0 18mm; font-size:14.5pt; letter-spacing:.03em; }
+"""
+
+html = f'''<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Droplet Spreading Poster</title>
+<style>{font_faces()}{CSS}</style></head><body>
+<header>
+ <div class="conf"><img class="l" src="logo_tiet.png" alt="Thapar Institute logo">
+  <div class="cn"><div class="a">International Conference on<br>Interfacial Phenomena in Droplets</div><div class="b">IISc Bengaluru · 5 to 7 October 2026</div></div>
+  <img class="r" src="logo_ws.png" alt="Conference logo"></div>
+ <div class="ttl"><h1>Physics Informed Machine Learning for Cross Surface Droplet Impact Prediction</h1>
+  <div class="sub">Testing on laser textured aluminium by holding out one surface at a time</div>
+  <div class="who"><u>Parth Sharma</u><span class="aff">Thapar Institute of Engineering and Technology, Patiala, Punjab, India</span></div></div>
+</header>
+
+<main><div class="cols">
+ <div class="col">
+   <div class="panel qbox"><h2>Introduction</h2>{h3(1, 'Background and objective')}
+    <p>Machine learning models for droplet spreading are usually validated on random splits of the data, so every test surface also appears in training [2]. Surface design needs the reverse: a reliable prediction for a surface that has not yet been made.</p>
+    <div class="q obj"><span class="lbl">Objective</span>Predict the maximum spreading ratio β<sub>max</sub> = <i>D</i><sub>max</sub>/<i>D</i><sub>0</sub> on laser textured surfaces excluded from training, and state how far each prediction can be trusted.</div>
+    <div class="stats">
+     <div><span>1,498</span>impacts on 12 textured surfaces</div>
+     <div><span>125</span>impacts on the smooth plate REF-H</div>
+     <div><span>1 to 160</span>mPa·s, water to 91 wt% glycerol</div>
+     <div><span>8 to 119</span>Weber number</div>
+     <div><span>9 to 4,435</span>Reynolds number</div>
+     <div><span>50 to 800</span>µm channel pitch, 6 or 25 µm deep</div>
+    </div>
+    <div class="cap">Experimental data from Može et al. [1], University of Ljubljana.</div>
+   </div>
+   <div class="panel"><h2>Methods</h2>{h3(2, 'Surface descriptors from SEM')}
+    <p>Between the laser tracks, the surface is flat and looks like the smooth plate. We measured the track width <i>w</i> on SEM images (about 45 µm for deep tracks and 30 µm for shallow ones) and used it to define two descriptors for each surface:</p>
+    <div class="eq"><i>φ</i> = (1 − <i>w</i>/<i>s</i>)<sup>2</sup> &nbsp;&nbsp;&nbsp; <i>V</i><sub>tex</sub> = (1 − <i>φ</i>) <i>h</i></div>
+    <p>Here φ is the flat area fraction. It ranges from 0.01 (D50) to 0.93 (S800), and the smooth plate REF-H has φ = 1. Coding surfaces by channel spacing and depth instead shifted the REF-H error by up to 0.022. With φ, a 10 µm change in track width shifts it by 0.005 at most.</p>
+    <div class="photos">
+     <figure><img src="D200_43.jpg" alt="SEM of D200 at 43x"><figcaption>D200 textured, 43×</figcaption></figure>
+     <figure><img src="REF-H_43.jpg" alt="SEM of REF-H at 43x"><figcaption>Smooth REF-H, 43×</figcaption></figure>
+     <figure><img src="D200_350.jpg" alt="SEM of D200 at 350x"><figcaption>D200 plateau, 350×</figcaption></figure>
+    </div>
+   </div>
+   <div class="panel">{h3(3, 'Reading descriptors directly from images')}
+    <div class="side"><img src="f_cnn.svg" alt="CNN estimate of phi against geometric phi">
+     <div>We trained a small CNN (9,070 parameters) to estimate φ and <i>V</i><sub>tex</sub> from three SEM images (43×, 100×, 350×) of a surface left out of training. Using these estimates, the GP error was 0.038 against 0.040, lower on 8 of 12 surfaces, but the difference is not significant. The CNN gives φ = 0.71 for REF-H, since the smoothest training surface has φ = 0.93.</div></div>
+   </div>
+ </div>
+
+ <div class="col">
+   <div class="panel">{h3(4, 'Dimensionless inputs')}
+    <div class="eqrow">
+     <div><i>Re</i> = <frac><span><i>ρVD</i><sub>0</sub></span><span><i>μ</i></span></frac></div>
+     <div><i>We</i> = <frac><span><i>ρV</i><sup>2</sup><i>D</i><sub>0</sub></span><span><i>σ</i></span></frac></div>
+     <div>β<sub>max</sub><i>Re</i><sup>−1/5</sup> = <frac><span>√<i>P</i></span><span><i>A</i> + √<i>P</i></span></frac></div>
+    </div>
+    <p style="margin-top:2.5mm">Our recomputed <i>Re</i> and <i>We</i> agree with the dataset to within 5×10<sup>−7</sup>. The Ohnesorge number follows from <i>Re</i> and <i>We</i>, so we did not add it. The scaling law of Laan et al. [3], with <i>P</i> = <i>We Re</i><sup>−2/5</sup>, was developed for wettable surfaces. On this data it gives R² = 0.71, with an average error of 11% on held out surfaces.</p>
+   </div>
+   <div class="panel">{h3(5, 'Evaluation')}
+    <p>Every impact condition was repeated about five times. A random split would place repeats of the same condition in both training and test sets, so we used:</p>
+    <div class="flow">
+     <div class="step"><div class="k">1</div><div><b>Grouped 5 fold cross validation</b> over the 297 conditions, for surfaces seen in training.</div></div>
+     <div class="step hl"><div class="k">2</div><div><b>Leave one surface out</b> (12 folds), used to choose the model.</div></div>
+     <div class="step"><div class="k">3</div><div><b>REF-H kept aside</b> and never used for training or model choice.</div></div>
+    </div>
+    <p>Model inputs are ln <i>Re</i>, ln <i>We</i>, ln <i>D</i><sub>0</sub>, φ and <i>V</i><sub>tex</sub>, and the target is ln β<sub>max</sub>. We kept a change only if its 95% confidence interval, from 4,000 bootstrap resamples of whole surfaces, excluded zero.</p>
+   </div>
+   <div class="panel"><h2>Results</h2>{h3(6, 'Comparison of 13 models')}
+    <img class="full" src="f_models.svg" alt="Held out surface RMSE for 13 models">
+    <div class="call callrow"><span class="v">0.040</span><span>RMSE of the Gaussian process (Matérn 3/2 kernel) on held out surfaces, a mean error of 1.1%. XGBoost gives 0.056 (95% CI of the difference: 0.006 to 0.028). On surfaces seen in training, the GP gives 0.036.</span></div>
+   </div>
+   <div class="panel">{h3(7, 'Variants tested')}
+    <img class="full" src="f_forest.svg" alt="Change in held out surface error for model variants">
+    <p class="note">Bars show 95% confidence intervals from paired bootstrap over surfaces. Adding a Laan law backbone, changing the kernel, nested model selection and CNN descriptors each changed the error by less than 0.002. XGBoost was the only significant difference, and it was worse. Removing φ and <i>V</i><sub>tex</sub> raised the error from 0.040 to 0.046. We therefore kept the plain GP.</p>
+   </div>
+ </div>
+
+ <div class="col">
+   <div class="panel">{h3(8, 'Prediction intervals')}
+    <img class="full" src="f_fluid.svg" alt="Interval coverage by glycerol content">
+    <div class="call callrow"><span class="v">90.1%</span><span>of impacts on held out surfaces fall inside the 90% interval (84 to 96% per surface). Coverage is 76% for water and 98% for 91 wt% glycerol. The out of range check flags D50 and S50.</span></div>
+   </div>
+   <div class="panel">{h3(9, 'Error for each held out surface')}
+    <img class="full" src="f_surface.svg" alt="RMSE for each held out surface">
+    <p class="note">D50 (φ = 0.01, the edge of the range) has the largest error for every model. The descriptors lower it from 0.091 to 0.059 but slightly raise the error on S50 and D200. With 12 surfaces, this is suggestive only.</p>
+   </div>
+   <div class="panel">{h3(10, 'Smooth plate REF-H')}
+    <div class="fig"><img src="f_parity.svg" alt="REF-H predicted against measured">
+     <div class="call"><span class="v">1.9%</span>mean error (RMSE 0.059), but only 62% of impacts fall inside the interval. In the highest Weber number third, the model over predicts by 0.041 on average.</div></div>
+    <div class="warn">Most misses are for water and the 20% and 60% mixtures (24 to 56% coverage); viscous fluids reach 96%. REF-H is hydrophobic while the textures are superhydrophobic, and wettability is not a model input. Lower friction over trapped air may let droplets spread further on the textures <span class="hyp">HYPOTHESIS</span></div>
+   </div>
+  <section class="panel"><h2>Future work</h2>
+   <ul class="b">
+    <li>Measure advancing and receding contact angles for each fluid and surface pair and use them as inputs.</li>
+    <li>Make the noise level depend on the Ohnesorge number.</li>
+    <li>Add new surfaces, with a test set fixed before any tuning.</li>
+   </ul>
+  </section>
+  <section class="panel"><h2>References</h2>
+   <div class="refs">
+    <div>[1] M. Može et al., Data in Brief 61 (2025) 111697; doi:10.17632/wsh8rxwd38.1</div>
+    <div>[2] S. Jereb et al., Biomimetics 10 (2025) 357</div>
+    <div>[3] N. Laan et al., Phys. Rev. Applied 2 (2014) 044018</div>
+   </div>
+  </section>
+ </div>
+</div></main>
+<section class="ktband"><h2>Conclusions</h2>
+  <div class="kt">
+   <div>{icon('check')}<span>Testing on held out surfaces gives a more realistic error than random splits.</span></div>
+   <div>{icon('layers')}<span>The flat area fraction φ describes both textured and smooth surfaces, so the smooth plate fits in as φ = 1.</span></div>
+   <div>{icon('drop')}<span>A Gaussian process had the lowest error (0.040) of 13 models. A physics backbone and larger models did not improve it significantly.</span></div>
+   <div>{icon('band')}<span>Intervals are well calibrated overall but not for every fluid, and they are too narrow on the smooth plate.</span></div>
+  </div></section>
+<footer><span>Data: Može et al. (2025), University of Ljubljana · Analysis and models: Parth Sharma</span><span>International Conference on Interfacial Phenomena in Droplets · IISc Bengaluru · 2026</span></footer>
+</body></html>'''
+open('poster.html', 'w').write(html)
+print('ok')

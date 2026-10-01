@@ -1,0 +1,277 @@
+<title>Droplet Spread Predictor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#f4f6f9; --panel:#ffffff; --ink:#13294b; --ink2:#46506a; --muted:#7a8398; --rule:#dde3eb;
+  --accent:#0e7cb5; --band:#cde5f2; --band-ink:#0b5f8c; --dot:#8fa0b8; --warn:#a85a14; --warn-bg:#fbf1e6; --ok:#177a57; --ok-bg:#e6f4ee;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0c1522; --panel:#132033; --ink:#e4ebf4; --ink2:#b3bfd0; --muted:#8290a6; --rule:#243650;
+  --accent:#5cb7e6; --band:#1b3f5c; --band-ink:#8fd0f2; --dot:#6e819d; --warn:#f0a864; --warn-bg:#3a2717; --ok:#5fd0a2; --ok-bg:#15352a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0c1522; --panel:#132033; --ink:#e4ebf4; --ink2:#b3bfd0; --muted:#8290a6; --rule:#243650;
+  --accent:#5cb7e6; --band:#1b3f5c; --band-ink:#8fd0f2; --dot:#6e819d; --warn:#f0a864; --warn-bg:#3a2717; --ok:#5fd0a2; --ok-bg:#15352a; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--sans)}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:16px;padding-block:24px 40px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;padding-bottom:18px;border-bottom:1px solid var(--rule);margin-bottom:22px}
+h1{margin:0;font-size:1.65rem;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+.sub{margin:.25rem 0 0;color:var(--ink2);max-width:62ch}
+.tag{font:500 12px/1.4 var(--mono);color:var(--muted);text-align:right}
+.tag b{color:var(--ink);font-weight:600}
+.grid{display:grid;grid-template-columns:320px 1fr;gap:22px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+.panel{background:var(--panel);border:1px solid var(--rule);border-radius:10px;padding:18px}
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin:0 0 12px}
+.field{display:grid;gap:6px;margin-bottom:16px}
+.field:last-child{margin-bottom:0}
+.field label{font-weight:500;font-size:13.5px;color:var(--ink2);display:flex;justify-content:space-between;gap:8px}
+.field label output{font:600 13px var(--mono);color:var(--ink)}
+select,input[type=range]{width:100%}
+select{font:inherit;font-size:14px;padding:8px 10px;border:1px solid var(--rule);border-radius:7px;background:var(--bg);color:var(--ink)}
+input[type=range]{accent-color:var(--accent)}
+select:focus-visible,input:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.hint{font:12px/1.4 var(--mono);color:var(--muted);display:flex;justify-content:space-between}
+.sep{border:0;border-top:1px solid var(--rule);margin:18px 0}
+#custom[hidden]{display:none}
+.result{display:grid;grid-template-columns:auto 1fr;gap:10px 28px;align-items:end}
+@media (max-width:560px){.result{grid-template-columns:1fr}}
+.big{font:600 3.4rem/1 var(--mono);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.big small{font:500 1rem var(--sans);color:var(--muted);letter-spacing:0;margin-left:6px}
+.ci{font:500 1.05rem var(--mono);color:var(--ink2);font-variant-numeric:tabular-nums}
+.ci span{color:var(--muted);font-family:var(--sans);font-size:.85rem}
+.pill{display:inline-flex;align-items:center;gap:6px;font:600 12px var(--mono);padding:4px 10px;border-radius:99px;background:var(--ok-bg);color:var(--ok)}
+.pill.warn{background:var(--warn-bg);color:var(--warn)}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.physics{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font:13px var(--mono);color:var(--ink2);font-variant-numeric:tabular-nums}
+.physics b{font-family:var(--sans);font-weight:600;color:var(--muted);margin-right:6px}
+.notes{margin:14px 0 0;padding:10px 12px;border-radius:8px;background:var(--warn-bg);color:var(--warn);font-size:13.5px}
+.notes ul{margin:4px 0 0;padding-left:18px}
+.chartbox{margin-top:18px}
+.chart{width:100%;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:520px;height:auto}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--ink2);margin-top:6px}
+.legend i{display:inline-block;width:14px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.lower{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:22px}
+@media (max-width:860px){.lower{grid-template-columns:1fr}}
+.tbl{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px;font-variant-numeric:tabular-nums}
+th{font:600 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--rule)}
+td{padding:6px 8px;border-bottom:1px solid var(--rule)}
+td.n{font-family:var(--mono);text-align:right}th.n{text-align:right}
+tr.sel td{background:var(--band);color:var(--band-ink);font-weight:600}
+.barcell{width:40%}
+.bar{height:8px;border-radius:4px;background:var(--accent);opacity:.8}
+.bar.low{background:var(--warn)}
+footer{margin-top:26px;color:var(--muted);font-size:12.5px;line-height:1.6;max-width:90ch}
+.loading{font:13px var(--mono);color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){.big{transition:color .2s}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Droplet Spread Predictor</h1>
+      <p class="sub">Maximum spreading β<sub>max</sub> of a droplet hitting a laser-textured aluminium surface, predicted by the trained Gaussian process from the v2.1 release. Every number is computed live in your browser.</p>
+    </div>
+    <div class="tag"><b>Matérn 3/2 GP · v2.1.0</b><br>1,498 textured impacts · 12 surfaces<br>unseen-surface RMSE <b id="t-rmse">0.040</b></div>
+  </header>
+
+  <div class="grid">
+    <form class="panel" id="form" autocomplete="off">
+      <p class="eyebrow">Impact</p>
+      <div class="field">
+        <label for="fluid">Fluid</label>
+        <select id="fluid">
+          <option value="0">Water · 0.94 mPa·s</option>
+          <option value="20">20 wt% glycerol · 1.6 mPa·s</option>
+          <option value="60">60 wt% glycerol · 9.1 mPa·s</option>
+          <option value="78">78 wt% glycerol · 36.7 mPa·s</option>
+          <option value="91">91 wt% glycerol · 151 mPa·s</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="D">Drop diameter D₀ <output id="D-out">2.50 mm</output></label>
+        <input type="range" id="D" min="2.00" max="2.80" step="0.01" value="2.50">
+        <div class="hint"><span>2.00</span><span>measured 2.15–2.61</span><span>2.80</span></div>
+      </div>
+      <div class="field">
+        <label for="V">Impact velocity V <output id="V-out">1.50 m/s</output></label>
+        <input type="range" id="V" min="0.40" max="1.80" step="0.01" value="1.50">
+        <div class="hint"><span>0.40</span><span>measured 0.48–1.71</span><span>1.80</span></div>
+      </div>
+      <hr class="sep">
+      <p class="eyebrow">Surface</p>
+      <div class="field">
+        <label for="surface">Laser-textured surface</label>
+        <select id="surface"></select>
+      </div>
+      <div id="custom" hidden>
+        <div class="field">
+          <label for="phi">Smooth-plateau fraction φ <output id="phi-out">0.60</output></label>
+          <input type="range" id="phi" min="0" max="1" step="0.01" value="0.60">
+          <div class="hint"><span>0 · all texture</span><span>1 · smooth</span></div>
+        </div>
+        <div class="field">
+          <label for="tv">Texture volume per area <output id="tv-out">10.0 µm</output></label>
+          <input type="range" id="tv" min="0" max="25" step="0.1" value="10">
+          <div class="hint"><span>0</span><span>25 µm</span></div>
+        </div>
+      </div>
+      <p class="hint" id="geo" style="margin:0"></p>
+    </form>
+
+    <section class="panel" aria-live="polite">
+      <p class="eyebrow">Prediction</p>
+      <div class="result">
+        <div class="big" id="beta">—<small>β<sub>max</sub></small></div>
+        <div>
+          <div class="ci" id="ci"><span>90% interval</span> —</div>
+          <div style="margin-top:8px"><span class="pill" id="status">Loading model…</span></div>
+        </div>
+      </div>
+      <div class="physics" id="physics"></div>
+      <div class="notes" id="notes" hidden></div>
+      <div class="chartbox">
+        <p class="eyebrow" style="margin-top:4px">β<sub>max</sub> across impact velocity, same fluid, surface and diameter</p>
+        <div class="chart" id="chart"><p class="loading">Loading the 8.6 MB model factor…</p></div>
+        <div class="legend">
+          <span><i style="background:var(--band)"></i>90% interval</span>
+          <span><i style="background:var(--accent);height:3px"></i>GP prediction</span>
+          <span><i style="background:var(--dot);border-radius:50%;width:9px;height:9px"></i>measured impacts, this surface and fluid (all diameters)</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="lower">
+    <section class="panel">
+      <p class="eyebrow">Error when the surface is held out (LOSO)</p>
+      <div class="tbl"><table id="t-surf"></table></div>
+    </section>
+    <section class="panel">
+      <p class="eyebrow">How often the 90% interval holds, by fluid</p>
+      <div class="tbl"><table id="t-fluid"></table></div>
+      <p class="hint" style="margin-top:10px;display:block">Unseen textured surface vs. smooth plate REF-H. Thin fluids are under-covered; wettability is not an input.</p>
+    </section>
+  </div>
+
+  <footer>
+    Model: baseline Matérn 3/2 Gaussian process on ln Re, ln We, ln D₀, φ and texture volume, from the Droplet Intelligence v2.1.0 release. The interval is the GP posterior scaled by an empirically calibrated factor (q = 1.645); coverage averaged over leave-one-surface-out folds is 90.1%. Reliability flags use the release's measured ranges and a Mahalanobis anomaly score. Experimental data: Može et al., <i>Data in Brief</i> 61 (2025) 111697. Model and analysis: Parth Sharma, Thapar Institute of Engineering &amp; Technology.
+  </footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+const DI=window.DI, M=DI.model, R=DI.release, $=id=>document.getElementById(id);
+const fmt=(n,d)=>Number(n).toFixed(d);
+let L=null;
+
+/* ---------- engine: ported unchanged from web/engine.mjs (baseline kernel path) ---------- */
+function m32(r){const z=Math.sqrt(3)*r;return (1+z)*Math.exp(-z)}
+function features(p){
+  const g=p.surface==='custom'?{phi:p.phi,texvol:p.texvol}:R.surfaces[p.surface];
+  const D=p.D_mm*.001,Re=p.rho*p.V*D/p.mu,We=p.rho*p.V*p.V*D/p.sigma,Oh=Math.sqrt(We)/Re;
+  return {x:[Math.log(Re),Math.log(We),Math.log(p.D_mm),g.phi,g.texvol],Re,We,Oh,D,V:p.V,rho:p.rho,sigma:p.sigma,mu:p.mu,phi:g.phi,texvol:g.texvol,surface:p.surface};
+}
+function posterior(f){
+  const x=f.x.map((v,i)=>(v-M.xmean[i])/M.xscale[i]),n=M.n,ks=new Float64Array(n),s=M.kernel;let sum=0;
+  for(let j=0;j<n;j++){let r2=0;const Xj=M.X[j];for(let i=0;i<5;i++){const z=(x[i]-Xj[i])/s.length_scale[i];r2+=z*z}
+    const k=s.amplitude*m32(Math.sqrt(r2));ks[j]=k;sum+=k*M.alpha[j]}
+  const mu=sum*M.yscale+M.ymean;
+  const v=new Float64Array(n);let norm=0,off=0;
+  for(let i=0;i<n;i++){let a=ks[i];for(let j=0;j<i;j++)a-=L[off+j]*v[j];v[i]=a/L[off+i];norm+=v[i]*v[i];off+=i+1}
+  return {mu,sd:Math.sqrt(Math.max(s.amplitude+M.noise-norm,1e-12))*M.yscale};
+}
+function predict(p){
+  const f=features(p),{mu,sd}=posterior(f),reasons=[];
+  const names={D:'Drop diameter',V:'Impact velocity',Re:'Reynolds number',We:'Weber number',phi:'φ',texvol:'Texture volume'};
+  for(const k of ['D','V','Re','We','phi','texvol']){const [lo,hi]=R.support[k];if(f[k]<lo-1e-12||f[k]>hi+1e-12)reasons.push(`${names[k]} is outside the measured training range`)}
+  if(f.surface==='REF-H'||f.phi>=.999)reasons.push('Smooth surface: wettability is not an input, and only 62% of smooth-plate impacts fell inside the interval');
+  if(f.surface==='custom')reasons.push('Custom surface: these descriptors were not measured');
+  const od=R.ood,z=f.x.map((v,i)=>(v-od.mean[i])/od.scale[i]);let d=0;for(let i=0;i<5;i++)for(let j=0;j<5;j++)d+=z[i]*od.precision[i][j]*z[j];d=Math.sqrt(Math.max(d,0));
+  let lo=0,hi=od.sorted_distances.length;while(lo<hi){const mid=(lo+hi)>>1;if(od.sorted_distances[mid]<d)lo=mid+1;else hi=mid}
+  const pct=lo/od.sorted_distances.length*100;if(pct>=95)reasons.push('Unusual combination of inputs (anomaly score at or above the training 95th percentile)');
+  const band=M.q*sd;
+  return {beta:Math.exp(mu),lo:Math.exp(mu-band),hi:Math.exp(mu+band),f,reasons,pct};
+}
+/* ------------------------------------------------------------------------------------------ */
+
+const order=['S50','S100','S200','S400','S600','S800','D50','D100','D200','D400','D600','D800','REF-H'];
+$('surface').innerHTML=order.map(s=>{const g=R.surfaces[s];const lab=s==='REF-H'?'REF-H · smooth plate (φ = 1)':`${s} · ${s[0]==='D'?'deep 25 µm':'shallow 6 µm'}, pitch ${g.spacing} µm`;return `<option value="${s}">${lab}</option>`}).join('')+'<option value="custom">Custom descriptors</option>';
+$('surface').value='D200';
+
+function state(){
+  const fl=R.fluids[$('fluid').value];
+  return {D_mm:+$('D').value,V:+$('V').value,surface:$('surface').value,rho:fl.rho,sigma:fl.sigma,mu:fl.mu,phi:+$('phi').value,texvol:+$('tv').value,gly:+$('fluid').value};
+}
+function labels(){
+  $('D-out').textContent=fmt($('D').value,2)+' mm';$('V-out').textContent=fmt($('V').value,2)+' m/s';
+  $('phi-out').textContent=fmt($('phi').value,2);$('tv-out').textContent=fmt($('tv').value,1)+' µm';
+  const s=$('surface').value;$('custom').hidden=s!=='custom';
+  if(s!=='custom'){const g=R.surfaces[s];$('geo').textContent=`φ = ${fmt(g.phi,3)} · texture volume ${fmt(g.texvol,2)} µm`}else $('geo').textContent='';
+}
+
+function chart(p,cur){
+  const W=720,H=330,l=52,r=16,t=14,b=46,x0=.4,x1=1.8,rows=[];
+  for(let i=0;i<=40;i++){const V=x0+(x1-x0)*i/40;const q=predict({...p,V});rows.push({V,b:q.beta,lo:q.lo,hi:q.hi})}
+  const pts=DI.exp.filter(e=>e[0]===p.surface&&e[1]===p.gly);
+  const ys=[...rows.flatMap(q=>[q.lo,q.hi]),...pts.map(e=>e[4])];
+  let y0=Math.floor(Math.min(...ys)*4)/4,y1=Math.ceil(Math.max(...ys)*4)/4;if(y1-y0<.5)y1=y0+.5;
+  const X=v=>l+(v-x0)/(x1-x0)*(W-l-r),Y=v=>H-b-(v-y0)/(y1-y0)*(H-t-b);
+  let s='';
+  const [s0,s1]=R.support.V;s+=`<rect x="${X(s0)}" y="${t}" width="${X(s1)-X(s0)}" height="${H-t-b}" fill="var(--bg)"/>`;
+  const step=(y1-y0)>1.2?.5:.25;
+  for(let y=y0;y<=y1+1e-9;y+=step)s+=`<line x1="${l}" x2="${W-r}" y1="${Y(y)}" y2="${Y(y)}" stroke="var(--rule)"/><text x="${l-8}" y="${Y(y)+4}" text-anchor="end" font-size="12" fill="var(--muted)" font-family="var(--mono)">${fmt(y,2)}</text>`;
+  for(const v of [.4,.6,.8,1,1.2,1.4,1.6,1.8])s+=`<text x="${X(v)}" y="${H-b+20}" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="var(--mono)">${fmt(v,1)}</text>`;
+  s+=`<text x="${X(s0)+6}" y="${t+14}" font-size="11" fill="var(--muted)">measured range</text>`;
+  const band=rows.map((q,i)=>`${i?'L':'M'}${X(q.V)},${Y(q.hi)}`).join('')+rows.slice().reverse().map(q=>`L${X(q.V)},${Y(q.lo)}`).join('')+'Z';
+  s+=`<path d="${band}" fill="var(--band)" opacity=".9"/>`;
+  for(const e of pts)s+=`<circle cx="${X(e[3])}" cy="${Y(e[4])}" r="3" fill="var(--dot)" opacity=".75"/>`;
+  s+=`<path d="${rows.map((q,i)=>`${i?'L':'M'}${X(q.V)},${Y(q.b)}`).join('')}" fill="none" stroke="var(--accent)" stroke-width="2.5"/>`;
+  if(p.V>=x0&&p.V<=x1)s+=`<line x1="${X(p.V)}" x2="${X(p.V)}" y1="${t}" y2="${H-b}" stroke="var(--ink2)" stroke-dasharray="3 4"/><circle cx="${X(p.V)}" cy="${Y(cur.beta)}" r="6" fill="var(--ink)" stroke="var(--panel)" stroke-width="2.5"/>`;
+  s+=`<line x1="${l}" x2="${W-r}" y1="${H-b}" y2="${H-b}" stroke="var(--muted)"/>`;
+  s+=`<text x="${(l+W-r)/2}" y="${H-8}" text-anchor="middle" font-size="12.5" fill="var(--ink2)">impact velocity V (m/s)</text>`;
+  s+=`<text x="14" y="${(t+H-b)/2}" transform="rotate(-90 14 ${(t+H-b)/2})" text-anchor="middle" font-size="12.5" fill="var(--ink2)">β max</text>`;
+  $('chart').innerHTML=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Predicted maximum spreading versus impact velocity with 90% interval and measured impacts">${s}</svg>`;
+}
+
+let raf=0;
+function run(){
+  labels();if(!L)return;
+  cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>{
+    const p=state(),q=predict(p);
+    $('beta').innerHTML=fmt(q.beta,2)+'<small>β<sub>max</sub></small>';
+    $('ci').innerHTML=`<span>90% interval</span> ${fmt(q.lo,2)} – ${fmt(q.hi,2)}`;
+    const st=$('status');if(q.reasons.length){st.className='pill warn';st.textContent='Outside validated range'}else{st.className='pill';st.textContent='Within measured range'}
+    $('physics').innerHTML=`<span><b>Re</b>${fmt(q.f.Re,0)}</span><span><b>We</b>${fmt(q.f.We,1)}</span><span><b>Oh</b>${fmt(q.f.Oh,4)}</span><span><b>φ</b>${fmt(q.f.phi,3)}</span><span><b>anomaly pct</b>${fmt(q.pct,0)}</span>`;
+    const n=$('notes');n.hidden=!q.reasons.length;n.innerHTML=q.reasons.length?'<b>Read with caution</b><ul>'+q.reasons.map(x=>`<li>${x}</li>`).join('')+'</ul>':'';
+    chart(p,q);tables(p);
+  });
+}
+
+function tables(p){
+  const ps=DI.bench.per_surface,mx=Math.max(...Object.values(ps));
+  $('t-surf').innerHTML='<thead><tr><th>Held-out surface</th><th>φ</th><th class="n">RMSE</th><th class="barcell"></th></tr></thead><tbody>'+
+    order.filter(s=>s in ps).map(s=>`<tr class="${s===p.surface?'sel':''}"><td>${s}</td><td class="n" style="text-align:left">${fmt(R.surfaces[s].phi,2)}</td><td class="n">${fmt(ps[s],3)}</td><td class="barcell"><div class="bar" style="width:${ps[s]/mx*100}%"></div></td></tr>`).join('')+
+    `<tr><td><b>All 12</b></td><td></td><td class="n"><b>${fmt(DI.bench.loso_rmse,3)}</b></td><td></td></tr></tbody>`;
+  $('t-fluid').innerHTML='<thead><tr><th>Glycerol</th><th class="n">Unseen textured</th><th class="n">Smooth plate</th></tr></thead><tbody>'+
+    DI.by_fluid.map(r=>`<tr class="${r.gly===p.gly?'sel':''}"><td>${r.gly} wt%</td><td class="n">${fmt(r.loso_cov*100,0)}%</td><td class="n">${fmt(r.refh_cov*100,0)}%</td></tr>`).join('')+
+    `<tr><td><b>All</b></td><td class="n"><b>${fmt(DI.bench.nominal_coverage*100,1)}%</b></td><td class="n"><b>${fmt(M.refh.coverage*100,1)}%</b></td></tr></tbody>`;
+}
+
+for(const id of ['fluid','D','V','surface','phi','tv'])$(id).addEventListener('input',run);
+$('form').addEventListener('submit',e=>e.preventDefault());
+labels();tables(state());
+
+fetch('L.txt').then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.text()}).then(txt=>{
+  const bin=atob(txt.trim()),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+  if(u.byteLength!==M.n*(M.n+1)/2*8)throw Error('incomplete download');
+  L=new Float64Array(u.buffer);run();
+}).catch(e=>{$('status').className='pill warn';$('status').textContent='Model factor failed to load';$('chart').innerHTML=`<p class="loading">Could not load the model file (${e.message}). Reload the page to retry.</p>`});
+})();
+</script>
