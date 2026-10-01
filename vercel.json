@@ -3,7 +3,7 @@
   "services": {
     "site": {
       "root": "Droplet_Intelligence_v2",
-      "installCommand": "",
+      "installCommand": "echo static site, nothing to install",
       "buildCommand": "python3 build_site.py",
       "outputDirectory": "public"
     },
