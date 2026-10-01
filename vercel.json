@@ -2,10 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "services": {
     "site": {
-      "root": "Droplet_Intelligence_v2",
-      "installCommand": "echo static site, nothing to install",
-      "buildCommand": "python3 build_site.py",
-      "outputDirectory": "public"
+      "root": "site"
     },
     "legacy_api": {
       "root": "archive/v1_droplet/droplet_app",

@@ -1,0 +1,95 @@
+{
+  "model": "sem_gp",
+  "images": 39,
+  "textured_images": 36,
+  "reference_images": 3,
+  "magnifications": [
+    43,
+    100,
+    350
+  ],
+  "encoder": "Shared 3-layer CNN, ordered 3-view fusion, 32-unit head, two sigmoid descriptor outputs",
+  "epochs": 250,
+  "seed": 23,
+  "training_targets": "Weak supervision: geometry-derived phi and texture-volume-per-area / 25. These are proxy labels, not new SEM measurements.",
+  "protocol": "12 LOSO folds. All images/rotations of the outer surface and REF-H excluded from CNN and GP fitting. Each GP uses descriptors predicted by its own training-only CNN for both training and test inputs.",
+  "loso_rmse": 0.03838457485816094,
+  "macro_rmse": 0.03745003278029146,
+  "per_surface": {
+    "D100": 0.0372318490672731,
+    "D200": 0.027822757517993454,
+    "D400": 0.04238764642834667,
+    "D50": 0.0536506273435697,
+    "D600": 0.043812238331222775,
+    "D800": 0.04058732077948228,
+    "S100": 0.021073620040749124,
+    "S200": 0.038538087232717136,
+    "S400": 0.035767890595392655,
+    "S50": 0.045190936868037775,
+    "S600": 0.03454333372899509,
+    "S800": 0.02879408542971774
+  },
+  "baseline_rmse": 0.03997278053909427,
+  "delta_vs_baseline_ci95": [
+    -0.0038474746800121738,
+    0.0005009236729472187
+  ],
+  "nominal_gp_coverage": 0.8798397863818425,
+  "nominal_intervals_note": "Conditional GP uncertainty only; does not propagate CNN descriptor uncertainty. No calibrated 90% image-model guarantee.",
+  "fold_descriptors": {
+    "D200": [
+      0.5109330415725708,
+      0.3376394510269165
+    ],
+    "D100": [
+      0.07426606863737106,
+      0.7684422135353088
+    ],
+    "D400": [
+      0.8232040405273438,
+      0.12031298130750656
+    ],
+    "D50": [
+      0.28201866149902344,
+      0.7747108936309814
+    ],
+    "D600": [
+      0.852482795715332,
+      0.06466040015220642
+    ],
+    "D800": [
+      0.8492041826248169,
+      0.08383845537900925
+    ],
+    "S200": [
+      0.7785581350326538,
+      0.11257389187812805
+    ],
+    "S100": [
+      0.6079330444335938,
+      0.3587559163570404
+    ],
+    "S400": [
+      0.8985803127288818,
+      0.04223102331161499
+    ],
+    "S50": [
+      0.38326841592788696,
+      0.4903333783149719
+    ],
+    "S600": [
+      0.9205784797668457,
+      0.029647046700119972
+    ],
+    "S800": [
+      0.9127796292304993,
+      0.013949636369943619
+    ]
+  },
+  "refh": {
+    "rmse": 0.06478868590710594,
+    "coverage": 0.592
+  },
+  "encoder_parameters": 9070,
+  "status": "experimental image branch; baseline remains default pending independent confirmation"
+}

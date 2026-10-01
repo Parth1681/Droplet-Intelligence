@@ -1,6 +1,5 @@
-# Not needed by the two deployed services (site, v1_api)
-Droplet_Intelligence_v2/data/sem_original/
-Droplet_Intelligence_v2/public/
+# Not needed by the two deployed services (site = prebuilt static files, legacy_api = v1 FastAPI)
+Droplet_Intelligence_v2/
 paper/
 poster/
 live_model/
