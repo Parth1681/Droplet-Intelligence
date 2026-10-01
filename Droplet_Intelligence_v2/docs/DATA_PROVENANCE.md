@@ -9,3 +9,5 @@ The contact-angle CSVs are retained but excluded from the model because measurem
 ## SEM extension
 
 All 39 supplied SEM TIFFs were read and converted to footer-free model inputs. Original hashes and exact crop/resizing specifications are in data/sem/manifest.json. The processed arrays are the exact CNN training inputs. CNN target descriptors retain the prior geometry-proxy assumptions.
+
+`data/raw/00 - Dataset Description.pdf` is the authors' dataset description from the Mendeley record (doi:10.17632/wsh8rxwd38.1), added 1 Oct 2026. On the same date the five CSVs in `data/raw/` were re-checked cell by cell against a fresh copy from the record: identical.
