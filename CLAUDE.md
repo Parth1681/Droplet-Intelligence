@@ -59,7 +59,7 @@ python -m droplet.serve --port 8000        # or double-click run_demo.bat on Win
 ```
 Open http://127.0.0.1:8000. As a check, POST to `/api/predict` with `{"D_mm":2.5,"V":1.5,"rho":997.2375,"mu":0.000943923,"sigma":0.07246,"surface":"D200"}`. It should return β_max 2.859, interval [2.807, 2.913], status `within_measured_support`.
 
-**Tests** (re-checked 1 Oct 2026 on Linux, Python 3.11: 12 core tests pass, demo check returns 2.859 [2.807, 2.913], JS parity ≤3.1×10⁻¹²):
+**Tests** (re-checked 1 Oct 2026 on Linux, Python 3.11: all 18 tests pass with the SEM originals in place, demo check returns 2.859 [2.807, 2.913], JS parity ≤3.1×10⁻¹²):
 ```
 cd Droplet_Intelligence_v2
 python -m pip install -r requirements-sem.txt     # adds torch + Pillow, needed by the SEM tests
@@ -103,7 +103,8 @@ python render.py --pdf    # Playwright + Chromium → Parth_Sharma_Droplet_Poste
   - `/home/claude/poster3` → `poster/landscape_A0`
   - `/home/claude/poster2` → `poster/portrait_v1_with_cover`
 - **Not included, because of size or duplication:**
-  - The original SEM TIFFs (197 MB) and the original dataset zip (148 MB). Download them from Mendeley, doi:10.17632/wsh8rxwd38.1. `droplet.sem_infer` needs the original TIFFs; it rejects the bundled JPEG thumbnails by design.
+  - The original dataset zip (148 MB). The five CSVs and the dataset description PDF are in `Droplet_Intelligence_v2/data/raw/`.
+- **SEM originals now included (1 Oct 2026):** all 39 TIFFs (13 surfaces × 43/100/350×) are in `Droplet_Intelligence_v2/data/sem_original/`, where `droplet.sem` expects them. Every file matches the SHA-256 in `data/sem/manifest.json`, and `droplet.sem.prepare()` rebuilds `training_pixels.npz` from them with zero pixel difference.
   - Older duplicate zips, render-check screenshots, an older copy of the paper sources, superseded poster scripts (`build3.py`, `build5.py`) and CatBoost training logs.
 
 ## Final poster layout (portrait, built by `build6.py`)

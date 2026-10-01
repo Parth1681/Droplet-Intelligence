@@ -58,7 +58,7 @@ Node.js is needed only for the cross-language parity check. Set workers to 1 on 
 
 ## Scope and provenance
 
-Training uses 1,498 textured impacts; 125 REF-H impacts remain out of training. Fixed geometry proxies from the supplied earlier implementation are retained. Contact-angle measurements are incomplete and excluded from this release; do not impute them as if measured. Footer-free SEM training arrays, image thumbnails and trained CNN weights are included. Original TIFFs, original posters and unrelated archives are not duplicated in this package. Dataset redistribution rights remain those of its original authors; no new license or experimental authorship is asserted. See `docs/DATA_PROVENANCE.md`.
+Training uses 1,498 textured impacts; 125 REF-H impacts remain out of training. Fixed geometry proxies from the supplied earlier implementation are retained. Contact-angle measurements are incomplete and excluded from this release; do not impute them as if measured. Footer-free SEM training arrays, image thumbnails and trained CNN weights are included. The 39 original SEM TIFFs are in `data/sem_original/` (added 1 Oct 2026, SHA-256 verified against `data/sem/manifest.json`). Original posters and unrelated archives are not duplicated in this package. Dataset redistribution rights remain those of its original authors; no new license or experimental authorship is asserted. See `docs/DATA_PROVENANCE.md`.
 
 This is a research system. The number of independent surfaces is small, REF-H was already inspected, optimizer diagnostics exist, and nested CV is not a substitute for a prospective external test. Read the report before using the metrics in a paper or poster.
 
