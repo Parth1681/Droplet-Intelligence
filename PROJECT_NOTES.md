@@ -104,6 +104,16 @@ python render.py --pdf    # Playwright + Chromium → Parth_Sharma_Droplet_Poste
 - **SEM originals now included (1 Oct 2026):** all 39 TIFFs (13 surfaces × 43/100/350×) are in `Droplet_Intelligence_v2/data/sem_original/`, where `droplet.sem` expects them. Every file matches the SHA-256 in `data/sem/manifest.json`, and `droplet.sem.prepare()` rebuilds `training_pixels.npz` from them with zero pixel difference.
   - Older duplicate zips, render-check screenshots, an older copy of the paper sources, superseded poster scripts (`build3.py`, `build5.py`) and CatBoost training logs.
 
+## Extensions for new surfaces (1 Oct 2026)
+
+Code: `droplet/extensions.py` (experiments), `droplet/predict_image.py` (tool), `droplet/extensions_report.py`. Results and the full table: `Droplet_Intelligence_v2/results/extensions/REPORT.md` and `summary.json`. Same protocol as the paper (LOSO, paired surface bootstrap 4,000 draws seed 23, REF-H never used for choices); the harness reproduces the baseline exactly (0.0400).
+
+- **Step 1, physical image reader: accepted as an input path.** φ is measured from one 43× SEM image (local roughness over a 12.7 µm window, threshold calibrated on training surfaces only). GP on ln Re, ln We, ln D₀ and image φ, with no spacing or depth: LOSO 0.0397 vs 0.0400, difference interval [−0.0068, +0.0045], so equivalent, not better. Reads REF-H as φ = 1.000 (the CNN read 0.709). LOSO interval coverage 88.8%. Valid near 43× only; at 100× and 350× textured φ is under-read, so the tool refuses other pixel sizes.
+  ```
+  python -m droplet.predict_image --image new_43x.tif --D_mm 2.5 --V 1.5 --rho 997.2 --mu 0.000944 --sigma 0.0725
+  ```
+- **Step 2, wettability: rejected on this data.** Lee β₀ correction: LOSO unchanged, but REF-H RMSE 0.228 (bias +0.22) at the literature angle and still 0.151 at 130°. Angle as a GP input: LOSO worse (0.0480, interval excludes zero). The training angles span only about 160 to 167°, so the data cannot teach a wettability effect; surfaces with intermediate angles are needed.
+
 ## Final poster layout (portrait, built by `build6.py`)
 
 The header carries the conference name, with the Thapar logo top-left and the conference logo top-right. Below it come the title, the subtitle "Testing on laser textured aluminium by holding out one surface at a time", the underlined presenter name and the affiliation.
@@ -124,7 +134,7 @@ A "Conclusions" band with 4 points runs along the bottom.
 4. **Print quality.** The TIET logo is 277×258 px and the cover image is 1132×1600 px. Larger or vector originals would print better at A0.
 5. ~~Paper author list~~: confirmed 1 Oct 2026 (body text, .docx and PDF metadata: Parth Sharma, sole author).
 6. **Planning doc diagram.** The architecture diagram in `notes/phase1_audit_and_plan.md` still shows the early design: a Laan prior and a spacing descriptor feeding the GP, and a conformal interval. The final model is the plain GP on the five inputs above.
-7. **Research next steps** (from the paper):
+7. **Research next steps** (from the paper; steps 1 and 2 of the extensions above address the first two in part):
    - measured advancing and receding contact angles for every fluid–surface pair, as a wettability input;
    - a noise model that depends on the Ohnesorge number, to fix water undercoverage;
    - new surfaces, with a test set fixed before any tuning;
