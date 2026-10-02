@@ -1,0 +1,983 @@
+{
+ "source_note": "beta_max scale; LOSO = leave one textured surface out (12 folds); ID = GroupKFold(5) by condition; REF-H = smooth plate never used in training",
+ "models": {
+  "v1_GPR": {
+   "label": "GP Matern 3/2 ARD (final)",
+   "source": "archive/v1_droplet/results/final/pred_GPR.npz",
+   "id": {
+    "rmse": 0.03632698624161148,
+    "mae": 0.02147757259417256,
+    "r2": 0.9929193525762424,
+    "bias": -0.0014291088006609665,
+    "n": 1498
+   },
+   "loso": {
+    "rmse": 0.03997278032919057,
+    "mae": 0.02420713138295972,
+    "r2": 0.9914268002136464,
+    "bias": -0.004443808639450666,
+    "n": 1498
+   },
+   "refh": {
+    "rmse": 0.059095751904100706,
+    "mae": 0.04301508019366902,
+    "r2": 0.9773157744916052,
+    "bias": 0.0036866892464242724,
+    "n": 125
+   },
+   "has_uncertainty": true
+  },
+  "v1_XGB": {
+   "label": "XGBoost (same 5 inputs)",
+   "source": "archive/v1_droplet/results/final/pred_XGB.npz",
+   "id": {
+    "rmse": 0.046175409658429215,
+    "mae": 0.02762905767078801,
+    "r2": 0.9885597439467642,
+    "bias": -0.0024057764409331174,
+    "n": 1498
+   },
+   "loso": {
+    "rmse": 0.056336337063874094,
+    "mae": 0.031874609610563556,
+    "r2": 0.9829709099147194,
+    "bias": -0.0030364416549620694,
+    "n": 1498
+   },
+   "refh": {
+    "rmse": 0.05927071117567423,
+    "mae": 0.04592742291180603,
+    "r2": 0.9771812575257041,
+    "bias": 0.010048556002191174,
+    "n": 125
+   }
+  },
+  "v1_M1": {
+   "label": "XGBoost, raw 7 inputs",
+   "source": "archive/v1_droplet/results/final/pred_M1.npz",
+   "id": {
+    "rmse": 0.04636152277078867,
+    "mae": 0.028576823815884618,
+    "r2": 0.9884673366424696,
+    "bias": -0.0020986197569155076,
+    "n": 1498
+   },
+   "loso": {
+    "rmse": 0.05125968440382689,
+    "mae": 0.030345492109157872,
+    "r2": 0.9859017214618063,
+    "bias": -0.0030588427600151927,
+    "n": 1498
+   },
+   "refh": {
+    "rmse": 0.06506238429705102,
+    "mae": 0.050550203000808785,
+    "r2": 0.9725038822106745,
+    "bias": 0.013959192224727258,
+    "n": 125
+   }
+  },
+  "v1_M2": {
+   "label": "XGBoost, Re/We/Oh + spacing/depth",
+   "source": "archive/v1_droplet/results/final/pred_M2.npz",
+   "id": {
+    "rmse": 0.050462253552988064,
+    "mae": 0.029820203159300913,
+    "r2": 0.9863369545349322,
+    "bias": -0.0023139997924291056,
+    "n": 1498
+   },
+   "loso": {
+    "rmse": 0.053537671811872134,
+    "mae": 0.030972390806361015,
+    "r2": 0.9846208195426446,
+    "bias": -0.0012594018509782352,
+    "n": 1498
+   },
+   "refh": {
+    "rmse": 0.06929623186737412,
+    "mae": 0.056930600780791506,
+    "r2": 0.9688089015395862,
+    "bias": 0.027101124246313363,
+    "n": 125
+   }
+  },
+  "v1_M3": {
+   "label": "XGBoost, hybrid raw + Re/We/Oh",
+   "source": "archive/v1_droplet/results/final/pred_M3.npz",
+   "id": {
+    "rmse": 0.04359379977783886,
+    "mae": 0.025895226234364008,
+    "r2": 0.9898032051677454,
+    "bias": -0.002754945983290627,
+    "n": 1498
+   },
+   "loso": {
+    "rmse": 0.048681289088659575,
+    "mae": 0.028203896661412983,
+    "r2": 0.9872843557076084,
+    "bias": -0.001865087197280831,
+    "n": 1498
+   },
+   "refh": {
+    "rmse": 0.06403275074843899,
+    "mae": 0.047588998838503614,
+    "r2": 0.9733672662013269,
+    "bias": 0.00904842248367599,
+    "n": 125
+   }
+  },
+  "v1_M5": {
+   "label": "Power-law backbone + XGBoost residual",
+   "source": "archive/v1_droplet/results/final/pred_M5.npz",
+   "id": {
+    "rmse": 0.04974638688478487,
+    "mae": 0.027992539571254645,
+    "r2": 0.986721857752993,
+    "bias": -0.0033243615771804116,
+    "n": 1498
+   },
+   "loso": {
+    "rmse": 0.054083917320655664,
+    "mae": 0.031046536169019492,
+    "r2": 0.9843053906216019,
+    "bias": -0.0010490959899826296,
+    "n": 1498
+   },
+   "refh": {
+    "rmse": 0.06909937638339889,
+    "mae": 0.05676265743080205,
+    "r2": 0.9689858640444796,
+    "bias": 0.029861737988749755,
+    "n": 125
+   }
+  },
+  "v1_M6": {
+   "label": "Laan backbone + GP residual",
+   "source": "archive/v1_droplet/results/final/pred_M6.npz",
+   "id": {
+    "rmse": 0.035587432996951364,
+    "mae": 0.021214724061877764,
+    "r2": 0.9932047168857565,
+    "bias": -0.000517205380010451,
+    "n": 1498
+   },
+   "loso": {
+    "rmse": 0.0387675922868944,
+    "mae": 0.023578708504391605,
+    "r2": 0.9919359745550201,
+    "bias": -0.003844573311476827,
+    "n": 1498
+   },
+   "refh": {
+    "rmse": 0.05927812412547329,
+    "mae": 0.043118246856866764,
+    "r2": 0.977175549317819,
+    "bias": 0.003958658529274864,
+    "n": 125
+   },
+   "has_uncertainty": true
+  },
+  "v2_baseline": {
+   "label": "baseline",
+   "source": "Droplet_Intelligence_v2/results/{loso,refh}_predictions.csv",
+   "loso": {
+    "rmse": 0.03997278053909427,
+    "mae": 0.02420711947441409,
+    "r2": 0.9914268001236077,
+    "bias": -0.0044437924427322365,
+    "n": 1498
+   },
+   "id": "Not available from the supplied evidence",
+   "refh": {
+    "rmse": 0.059095767288213974,
+    "mae": 0.043015093895452806,
+    "r2": 0.9773157626810528,
+    "bias": 0.003686699471861054,
+    "n": 125,
+    "coverage90": 0.616
+   },
+   "loso_coverage90": 0.9012016021361816,
+   "delta_ci95": [
+    0.0,
+    0.0
+   ],
+   "worst": 0.059353164801708706,
+   "per_surface": {
+    "D100": 0.03512788045238787,
+    "D200": 0.028587400927966924,
+    "D400": 0.041447815512114405,
+    "D50": 0.059353164801708706,
+    "D600": 0.040309772795707854,
+    "D800": 0.03917661121449497,
+    "S100": 0.03402839465897091,
+    "S200": 0.04011977286596941,
+    "S400": 0.035873159501247594,
+    "S50": 0.05006244681390747,
+    "S600": 0.03477925524909357,
+    "S800": 0.030771686735621556
+   }
+  },
+  "v2_matern52": {
+   "label": "matern52",
+   "source": "Droplet_Intelligence_v2/results/{loso,refh}_predictions.csv",
+   "loso": {
+    "rmse": 0.03976704416376471,
+    "mae": 0.024004926356984865,
+    "r2": 0.9915148240205318,
+    "bias": -0.004044925759354829,
+    "n": 1498
+   },
+   "id": "Not available from the supplied evidence",
+   "refh": {
+    "rmse": 0.05895084570998098,
+    "mae": 0.043048197734592,
+    "r2": 0.9774268841608589,
+    "bias": 0.00420961197883453,
+    "n": 125,
+    "coverage90": 0.632
+   },
+   "loso_coverage90": 0.8965287049399199,
+   "delta_ci95": [
+    -0.000929143465027963,
+    0.0004964609873601378
+   ],
+   "worst": 0.05774347982090567,
+   "per_surface": {
+    "D100": 0.03509427778682034,
+    "D200": 0.030047752275176018,
+    "D400": 0.04275134930834351,
+    "D50": 0.05774347982090567,
+    "D600": 0.04052687719543462,
+    "D800": 0.03866420161598808,
+    "S100": 0.03306776804329033,
+    "S200": 0.03972715785223637,
+    "S400": 0.03572309123355553,
+    "S50": 0.05168481145608283,
+    "S600": 0.032082215060818285,
+    "S800": 0.029819242211169356
+   }
+  },
+  "v2_structured": {
+   "label": "structured",
+   "source": "Droplet_Intelligence_v2/results/{loso,refh}_predictions.csv",
+   "loso": {
+    "rmse": 0.041155838522545694,
+    "mae": 0.024207021119614192,
+    "r2": 0.9909118154018186,
+    "bias": -0.0040829242495571405,
+    "n": 1498
+   },
+   "id": "Not available from the supplied evidence",
+   "refh": {
+    "rmse": 0.062062649227210324,
+    "mae": 0.046460785383587104,
+    "r2": 0.9749808788162486,
+    "bias": 0.0063546339013561964,
+    "n": 125,
+    "coverage90": 0.576
+   },
+   "loso_coverage90": 0.9058744993324432,
+   "delta_ci95": [
+    -0.004318338958847034,
+    0.007626731356105591
+   ],
+   "worst": 0.08156010574517975,
+   "per_surface": {
+    "D100": 0.038041086593837835,
+    "D200": 0.02291753635631804,
+    "D400": 0.031348534577851805,
+    "D50": 0.08156010574517975,
+    "D600": 0.04083980270948509,
+    "D800": 0.035165372548425604,
+    "S100": 0.033540770298302165,
+    "S200": 0.04018804012684739,
+    "S400": 0.037001149146176034,
+    "S50": 0.041434380481280474,
+    "S600": 0.03143514260819812,
+    "S800": 0.03152254112969216
+   }
+  },
+  "v2_physics_residual": {
+   "label": "physics_residual",
+   "source": "Droplet_Intelligence_v2/results/{loso,refh}_predictions.csv",
+   "loso": {
+    "rmse": 0.0387673389718221,
+    "mae": 0.023578598181841215,
+    "r2": 0.9919360799385322,
+    "bias": -0.003844590754155828,
+    "n": 1498
+   },
+   "id": "Not available from the supplied evidence",
+   "refh": {
+    "rmse": 0.05927857421197228,
+    "mae": 0.043118665027089983,
+    "r2": 0.9771752027138652,
+    "bias": 0.003959092517064805,
+    "n": 125,
+    "coverage90": 0.608
+   },
+   "loso_coverage90": 0.9025367156208278,
+   "delta_ci95": [
+    -0.0029576007808567338,
+    8.059740352130212e-05
+   ],
+   "worst": 0.051282758030937466,
+   "per_surface": {
+    "D100": 0.03435870744682709,
+    "D200": 0.028538064558619243,
+    "D400": 0.04129589687146201,
+    "D50": 0.051282758030937466,
+    "D600": 0.04039376606699027,
+    "D800": 0.03938853019506695,
+    "S100": 0.03404131932309548,
+    "S200": 0.04047434799872734,
+    "S400": 0.035831639952137215,
+    "S50": 0.047415022970357705,
+    "S600": 0.03493404167383925,
+    "S800": 0.03112715281888162
+   }
+  },
+  "ext_baseline": {
+   "refh": {
+    "rmse": 0.05909576728821398
+   },
+   "label": "baseline",
+   "source": "Droplet_Intelligence_v2/results/extensions/",
+   "loso": {
+    "rmse": 0.03997278053909427,
+    "mae": 0.02420711947441409,
+    "r2": 0.9914268001236077,
+    "bias": -0.0044437924427322365,
+    "n": 1498
+   },
+   "id": "Not available from the supplied evidence",
+   "summary": {
+    "spec": {
+     "phi": "geom",
+     "texvol": true,
+     "wet": null
+    },
+    "loso": {
+     "rmse": 0.03997278053909427,
+     "mape": 1.0566199679131023,
+     "bias": -0.004443792442732249,
+     "coverage": 0.9012016021361816,
+     "worst": 0.059353164801708706,
+     "worst_surface": "D50",
+     "per_surface": {
+      "D100": 0.03512788045238787,
+      "D200": 0.028587400927966924,
+      "D400": 0.041447815512114405,
+      "D50": 0.059353164801708706,
+      "D600": 0.040309772795707854,
+      "D800": 0.03917661121449497,
+      "S100": 0.03402839465897091,
+      "S200": 0.04011977286596941,
+      "S400": 0.035873159501247594,
+      "S50": 0.05006244681390747,
+      "S600": 0.03477925524909357,
+      "S800": 0.030771686735621556
+     }
+    },
+    "refh": {
+     "rmse": 0.05909576728821398,
+     "mape": 1.9448559168188169,
+     "bias": 0.0036866994718610167,
+     "coverage": 0.616,
+     "worst": 0.05909576728821398,
+     "worst_surface": "REF-H",
+     "per_surface": {
+      "REF-H": 0.05909576728821398
+     }
+    },
+    "refh_phi_used": 1.0,
+    "delta_vs_baseline_ci95": [
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "ext_image_phi": {
+   "refh": {
+    "rmse": 0.05951187220264177
+   },
+   "label": "image_phi",
+   "source": "Droplet_Intelligence_v2/results/extensions/",
+   "loso": {
+    "rmse": 0.03979284183609583,
+    "mae": 0.02493024183535261,
+    "r2": 0.9915038114448742,
+    "bias": -0.00796900489330866,
+    "n": 1498
+   },
+   "id": "Not available from the supplied evidence",
+   "summary": {
+    "spec": {
+     "phi": "image",
+     "texvol": true,
+     "wet": null
+    },
+    "loso": {
+     "rmse": 0.03979284183609583,
+     "mape": 1.1230286739895707,
+     "bias": -0.007969004893308672,
+     "coverage": 0.8798397863818425,
+     "worst": 0.05468723333054352,
+     "worst_surface": "D50",
+     "per_surface": {
+      "D100": 0.048215078171570336,
+      "D200": 0.034914434871004596,
+      "D400": 0.0496362223416858,
+      "D50": 0.05468723333054352,
+      "D600": 0.04040109263464788,
+      "D800": 0.039986272418496525,
+      "S100": 0.025676966793152182,
+      "S200": 0.04271500845517784,
+      "S400": 0.03711572031762994,
+      "S50": 0.02439691887057223,
+      "S600": 0.036682729270578314,
+      "S800": 0.031097317235274147
+     }
+    },
+    "refh": {
+     "rmse": 0.05951187220264177,
+     "mape": 1.947620205894753,
+     "bias": 0.0031759089790178337,
+     "coverage": 0.664,
+     "worst": 0.05951187220264177,
+     "worst_surface": "REF-H",
+     "per_surface": {
+      "REF-H": 0.05951187220264177
+     }
+    },
+    "refh_phi_used": 0.9995991938164893,
+    "delta_vs_baseline_ci95": [
+     -0.0057063559140636926,
+     0.004659546789301194
+    ]
+   }
+  },
+  "ext_image_only": {
+   "refh": {
+    "rmse": 0.06362415971090019
+   },
+   "label": "image_only",
+   "source": "Droplet_Intelligence_v2/results/extensions/",
+   "loso": {
+    "rmse": 0.03970252956639148,
+    "mae": 0.02339686213267979,
+    "r2": 0.9915423329129823,
+    "bias": -0.005023207044059549,
+    "n": 1498
+   },
+   "id": "Not available from the supplied evidence",
+   "summary": {
+    "spec": {
+     "phi": "image",
+     "texvol": false,
+     "wet": null
+    },
+    "loso": {
+     "rmse": 0.03970252956639148,
+     "mape": 1.032735601481071,
+     "bias": -0.0050232070440595624,
+     "coverage": 0.8878504672897196,
+     "worst": 0.07033748149361155,
+     "worst_surface": "D50",
+     "per_surface": {
+      "D100": 0.0393269960797672,
+      "D200": 0.022731256165592063,
+      "D400": 0.03636242900271483,
+      "D50": 0.07033748149361155,
+      "D600": 0.0445590344480221,
+      "D800": 0.043884340792904555,
+      "S100": 0.027688292986340835,
+      "S200": 0.04354691813142411,
+      "S400": 0.03870306461938268,
+      "S50": 0.01969775392528295,
+      "S600": 0.034068166312813904,
+      "S800": 0.03097284925235159
+     }
+    },
+    "refh": {
+     "rmse": 0.06362415971090019,
+     "mape": 2.0865795215767147,
+     "bias": 0.006013782625838443,
+     "coverage": 0.616,
+     "worst": 0.06362415971090019,
+     "worst_surface": "REF-H",
+     "per_surface": {
+      "REF-H": 0.06362415971090019
+     }
+    },
+    "refh_phi_used": 0.9995991938164893,
+    "delta_vs_baseline_ci95": [
+     -0.006775938734088914,
+     0.004460631200169676
+    ]
+   }
+  },
+  "ext_lee_beta0": {
+   "refh": {
+    "rmse": 0.22787339220855665
+   },
+   "label": "lee_beta0",
+   "source": "Droplet_Intelligence_v2/results/extensions/",
+   "loso": {
+    "rmse": 0.03979042896515081,
+    "mae": 0.02454582726555768,
+    "r2": 0.9915048417600787,
+    "bias": -0.0031640601003149484,
+    "n": 1498
+   },
+   "id": "Not available from the supplied evidence",
+   "summary": {
+    "spec": {
+     "phi": "geom",
+     "texvol": true,
+     "wet": "lee"
+    },
+    "loso": {
+     "rmse": 0.039790428965150816,
+     "mape": 1.0874050075397057,
+     "bias": -0.0031640601003149562,
+     "coverage": 0.9005340453938585,
+     "worst": 0.055461552564169014,
+     "worst_surface": "D50",
+     "per_surface": {
+      "D100": 0.03766531664084952,
+      "D200": 0.030723960157668213,
+      "D400": 0.04232294968184296,
+      "D50": 0.055461552564169014,
+      "D600": 0.040888275197425494,
+      "D800": 0.03948027310391058,
+      "S100": 0.033841686623134214,
+      "S200": 0.040112481078411505,
+      "S400": 0.03594938599317024,
+      "S50": 0.048322089584918515,
+      "S600": 0.03488226400075862,
+      "S800": 0.030586601245613423
+     }
+    },
+    "refh": {
+     "rmse": 0.22787339220855665,
+     "mape": 11.487574766803696,
+     "bias": 0.21881445180698295,
+     "coverage": 0.008,
+     "worst": 0.22787339220855665,
+     "worst_surface": "REF-H",
+     "per_surface": {
+      "REF-H": 0.22787339220855665
+     }
+    },
+    "refh_phi_used": 1.0,
+    "delta_vs_baseline_ci95": [
+     -0.0012694628144598727,
+     0.0008507480462341239
+    ]
+   }
+  },
+  "ext_angle_input": {
+   "refh": {
+    "rmse": 0.37712850266647235
+   },
+   "label": "angle_input",
+   "source": "Droplet_Intelligence_v2/results/extensions/",
+   "loso": {
+    "rmse": 0.04804636459069009,
+    "mae": 0.02868601687031707,
+    "r2": 0.987613879644909,
+    "bias": -0.008173907389870378,
+    "n": 1498
+   },
+   "id": "Not available from the supplied evidence",
+   "summary": {
+    "spec": {
+     "phi": "geom",
+     "texvol": true,
+     "wet": "feature"
+    },
+    "loso": {
+     "rmse": 0.04804636459069009,
+     "mape": 1.241827463763561,
+     "bias": -0.00817390738987039,
+     "coverage": 0.8918558077436582,
+     "worst": 0.09833693315618122,
+     "worst_surface": "D50",
+     "per_surface": {
+      "D100": 0.035887669618582176,
+      "D200": 0.043362986036786066,
+      "D400": 0.041428708028149366,
+      "D50": 0.09833693315618122,
+      "D600": 0.0525230949899921,
+      "D800": 0.0392412877582259,
+      "S100": 0.03412836119213622,
+      "S200": 0.03923673383985769,
+      "S400": 0.036155692169645974,
+      "S50": 0.05016922298662176,
+      "S600": 0.034864957196469384,
+      "S800": 0.03298772254988513
+     }
+    },
+    "refh": {
+     "rmse": 0.37712850266647235,
+     "mape": 15.329284154784805,
+     "bias": -0.04772003187915362,
+     "coverage": 1.0,
+     "worst": 0.37712850266647235,
+     "worst_surface": "REF-H",
+     "per_surface": {
+      "REF-H": 0.37712850266647235
+     }
+    },
+    "refh_phi_used": 1.0,
+    "delta_vs_baseline_ci95": [
+     0.0003968964892325851,
+     0.01712234787846132
+    ]
+   }
+  },
+  "zoo_gaussian_process_matern_3_2_ard_": {
+   "label": "Gaussian process (Matern 3/2, ARD)",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0363272261,
+    "r2": 0.9929192591,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0399727188,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.059 (D50)"
+   },
+   "refh": {
+    "rmse": 0.0590957724207746,
+    "mae": 0.04301512399925562,
+    "r2": 0.977315758740729,
+    "bias": 0.0036867296899707894,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0590957724
+  },
+  "zoo_random_forest": {
+   "label": "Random forest",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0439535314,
+    "r2": 0.989634225,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0462117551,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.080 (D50)"
+   },
+   "refh": {
+    "rmse": 0.06282722006552681,
+    "mae": 0.048256515825575164,
+    "r2": 0.9743606436718015,
+    "bias": 0.008595521813020684,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0628272201
+  },
+  "zoo_extra_trees": {
+   "label": "Extra trees",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0437119194,
+    "r2": 0.9897478729,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0464821306,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.096 (D50)"
+   },
+   "refh": {
+    "rmse": 0.06341476174043545,
+    "mae": 0.04822970175345953,
+    "r2": 0.9738788579654581,
+    "bias": 0.008978126702106693,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0634147617
+  },
+  "zoo_ft_transformer_d_32_2_layers_": {
+   "label": "FT-Transformer (d=32, 2 layers)",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0454978652557752,
+    "r2": 0.98889301280893,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0505011826725944,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.098 (D50)"
+   },
+   "refh": {
+    "rmse": 0.06705902436059369,
+    "mae": 0.051028952775985334,
+    "r2": 0.9707903810334569,
+    "bias": 0.010123903599980558,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0670590243605936
+  },
+  "zoo_catboost": {
+   "label": "CatBoost",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0445694332,
+    "r2": 0.9893416874,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0523652143,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.114 (D50)"
+   },
+   "refh": {
+    "rmse": 0.06280498349370621,
+    "mae": 0.04770256902944722,
+    "r2": 0.9743787896440066,
+    "bias": 0.007512705518588067,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0628049835
+  },
+  "zoo_deep_ensemble_5_x_mlp_": {
+   "label": "Deep ensemble (5 x MLP)",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0450427036,
+    "r2": 0.9891141303,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0525380666,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.101 (D50)"
+   },
+   "refh": {
+    "rmse": 0.06744653916329854,
+    "mae": 0.05130269162419235,
+    "r2": 0.9704518176582095,
+    "bias": 0.020015413543397073,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0674465392
+  },
+  "zoo_xgboost_reference_same_features_": {
+   "label": "XGBoost (reference, same features)",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0461754163,
+    "r2": 0.9885597407,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0563363385,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.115 (D50)"
+   },
+   "refh": {
+    "rmse": 0.059270685463069746,
+    "mae": 0.04592741299714112,
+    "r2": 0.9771812773239876,
+    "bias": 0.01004852011733252,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0592706855
+  },
+  "zoo_lightgbm": {
+   "label": "LightGBM",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0508987876,
+    "r2": 0.9860995421,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0591373571,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.136 (D50)"
+   },
+   "refh": {
+    "rmse": 0.05975162592659252,
+    "mae": 0.04745299172367086,
+    "r2": 0.9768094587096381,
+    "bias": 0.010949243263431956,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0597516259
+  },
+  "zoo_ridge_quadratic_in_log_features": {
+   "label": "Ridge, quadratic in log-features",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0541318469,
+    "r2": 0.9842775609,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0638368466,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.135 (D50)"
+   },
+   "refh": {
+    "rmse": 0.07022942936805952,
+    "mae": 0.05309599451416554,
+    "r2": 0.9679631572251644,
+    "bias": 0.017324115140189684,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0702294294
+  },
+  "zoo_mlp_64_64_strong_l2_": {
+   "label": "MLP (64-64, strong L2)",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0524609355,
+    "r2": 0.9852332034,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0700926727,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.167 (D50)"
+   },
+   "refh": {
+    "rmse": 0.08200664828051783,
+    "mae": 0.0654767497182963,
+    "r2": 0.9563172918855438,
+    "bias": 0.024325227405617888,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0820066483
+  },
+  "zoo_knn_k_10_distance_weighted_": {
+   "label": "kNN (k=10, distance-weighted)",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.1322414387,
+    "r2": 0.9061683482,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.0759580149,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.178 (D50)"
+   },
+   "refh": {
+    "rmse": 0.060773134732092636,
+    "mae": 0.04612317763116175,
+    "r2": 0.9760097536884266,
+    "bias": 0.008383710274989093,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0607731347
+  },
+  "zoo_svr_rbf_": {
+   "label": "SVR (RBF)",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.045371793,
+    "r2": 0.9889544813,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.108472881,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.305 (D50)"
+   },
+   "refh": {
+    "rmse": 0.04907652481173159,
+    "mae": 0.03242582785433975,
+    "r2": 0.9843555955676834,
+    "bias": -0.0021228942369304065,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0490765248
+  },
+  "zoo_kernel_ridge_rbf_": {
+   "label": "Kernel ridge (RBF)",
+   "source": "archive/v1_droplet/results/zoo_table.csv + zoo/*_ref.npy",
+   "id": {
+    "rmse": 0.0441615266,
+    "r2": 0.9895358879,
+    "mae": "Not available from the supplied evidence"
+   },
+   "loso": {
+    "rmse": 0.2568306006,
+    "mae": "Not available from the supplied evidence",
+    "r2": "Not available from the supplied evidence",
+    "worst": "0.825 (D50)"
+   },
+   "refh": {
+    "rmse": 0.047543355770847506,
+    "mae": 0.032080839294115274,
+    "r2": 0.9853178013621299,
+    "bias": -0.009591034967523754,
+    "n": 125
+   },
+   "refh_table_rmse": 0.0475433558
+  },
+  "raw7_gp": {
+   "label": "GP on dimensional inputs (D,V,rho,sigma,mu,spacing,depth)",
+   "source": "paper/v3/raw7_rerun.json",
+   "model": "GP, dimensional inputs D,V,rho,sigma,mu,spacing,depth (REF-H spacing=depth=0)",
+   "loso_rmse": 0.03716066647323947,
+   "loso_mae": 0.021746362334215636,
+   "loso_r2": 0.992590631076312,
+   "loso_cov90": 0.8911882510013351,
+   "delta_vs_baseline_ci95": [
+    -0.008414094075793594,
+    0.0014298927766784437
+   ],
+   "refh_rmse": 0.05820565033525989,
+   "per_surface": {
+    "D100": 0.03287003389714479,
+    "D200": 0.020479263095294735,
+    "D400": 0.0322059860836746,
+    "D50": 0.06285542868467717,
+    "D600": 0.04114967073415491,
+    "D800": 0.039092880462719595,
+    "S100": 0.02357055074490743,
+    "S200": 0.03937844108265292,
+    "S400": 0.04401627549823519,
+    "S50": 0.022438312572773258,
+    "S600": 0.033509993855610314,
+    "S800": 0.03451582132874562
+   }
+  }
+ },
+ "checks": {
+  "v1_GPR_vs_v2_baseline_loso_rmse": [
+   0.03997278032919057,
+   0.03997278053909427
+  ],
+  "y_range": [
+   1.442874313,
+   3.342236258
+  ],
+  "refh_range": [
+   1.444621118,
+   2.825318246
+  ]
+ }
+}

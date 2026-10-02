@@ -8,7 +8,7 @@ Live website: https://iisc-droplet-parth1682.vercel.app
 
 Deliverables:
 - Poster (submitted, A0 portrait): `poster/final_A0_portrait/Parth_Sharma_Droplet_Poster_A0_Portrait.pdf`
-- Paper: `paper/Droplet_Spreading_Paper_v2.pdf` (and `.docx`)
+- Paper: `paper/v3/Droplet_Intelligence_Paper_v3.pdf` (and `.docx`); audit and verification report: `paper/v3/REPORT.md`. Earlier version: `paper/Droplet_Spreading_Paper_v2.pdf`
 - Demo app: `cd Droplet_Intelligence_v2`, then `python -m pip install -r requirements.txt`, then `python -m droplet.serve --port 8000` (or `run_demo.bat`)
 - Pitch scripts: `notes/pitch_scripts.md`
 - Website: https://iisc-droplet-parth1682.vercel.app (source in `site/`, built by `Droplet_Intelligence_v2/build_site.py`)

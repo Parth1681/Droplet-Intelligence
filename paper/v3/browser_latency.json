@@ -1,0 +1,8 @@
+{
+ "median_ms": 2.3999999999068677,
+ "p95_ms": 4.199999999953434,
+ "n": 200,
+ "beta": 2.859031155534474,
+ "training_rows": 1498,
+ "machine": "headless Chromium in the cloud build container; timing excludes model download"
+}
