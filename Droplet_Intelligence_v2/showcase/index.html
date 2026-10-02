@@ -198,6 +198,7 @@
     .steps { grid-template-columns: minmax(0, 1fr); }
     .bar { grid-template-columns: minmax(0, 120px) minmax(0, 1fr) 56px; }
   }
+.nocase { text-transform: none; }
 </style>
 
 <header class="header">
@@ -275,7 +276,7 @@
         <div class="field"><span class="lbl">Or try a sample from the dataset</span>
           <div class="samples"><button type="button" class="btn sm" data-sample="D200_43">D200 textured</button><button type="button" class="btn sm" data-sample="S800_43">S800 textured</button><button type="button" class="btn sm" data-sample="REF-H_43">Smooth plate</button></div></div>
         <div class="pair">
-          <div class="field"><label for="umpx">Pixel size, µm/px</label><input type="number" id="umpx" step="0.001" min="0.05" value="1.157"></div>
+          <div class="field"><label for="umpx">Pixel size, <span class="nocase">µm</span>/px</label><input type="number" id="umpx" step="0.001" min="0.05" value="1.157"></div>
           <div class="field"><label for="footer">Crop below row</label><input type="number" id="footer" step="1" min="0" value="0"></div>
         </div>
         <label class="check" for="force"><input type="checkbox" id="force"><span>Read anyway if the pixel size is not near 43× (φ will be biased low)</span></label>
@@ -523,7 +524,7 @@ async function run() {
     $('status').textContent = inside ? 'Within measured range' : pred.reliability.status === 'experimental' ? 'Experimental model' : 'Extrapolation';
     const rs = pred.reliability.reasons; $('reasons').hidden = !rs.length; $('reasons').innerHTML = rs.map(x => `<li>${x}</li>`).join('');
     const q = pred.physics;
-    $('phys').innerHTML = `<div><b>Re</b><span>${fmt(q.Re, 0)}</span></div><div><b>We</b><span>${fmt(q.We, 1)}</span></div><div><b>Oh</b><span>${fmt(q.Oh, 4)}</span></div><div><b>φ</b><span>${fmt(q.phi, 3)}</span></div><div><b>V<sub>tex</sub>, µm</b><span>${fmt(q.texvol, 1)}</span></div>`;
+    $('phys').innerHTML = `<div><b>Re</b><span>${fmt(q.Re, 0)}</span></div><div><b>We</b><span>${fmt(q.We, 1)}</span></div><div><b>Oh</b><span>${fmt(q.Oh, 4)}</span></div><div><b>φ</b><span>${fmt(q.phi, 3)}</span></div><div><b>V<sub>tex</sub>, <span class="nocase">µm</span></b><span>${fmt(q.texvol, 1)}</span></div>`;
     chart(p, pred);
     upPredict();
     vPredict();
@@ -596,7 +597,7 @@ function renderData() {
 function renderSEM() {
   const k = $('sem-surface').value, d = encoder.surface_descriptors[k];
   $('sem-views').innerHTML = [43, 100, 350].map(m => `<figure><img src="sem/${k}_${m}.jpg" alt="${k} SEM at ${m}× magnification" loading="lazy"><figcaption>${k} · ${m}×</figcaption></figure>`).join('');
-  $('sem-desc').innerHTML = `<div><b>CNN φ</b><span>${fmt(d.phi, 3)}</span></div><div><b>CNN V<sub>tex</sub>, µm</b><span>${fmt(d.texvol, 2)}</span></div><div><b>Geometry φ</b><span>${fmt(stats.surfaces[k].phi, 3)}</span></div><div><b>Geometry V<sub>tex</sub>, µm</b><span>${fmt(stats.surfaces[k].texvol, 2)}</span></div>`;
+  $('sem-desc').innerHTML = `<div><b>CNN φ</b><span>${fmt(d.phi, 3)}</span></div><div><b>CNN V<sub>tex</sub>, <span class="nocase">µm</span></b><span>${fmt(d.texvol, 2)}</span></div><div><b>Geometry φ</b><span>${fmt(stats.surfaces[k].phi, 3)}</span></div><div><b>Geometry V<sub>tex</sub>, <span class="nocase">µm</span></b><span>${fmt(stats.surfaces[k].texvol, 2)}</span></div>`;
 }
 $('data-surface').onchange = $('data-fluid').onchange = () => { dataPage = 0; renderData(); };
 $('prev').onclick = () => { dataPage--; renderData(); };
@@ -653,7 +654,7 @@ function upPredict() {
   const ok = !q.reasons.length; $('up-status').hidden = false; $('up-status').className = 'chip ' + (ok ? 'ok' : 'warn'); $('up-status').textContent = ok ? 'Within measured range' : 'Extrapolation';
   $('up-reasons').hidden = ok; $('up-reasons').innerHTML = q.reasons.map(x => `<li>${x}</li>`).join('');
   const near = ORDER.filter(k => k !== 'REF-H').map(k => [k, Math.abs((stats.image_phi?.[k] ?? stats.surfaces[k].phi) - upPhi)]).sort((a, b) => a[1] - b[1])[0][0];
-  $('up-stats').innerHTML = `<div><b>φ from image</b><span>${fmt(upPhi, 3)}</span></div><div><b>Pixel size, µm</b><span>${fmt(Number($('umpx').value), 3)}</span></div><div><b>Window, px</b><span>${upMap.win}</span></div><div><b>Re</b><span>${fmt(q.Re, 0)}</span></div><div><b>We</b><span>${fmt(q.We, 1)}</span></div><div><b>Closest training surface</b><span>${near}</span></div>`;
+  $('up-stats').innerHTML = `<div><b>φ from image</b><span>${fmt(upPhi, 3)}</span></div><div><b>Pixel size, <span class="nocase">µm</span></b><span>${fmt(Number($('umpx').value), 3)}</span></div><div><b>Window, px</b><span>${upMap.win}</span></div><div><b>Re</b><span>${fmt(q.Re, 0)}</span></div><div><b>We</b><span>${fmt(q.We, 1)}</span></div><div><b>Closest training surface</b><span>${near}</span></div>`;
 }
 async function upLoad(fileOrBlob, name) {
   upError(''); $('up-int').textContent = 'Decoding…';

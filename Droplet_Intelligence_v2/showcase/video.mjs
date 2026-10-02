@@ -30,7 +30,12 @@ export async function grabFrames(file, { maxW = 640, maxFrames = 3000, onProgres
   }
   URL.revokeObjectURL(v.src);
   frames.sort((a, b) => a.t - b.t);
-  return { W, H, scale: s, frames: frames.map(f => f.g) };
+  // Frame index from the media timestamp, so a frame the browser skipped leaves a gap instead of shifting time.
+  const dts = frames.slice(1).map((f, i) => f.t - frames[i].t).filter(d => d > 1e-6).sort((a, b) => a - b);
+  let step = dts.length ? dts[dts.length >> 1] : 1;                    // median spacing, then refit over the whole clip
+  if (frames.length > 1) { const span = frames[frames.length - 1].t - frames[0].t; step = span / Math.max(1, Math.round(span / step)); }
+  const idx = frames.map(f => Math.round((f.t - frames[0].t) / step));
+  return { W, H, scale: s, frames: frames.map(f => f.g), idx, skipped: idx.length ? idx[idx.length - 1] + 1 - idx.length : 0 };
 }
 
 function otsu(hist) {
@@ -55,8 +60,8 @@ function largestBlob(mask, W, H) {
   return best && best.area >= 20 ? best : null;
 }
 
-export function analyse({ W, H, frames }, fps, mmPerPx, { baseline = null, fitFrames = 8 } = {}) {
-  const N = frames.length, hist = new Float64Array(256);
+export function analyse({ W, H, frames, idx }, fps, mmPerPx, { baseline = null, fitFrames = 8 } = {}) {
+  const N = frames.length, hist = new Float64Array(256), T = idx || frames.map((_, i) => i);
   for (const g of frames) for (let i = 0; i < g.length; i += 4) hist[g[i]]++;
   const thr = otsu(hist);
   if (baseline == null) {
@@ -73,10 +78,10 @@ export function analyse({ W, H, frames }, fps, mmPerPx, { baseline = null, fitFr
   const fit = pre.slice(-fitFrames);
   if (fit.length < 3) throw Error('Fewer than 3 frames of the falling drop before contact.');
   const d0s = fit.map(i => 2 * Math.sqrt(recs[i].area / Math.PI)).sort((a, b) => a - b), d0px = d0s[d0s.length >> 1];
-  const xm = fit.reduce((a, b) => a + b, 0) / fit.length, ym = fit.reduce((a, i) => a + recs[i].cy, 0) / fit.length;
-  const slope = fit.reduce((a, i) => a + (i - xm) * (recs[i].cy - ym), 0) / fit.reduce((a, i) => a + (i - xm) ** 2, 0);
+  const xm = fit.reduce((a, i) => a + T[i], 0) / fit.length, ym = fit.reduce((a, i) => a + recs[i].cy, 0) / fit.length;
+  const slope = fit.reduce((a, i) => a + (T[i] - xm) * (recs[i].cy - ym), 0) / fit.reduce((a, i) => a + (T[i] - xm) ** 2, 0);
   const series = []; let best = 0, iBest = contact;
-  for (let i = contact; i < N; i++) if (recs[i]) { const w = recs[i].right - recs[i].left + 1; series.push({ t_ms: (i - contact) / fps * 1e3, D_mm: w * mmPerPx }); if (w > best) { best = w; iBest = i; } }
-  return { D0_mm: d0px * mmPerPx, V: slope * mmPerPx * 1e-3 * fps, beta_max: best / d0px, t_max_ms: (iBest - contact) / fps * 1e3,
+  for (let i = contact; i < N; i++) if (recs[i]) { const w = recs[i].right - recs[i].left + 1; series.push({ t_ms: (T[i] - T[contact]) / fps * 1e3, D_mm: w * mmPerPx }); if (w > best) { best = w; iBest = i; } }
+  return { D0_mm: d0px * mmPerPx, V: slope * mmPerPx * 1e-3 * fps, beta_max: best / d0px, t_max_ms: (T[iBest] - T[contact]) / fps * 1e3,
            contact, baseline, threshold: thr, frames: N, series, recs };
 }
