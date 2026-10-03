@@ -612,8 +612,7 @@ thead { display: table-header-group; }
     out.append("<h1>References</h1><div class='refs'>" + ''.join(f'<p>[{i + 1}] {inline_html(r)}</p>' for i, r in enumerate(REFS)) + '</div>')
     blocks(APP)
     out.append('</body></html>')
-    open(R + '/paper_v3.html', 'w').write('\n'.join(out[:1] + out[4:]))
-    open(R + '/front_v3.html', 'w').write('\n'.join(out[:4]) + '</body></html>')
+    open(R + '/paper_v3.html', 'w').write('\n'.join(out[:1] + out[3:]))
 
 
 VENUE = 'Prepared for Interfacial Phenomena in Droplets 2026, IISc Bengaluru, 5–7 October 2026'
@@ -622,7 +621,7 @@ COVER_STATS = [(f"{gp['loso']['rmse']:.4f}", 'RMSE on unseen surfaces'), (f"{gp[
 
 
 def headings():
-    hs = []
+    hs = [('Abstract', 0)]
     for blk in C:
         if blk[0] == 'h1': hs.append((blk[1], 0))
         elif blk[0] == 'h2': hs.append((blk[1], 1))
@@ -730,10 +729,8 @@ def render_docx():
         q = para(h, 11 if lvl == 0 else 10.4, bold=lvl == 0, after=2)
         if lvl: q.paragraph_format.left_indent = Mm(8)
     q.add_run().add_break(WD_BREAK.PAGE)
-    para(TITLE, 17, True, font='Arial', after=4); para(SUB, 11.5, color='5B6475', font='Arial', after=8)
-    para(f'**{AUTH}** · {AFF}', 10, after=10)
     para('Abstract', 11.5, True, font='Arial', after=2); para(ABSTRACT, 10, align=WD_ALIGN_PARAGRAPH.JUSTIFY, after=4)
-    q = para('**Keywords:** ' + KEYWORDS, 9.5, after=10); q.add_run().add_break(WD_BREAK.PAGE)
+    para('**Keywords:** ' + KEYWORDS, 9.5, after=10)
     def shade(cell, hexcol):
         tcPr = cell._tc.get_or_add_tcPr(); s = OxmlElement('w:shd'); s.set(qn('w:val'), 'clear'); s.set(qn('w:color'), 'auto'); s.set(qn('w:fill'), hexcol); tcPr.append(s)
     def blocks(Bs):
@@ -789,19 +786,17 @@ def render_pdf():
         pg.pdf(path=R + '/_main.pdf', format='A4', print_background=True, display_header_footer=True,
                header_template='<div></div>', footer_template="<div style='font-size:9px;color:#666;width:100%;text-align:center;font-family:serif'><span class='pageNumber'></span></div>",
                margin=dict(top='18mm', bottom='18mm', left='16mm', right='16mm'))
-        pg.goto('file://' + R + '/front_v3.html'); pg.wait_for_timeout(500)
-        pg.pdf(path=R + '/_front.pdf', format='A4', print_background=True, margin=dict(top='18mm', bottom='18mm', left='16mm', right='16mm'))
         render_cover_html(); render_index_html(heading_pages(R + '/_main.pdf'))
         for name in ('cover', 'index'):
             pg.goto(f'file://{R}/{name}_v3.html'); pg.wait_for_timeout(500)
             pg.pdf(path=f'{R}/_{name}.pdf', format='A4', print_background=True, margin=zero)
         b.close()
-    for n in ('cover', 'index', 'front'): assert len(PdfReader(f'{R}/_{n}.pdf').pages) == 1, n
+    for n in ('cover', 'index'): assert len(PdfReader(f'{R}/_{n}.pdf').pages) == 1, n
     w = PdfWriter()
-    for n in ('cover', 'index', 'front', 'main'): w.append(f'{R}/_{n}.pdf')
+    for n in ('cover', 'index', 'main'): w.append(f'{R}/_{n}.pdf')
     w.write(R + '/Droplet_Intelligence_Paper_v3.pdf')
     import shutil; shutil.copy(R + '/_cover.pdf', R + '/Droplet_Intelligence_Cover_v3.pdf')
-    for n in ('cover', 'index', 'front', 'main'): os.remove(f'{R}/_{n}.pdf')
+    for n in ('cover', 'index', 'main'): os.remove(f'{R}/_{n}.pdf')
 
 
 def renumber():
