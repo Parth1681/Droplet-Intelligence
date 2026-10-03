@@ -615,6 +615,41 @@ thead { display: table-header-group; }
     open(R + '/paper_v3.html', 'w').write('\n'.join(out))
 
 
+VENUE = 'Prepared for Interfacial Phenomena in Droplets 2026, IISc Bengaluru, 5–7 October 2026'
+COVER_STATS = [(f"{gp['loso']['rmse']:.4f}", 'RMSE on unseen surfaces'), (f"{gp['loso']['r2']:.3f}", 'R² on unseen surfaces'),
+               (f"{T_['rows'] + RF['rows']:,}", 'drop impacts analysed'), (f"{pct(cov['overall'])}", 'coverage of 90% interval')]
+
+
+def render_cover_html():
+    stats = ''.join(f"<div class='st'><b>{v}</b><span>{inline_html(k)}</span></div>" for v, k in COVER_STATS)
+    page = f"""<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Droplet Intelligence cover</title><style>
+@page {{ size: A4; margin: 0; }}
+html, body {{ margin: 0; background: #ffffff; }}
+.cv {{ width: 210mm; height: 297mm; box-sizing: border-box; padding: 22mm 20mm 18mm; display: flex; flex-direction: column; font-family: 'Liberation Sans', Arial, sans-serif; color: #1d2433; position: relative; overflow: hidden; }}
+.cv::before {{ content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 7mm; background: #1f5fa8; }}
+.top {{ display: flex; justify-content: space-between; align-items: center; }}
+.top img {{ height: 20mm; }}
+.kind {{ font-size: 9.5pt; letter-spacing: .18em; text-transform: uppercase; color: #1f5fa8; font-weight: 700; }}
+.ttl {{ margin-top: 18mm; font-size: 27pt; line-height: 1.16; font-weight: 700; color: #0f172a; }}
+.sub {{ margin-top: 7mm; font-size: 13pt; line-height: 1.4; color: #5b6475; max-width: 150mm; }}
+.rule {{ margin: 11mm 0 8mm; height: 2px; width: 40mm; background: #1f5fa8; }}
+.au {{ font-size: 14pt; font-weight: 700; }} .af {{ font-size: 11pt; color: #5b6475; margin-top: 2mm; font-family: 'Liberation Serif', serif; font-style: italic; }}
+.hero {{ margin-top: auto; padding-top: 8mm; }} .hero img {{ width: 94%; display: block; margin: 0 auto; }}
+.stats {{ display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #d5dae3; border-bottom: 1px solid #d5dae3; margin: 8mm 0 7mm; }}
+.st {{ padding: 4mm 3mm; }} .st + .st {{ border-left: 1px solid #d5dae3; }}
+.st b {{ display: block; font-size: 17pt; color: #1f5fa8; font-variant-numeric: tabular-nums; }} .st span {{ font-size: 8.5pt; color: #5b6475; }}
+.foot {{ display: flex; justify-content: space-between; font-size: 9pt; color: #5b6475; }}
+</style></head><body><div class='cv'>
+<div class='top'><span class='kind'>Research paper · Version 3</span><img src='figs/logo_tiet.png' alt=''></div>
+<div class='ttl'>{inline_html(TITLE)}</div><div class='sub'>{inline_html(SUB)}</div>
+<div class='rule'></div><div class='au'>{AUTH}</div><div class='af'>{AFF}</div>
+<div class='hero'><img src='figs/fig04_parity.png' alt=''></div>
+<div class='stats'>{stats}</div>
+<div class='foot'><span>{VENUE}</span><span>{datetime.date.today().strftime('%d %B %Y')}</span></div>
+</div></body></html>"""
+    open(R + '/cover_v3.html', 'w').write(page)
+
+
 def render_docx():
     from docx import Document
     from docx.shared import Pt, Mm, RGBColor
@@ -637,6 +672,14 @@ def render_docx():
             if color: r.font.color.rgb = RGBColor.from_string(color)
             if font: r.font.name = font
         return p
+    from docx.enum.text import WD_BREAK
+    doc.add_picture(R + '/figs/logo_tiet.png', width=Mm(22)); doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    para('RESEARCH PAPER · VERSION 3', 9.5, True, color='1F5FA8', font='Arial', after=60)
+    para(TITLE, 24, True, font='Arial', color='0F172A', after=10); para(SUB, 13, color='5B6475', font='Arial', after=36)
+    para(AUTH, 14, True, font='Arial', after=2); para(AFF, 11, italic=True, color='5B6475', after=24)
+    doc.add_picture(R + '/figs/fig04_parity.png', width=Mm(170))
+    para('   ·   '.join(f'{v} {k}' for v, k in COVER_STATS), 9.5, color='1F5FA8', font='Arial', after=10)
+    p_ = para(VENUE + '   ·   ' + DATE, 9, color='5B6475', after=0); p_.add_run().add_break(WD_BREAK.PAGE)
     para(TITLE, 17, True, font='Arial', after=4); para(SUB, 11.5, color='5B6475', font='Arial', after=8)
     para(f'**{AUTH}** · {AFF}', 10, after=0); para(DATE, 9.5, color='5B6475', after=10)
     para('Abstract', 11.5, True, font='Arial', after=2); para(ABSTRACT, 10, align=WD_ALIGN_PARAGRAPH.JUSTIFY, after=4)
@@ -693,7 +736,13 @@ def render_pdf():
         pg.pdf(path=R + '/Droplet_Intelligence_Paper_v3.pdf', format='A4', print_background=True, display_header_footer=True,
                header_template='<div></div>', footer_template="<div style='font-size:8px;color:#888;width:100%;text-align:center;font-family:sans-serif'>Droplet Intelligence v3 · <span class='pageNumber'></span> / <span class='totalPages'></span></div>",
                margin=dict(top='18mm', bottom='18mm', left='16mm', right='16mm'))
+        pg.goto('file://' + R + '/cover_v3.html'); pg.wait_for_timeout(500)
+        pg.pdf(path=R + '/Droplet_Intelligence_Cover_v3.pdf', format='A4', print_background=True, margin=dict(top='0', bottom='0', left='0', right='0'))
         b.close()
+    from pypdf import PdfWriter
+    w = PdfWriter()
+    for f_ in ('Droplet_Intelligence_Cover_v3.pdf', 'Droplet_Intelligence_Paper_v3.pdf'): w.append(R + '/' + f_)
+    w.write(R + '/Droplet_Intelligence_Paper_v3.pdf')
 
 
 def renumber():
@@ -713,5 +762,5 @@ if __name__ == '__main__':
     print('figure order', renumber())
     n_abs = len(re.sub(r'_\{|\^\{|\}', ' ', ABSTRACT).split())
     print('abstract words:', n_abs)
-    render_html(); render_pdf(); render_docx()
+    render_html(); render_cover_html(); render_pdf(); render_docx()
     print('wrote paper_v3.html, Droplet_Intelligence_Paper_v3.pdf, Droplet_Intelligence_Paper_v3.docx')
