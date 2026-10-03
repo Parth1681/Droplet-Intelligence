@@ -241,7 +241,7 @@ rows.append(['Laan law alone (A refit)', 'P = We·Re^{−2/5}', NA, f(AB['laan']
 TAB('Table 5. Verified model results. RMSE, MAE and R² on β_{max}. ID = GroupKFold(5) over conditions; LOSO = leave one textured surface out; REF-H = smooth plate, never trained on. '
     'Δ = candidate RMSE − GP RMSE under LOSO, 95% paired surface-bootstrap interval (positive = worse than the GP). "n/a" entries are ' + NA.lower() + ' (the 13-model screen saved LOSO RMSE only, not per-impact LOSO predictions).',
     ['Model', 'Inputs', 'ID RMSE', 'LOSO RMSE', 'LOSO MAE', 'LOSO R²', 'REF-H RMSE', 'REF-H MAE', 'REF-H R²', 'Δ LOSO (95% CI)'],
-    [[c if c != NA else 'n/a' for c in r] for r in rows], widths=[21, 13, 7, 7, 7, 7, 7, 7, 7, 17])
+    [[c if c != NA else 'n/a' for c in r] for r in rows], widths=[24, 13, 6.5, 6.5, 6.5, 6.5, 6.5, 6.5, 6.5, 16.5])
 P(f"The GP is the most accurate of the 13 learners screened on identical inputs (Table 5, Fig. 3; parity plots in Fig. 4). Its LOSO RMSE is {gp['loso']['rmse']:.4f} "
   f"(95% surface-bootstrap interval {S['loso_rmse_ci95_surface_bootstrap']['GPR'][0]:.4f}–{S['loso_rmse_ci95_surface_bootstrap']['GPR'][1]:.4f}), with MAE {gp['loso']['mae']:.4f} "
   f"and R² {gp['loso']['r2']:.4f}; the ID RMSE is {gp['id']['rmse']:.4f}, so moving from seen to unseen surfaces costs about {100 * (gp['loso']['rmse'] / gp['id']['rmse'] - 1):.0f}% in RMSE. "
@@ -512,17 +512,6 @@ AT('Table B1. Reproducibility record.', ['Item', 'Value'],
     ['This manuscript', 'build scripts: raw7_rerun.py, collect_metrics.py, stats.py, figs.py, screenshots.py, build_paper.py'],
     ['Tests', '23 unit tests in Droplet_Intelligence_v2/tests; browser–Python parity: results/js_parity.json'],
     ['Compute', 'single CPU container; the extension benchmark (5 candidates × 12 LOSO folds) took %.0f s with 4 workers' % EXT['seconds']]], widths=[22, 78])
-AH('Appendix C. Verification report')
-AT('Table C1. Final verification.', ['Check', 'Result'],
-   [['Fabricated values', 'NONE. Every number is read from a saved result file or recomputed from saved per-impact predictions at build time'],
-    ['Unverified models in the benchmark', 'NONE. Only implemented and evaluated models appear in Tables 5–6; planned work is in Table 8'],
-    ['Metrics recomputed', 'RMSE/MAE/R² recomputed from per-impact predictions for 7 v1 models, 4 v2 GP variants and 5 extension models; REF-H RMSE of all 13 screened models recomputed from saved predictions and matches zoo_table.csv'],
-    ['Cross-checks', 'v1 GP LOSO RMSE %.8f vs v2 re-implementation %.8f; browser vs Python β_{max} %.1e' % (gp['loso']['rmse'], M['v2_baseline']['loso']['rmse'], PAR['max_absolute_beta_difference'])],
-    ['Re-run in this study', 'dimensional-input GP (reproduces 0.0372 of the archived phase-2 run), bootstrap intervals, latency, video checks'],
-    ['Latency claims', 'measured (Table 7); no capture-to-result real-time claim'],
-    ['References', '15, all cited in the text; none added without a verifiable source'],
-    ['Corrections to earlier drafts', 'Laan-backbone improvement is not significant with surfaces resampled; dimensional inputs are lower but not significant; browser video timing bug found and fixed']],
-   widths=[28, 72])
 
 # ============================================================== rendering helpers
 def inline_html(t):
@@ -600,11 +589,11 @@ thead { display: table-header-group; }
             elif k == 'fig': out.append(f"<figure><img src='figs/{b[1]}.png' style='width:{100 * b[3]:.0f}%' alt=''><figcaption class='cap'>{inline_html(b[2])}</figcaption></figure>")
             elif k == 'table':
                 _, cap, head, rows, note, widths = b
-                isnum = [all(re.fullmatch(r'[−+\-]?[0-9.,]+%?|n/a|–|0', str(r[j])) for r in rows) for j in range(len(head))]
+                isnum = [all(re.fullmatch(r'[−+\-]?[0-9.,]+(–[0-9.,]+)?%?|n/a|–|0', str(r[j])) for r in rows) for j in range(len(head))]
                 cg = ''.join(f"<col style='width:{w}%'>" for w in widths) if widths else ''
                 th = ''.join(f"<th class='{'num' if isnum[j] else ''}'>{inline_html(h)}</th>" for j, h in enumerate(head))
                 tr = ''.join('<tr>' + ''.join(f"<td class='{'num' if isnum[j] else ''}'>{inline_html(str(c))}</td>" for j, c in enumerate(r)) + '</tr>' for r in rows)
-                cls = ('tablewrap keep' if len(rows) <= 18 else 'tablewrap') + (' big' if len(head) >= 9 else '')
+                cls = ('tablewrap keep' if len(rows) <= 12 else 'tablewrap') + (' big' if len(head) >= 9 else '')
                 out.append(f"<div class='{cls}'><table><caption>{inline_html(cap)}</caption><colgroup>{cg}</colgroup><thead><tr>{th}</tr></thead><tbody>{tr}</tbody></table>"
                            + (f"<div class='tnote'>{inline_html(note)}</div>" if note else '') + '</div>')
     blocks(C)
@@ -612,7 +601,7 @@ thead { display: table-header-group; }
     out.append("<h1>References</h1><div class='refs'>" + ''.join(f'<p>[{i + 1}] {inline_html(r)}</p>' for i, r in enumerate(REFS)) + '</div>')
     blocks(APP)
     out.append('</body></html>')
-    open(R + '/paper_v3.html', 'w').write('\n'.join(out[:1] + out[3:]))
+    open(R + '/paper_v3.html', 'w').write('\n'.join(out[:1] + out[4:]))
 
 
 VENUE = 'Prepared for Interfacial Phenomena in Droplets 2026, IISc Bengaluru, 5–7 October 2026'
@@ -621,7 +610,7 @@ COVER_STATS = [(f"{gp['loso']['rmse']:.4f}", 'RMSE on unseen surfaces'), (f"{gp[
 
 
 def headings():
-    hs = [('Abstract', 0)]
+    hs = []
     for blk in C:
         if blk[0] == 'h1': hs.append((blk[1], 0))
         elif blk[0] == 'h2': hs.append((blk[1], 1))
@@ -729,8 +718,6 @@ def render_docx():
         q = para(h, 11 if lvl == 0 else 10.4, bold=lvl == 0, after=2)
         if lvl: q.paragraph_format.left_indent = Mm(8)
     q.add_run().add_break(WD_BREAK.PAGE)
-    para('Abstract', 11.5, True, font='Arial', after=2); para(ABSTRACT, 10, align=WD_ALIGN_PARAGRAPH.JUSTIFY, after=4)
-    para('**Keywords:** ' + KEYWORDS, 9.5, after=10)
     def shade(cell, hexcol):
         tcPr = cell._tc.get_or_add_tcPr(); s = OxmlElement('w:shd'); s.set(qn('w:val'), 'clear'); s.set(qn('w:color'), 'auto'); s.set(qn('w:fill'), hexcol); tcPr.append(s)
     def blocks(Bs):
@@ -784,7 +771,8 @@ def render_pdf():
         pg = b.new_page()
         pg.goto('file://' + R + '/paper_v3.html'); pg.wait_for_timeout(500)
         pg.pdf(path=R + '/_main.pdf', format='A4', print_background=True, display_header_footer=True,
-               header_template='<div></div>', footer_template="<div style='font-size:9px;color:#666;width:100%;text-align:center;font-family:serif'><span class='pageNumber'></span></div>",
+               header_template="<div style='font-size:8px;color:#666;width:100%;margin:0 16mm;padding-bottom:2px;border-bottom:0.5px solid #bbb;display:flex;justify-content:space-between;font-family:Liberation Serif,serif;font-style:italic'><span>Droplet Intelligence: maximum spreading on laser-textured surfaces</span><span>P. Sharma</span></div>",
+               footer_template="<div style='font-size:9px;color:#333;width:100%;text-align:center;font-family:Liberation Serif,serif'><span class='pageNumber'></span></div>",
                margin=dict(top='18mm', bottom='18mm', left='16mm', right='16mm'))
         render_cover_html(); render_index_html(heading_pages(R + '/_main.pdf'))
         for name in ('cover', 'index'):
