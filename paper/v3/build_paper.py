@@ -464,7 +464,7 @@ TAB('Table 8. Proposed / future evaluation (not benchmarked; no results claimed)
 ACK = ("The author thanks M. Može and co-authors for publishing the dataset used here. An AI assistant was used to help write analysis code and edit the text; the author "
        "designed the study, checked every result against the saved result files, and takes responsibility for the content.")
 DATA = ("Impact data: Može et al., Mendeley Data, doi:10.17632/wsh8rxwd38.1 [4]. Code, trained model bundles, per-impact predictions, figure and table scripts are in the project "
-        "repository (paper/v3/ for this manuscript; Appendix B).")
+        "repository (Appendix B).")
 
 REFS = [
     'C. Josserand, S. T. Thoroddsen. Drop impact on a solid surface. *Annual Review of Fluid Mechanics* 48 (2016) 365–391.',
@@ -509,7 +509,7 @@ AT('Table B1. Reproducibility record.', ['Item', 'Value'],
     ['Main model export', 'Droplet_Intelligence_v2/models/release.json, baseline.json + baseline.L.bin (float64 Cholesky factor)'],
     ['Benchmark (v2)', 'python -m droplet.benchmark; python -m droplet.nested; python -m droplet.extensions --workers 4'],
     ['Archived screen (v1)', 'archive/v1_droplet/src/{models_extra,final_pipeline,phases,phase_extra}.py; results in archive/v1_droplet/results/'],
-    ['This manuscript', 'paper/v3/: raw7_rerun.py, collect_metrics.py, stats.py, figs.py, screenshots.py, build_paper.py'],
+    ['This manuscript', 'build scripts: raw7_rerun.py, collect_metrics.py, stats.py, figs.py, screenshots.py, build_paper.py'],
     ['Tests', '23 unit tests in Droplet_Intelligence_v2/tests; browser–Python parity: results/js_parity.json'],
     ['Compute', 'single CPU container; the extension benchmark (5 candidates × 12 LOSO folds) took %.0f s with 4 workers' % EXT['seconds']]], widths=[22, 78])
 AH('Appendix C. Verification report')
@@ -585,7 +585,7 @@ thead { display: table-header-group; }
 """
     out = [f"<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Droplet Intelligence paper</title><style>{css}</style></head><body>",
            f"<div class='title'>{inline_html(TITLE)}</div><div class='sub'>{inline_html(SUB)}</div>",
-           f"<div class='meta'><b>{AUTH}</b> · {AFF}<br>{DATE}</div>",
+           f"<div class='meta'><b>{AUTH}</b> · {AFF}</div>",
            f"<div class='abstract'><h2>Abstract</h2><p>{inline_html(ABSTRACT)}</p></div><div class='kw'><b>Keywords:</b> {inline_html(KEYWORDS)}</div>"]
     def blocks(Bs):
         for b in Bs:
@@ -612,7 +612,8 @@ thead { display: table-header-group; }
     out.append("<h1>References</h1><div class='refs'>" + ''.join(f'<p>[{i + 1}] {inline_html(r)}</p>' for i, r in enumerate(REFS)) + '</div>')
     blocks(APP)
     out.append('</body></html>')
-    open(R + '/paper_v3.html', 'w').write('\n'.join(out))
+    open(R + '/paper_v3.html', 'w').write('\n'.join(out[:1] + out[4:]))
+    open(R + '/front_v3.html', 'w').write('\n'.join(out[:4]) + '</body></html>')
 
 
 VENUE = 'Prepared for Interfacial Phenomena in Droplets 2026, IISc Bengaluru, 5–7 October 2026'
@@ -620,35 +621,76 @@ COVER_STATS = [(f"{gp['loso']['rmse']:.4f}", 'RMSE on unseen surfaces'), (f"{gp[
                (f"{T_['rows'] + RF['rows']:,}", 'drop impacts analysed'), (f"{pct(cov['overall'])}", 'coverage of 90% interval')]
 
 
+def headings():
+    hs = []
+    for blk in C:
+        if blk[0] == 'h1': hs.append((blk[1], 0))
+        elif blk[0] == 'h2': hs.append((blk[1], 1))
+    hs += [('Acknowledgements', 0), ('Data and code availability', 0), ('References', 0)]
+    hs += [(blk[1], 0) for blk in APP if blk[0] == 'h1']
+    return hs
+
+
+def heading_pages(pdf):
+    from pypdf import PdfReader
+    pages = [pg.extract_text() or '' for pg in PdfReader(pdf).pages]
+    norm = lambda t: re.sub(r'\s+', ' ', re.sub(r'_\{|\^\{|\}', '', t)).strip()
+    out, start = {}, 0
+    for h, _ in headings():
+        key = norm(h)
+        for i in range(start, len(pages)):
+            if any(norm(line).startswith(key) for line in pages[i].splitlines()):
+                out[h] = i + 1; start = i; break
+    return out
+
+
+PROJECT, TITLE_REST = TITLE.split(': ', 1)
+TITLE_REST = TITLE_REST[0].upper() + TITLE_REST[1:]
+
+
 def render_cover_html():
-    stats = ''.join(f"<div class='st'><b>{v}</b><span>{inline_html(k)}</span></div>" for v, k in COVER_STATS)
-    page = f"""<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Droplet Intelligence cover</title><style>
+    page = f"""<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Cover</title><style>
 @page {{ size: A4; margin: 0; }}
 html, body {{ margin: 0; background: #ffffff; }}
-.cv {{ width: 210mm; height: 297mm; box-sizing: border-box; padding: 22mm 20mm 18mm; display: flex; flex-direction: column; font-family: 'Liberation Sans', Arial, sans-serif; color: #1d2433; position: relative; overflow: hidden; }}
-.cv::before {{ content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 7mm; background: #1f5fa8; }}
-.top {{ display: flex; justify-content: space-between; align-items: center; }}
-.top img {{ height: 20mm; }}
-.kind {{ font-size: 9.5pt; letter-spacing: .18em; text-transform: uppercase; color: #1f5fa8; font-weight: 700; }}
-.ttl {{ margin-top: 18mm; font-size: 27pt; line-height: 1.16; font-weight: 700; color: #0f172a; }}
-.sub {{ margin-top: 7mm; font-size: 13pt; line-height: 1.4; color: #5b6475; max-width: 150mm; }}
-.rule {{ margin: 11mm 0 8mm; height: 2px; width: 40mm; background: #1f5fa8; }}
-.au {{ font-size: 14pt; font-weight: 700; }} .af {{ font-size: 11pt; color: #5b6475; margin-top: 2mm; font-family: 'Liberation Serif', serif; font-style: italic; }}
-.hero {{ margin-top: auto; padding-top: 8mm; }} .hero img {{ width: 94%; display: block; margin: 0 auto; }}
-.stats {{ display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid #d5dae3; border-bottom: 1px solid #d5dae3; margin: 8mm 0 7mm; }}
-.st {{ padding: 4mm 3mm; }} .st + .st {{ border-left: 1px solid #d5dae3; }}
-.st b {{ display: block; font-size: 17pt; color: #1f5fa8; font-variant-numeric: tabular-nums; }} .st span {{ font-size: 8.5pt; color: #5b6475; }}
-.foot {{ display: flex; justify-content: space-between; font-size: 9pt; color: #5b6475; }}
-</style></head><body><div class='cv'>
-<div class='top'><span class='kind'>Research paper · Version 3</span><img src='figs/logo_tiet.png' alt=''></div>
-<div class='ttl'>{inline_html(TITLE)}</div><div class='sub'>{inline_html(SUB)}</div>
-<div class='rule'></div><div class='au'>{AUTH}</div><div class='af'>{AFF}</div>
-<div class='hero'><img src='figs/fig04_parity.png' alt=''></div>
-<div class='stats'>{stats}</div>
-<div class='foot'><span>{VENUE}</span><span>{datetime.date.today().strftime('%d %B %Y')}</span></div>
-</div></body></html>"""
+.cv {{ width: 210mm; height: 297mm; box-sizing: border-box; padding: 16mm; font-family: 'Liberation Serif', 'Times New Roman', serif; color: #111; }}
+.fr {{ height: 100%; box-sizing: border-box; border: 1.2pt solid #1f3a68; outline: 0.5pt solid #1f3a68; outline-offset: -2.2mm; padding: 16mm 14mm 14mm; display: flex; flex-direction: column; align-items: center; text-align: center; }}
+.logo {{ height: 26mm; }}
+.inst {{ margin-top: 3mm; font-size: 12pt; letter-spacing: .04em; }}
+.kind {{ margin-top: 22mm; font-family: 'Liberation Sans', Arial, sans-serif; font-size: 10.5pt; letter-spacing: .32em; color: #1f3a68; font-weight: 700; }}
+.proj {{ margin-top: 7mm; font-family: 'Liberation Sans', Arial, sans-serif; font-size: 34pt; font-weight: 700; color: #1f3a68; letter-spacing: .02em; }}
+.bar {{ width: 34mm; height: 2.4pt; background: #1f3a68; margin: 8mm 0; }}
+.ttl {{ font-size: 18pt; line-height: 1.32; font-weight: 700; max-width: 150mm; }}
+.sub {{ margin-top: 6mm; font-size: 12.5pt; line-height: 1.4; font-style: italic; color: #333; max-width: 145mm; }}
+.by {{ margin-top: auto; font-size: 11pt; color: #444; letter-spacing: .08em; }}
+.au {{ margin-top: 3mm; font-size: 20pt; font-weight: 700; }}
+.af {{ margin-top: 2mm; font-size: 12pt; }}
+.venue {{ margin-top: 16mm; padding-top: 5mm; border-top: 0.6pt solid #999; width: 100%; font-size: 10.5pt; color: #333; }}
+</style></head><body><div class='cv'><div class='fr'>
+<img class='logo' src='figs/logo_tiet.png' alt=''>
+<div class='inst'>Thapar Institute of Engineering &amp; Technology, Patiala</div>
+<div class='kind'>RESEARCH PAPER</div>
+<div class='proj'>{PROJECT}</div><div class='bar'></div>
+<div class='ttl'>{inline_html(TITLE_REST)}</div><div class='sub'>{inline_html(SUB)}</div>
+<div class='by'>SUBMITTED BY</div><div class='au'>{AUTH}</div><div class='af'>{AFF}</div>
+<div class='venue'>{VENUE}</div>
+</div></div></body></html>"""
     open(R + '/cover_v3.html', 'w').write(page)
 
+
+def render_index_html(pages):
+    rows = ''.join(f"<div class='r l{lvl}'><span>{inline_html(h)}</span><i></i><b>{pages.get(h, '')}</b></div>" for h, lvl in headings())
+    page = f"""<!doctype html><html lang='en'><head><meta charset='utf-8'><title>Contents</title><style>
+@page {{ size: A4; margin: 0; }}
+html, body {{ margin: 0; background: #ffffff; }}
+.pg {{ width: 210mm; height: 297mm; box-sizing: border-box; padding: 26mm 24mm 18mm; font-family: 'Liberation Serif', 'Times New Roman', serif; color: #111; }}
+h1 {{ font-family: 'Liberation Sans', Arial, sans-serif; font-size: 18pt; color: #1f3a68; margin: 0 0 3mm; letter-spacing: .06em; }}
+.hr {{ border-top: 1.4pt solid #1f3a68; margin-bottom: 7mm; }}
+.r {{ display: flex; align-items: baseline; font-size: 11pt; line-height: 1.62; }}
+.r i {{ flex: 1; border-bottom: 1px dotted #555; margin: 0 2mm; transform: translateY(-3px); }}
+.r b {{ font-weight: normal; min-width: 7mm; text-align: right; }}
+.l0 span {{ font-weight: 700; }} .l1 {{ padding-left: 8mm; font-size: 10.4pt; line-height: 1.5; }}
+</style></head><body><div class='pg'><h1>CONTENTS</h1><div class='hr'></div>{rows}</div></body></html>"""
+    open(R + '/index_v3.html', 'w').write(page)
 
 def render_docx():
     from docx import Document
@@ -673,17 +715,25 @@ def render_docx():
             if font: r.font.name = font
         return p
     from docx.enum.text import WD_BREAK
-    doc.add_picture(R + '/figs/logo_tiet.png', width=Mm(22)); doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.RIGHT
-    para('RESEARCH PAPER · VERSION 3', 9.5, True, color='1F5FA8', font='Arial', after=60)
-    para(TITLE, 24, True, font='Arial', color='0F172A', after=10); para(SUB, 13, color='5B6475', font='Arial', after=36)
-    para(AUTH, 14, True, font='Arial', after=2); para(AFF, 11, italic=True, color='5B6475', after=24)
-    doc.add_picture(R + '/figs/fig04_parity.png', width=Mm(170))
-    para('   ·   '.join(f'{v} {k}' for v, k in COVER_STATS), 9.5, color='1F5FA8', font='Arial', after=10)
-    p_ = para(VENUE + '   ·   ' + DATE, 9, color='5B6475', after=0); p_.add_run().add_break(WD_BREAK.PAGE)
+    CEN = WD_ALIGN_PARAGRAPH.CENTER
+    doc.add_picture(R + '/figs/logo_tiet.png', width=Mm(26)); doc.paragraphs[-1].alignment = CEN
+    para('Thapar Institute of Engineering & Technology, Patiala', 12, align=CEN, after=60)
+    para('RESEARCH PAPER', 10.5, True, color='1F3A68', font='Arial', align=CEN, after=10)
+    para(PROJECT, 32, True, color='1F3A68', font='Arial', align=CEN, after=18)
+    para(TITLE_REST, 17, True, align=CEN, after=10)
+    para(SUB, 12.5, italic=True, color='333333', align=CEN, after=110)
+    para('SUBMITTED BY', 11, color='444444', align=CEN, after=4)
+    para(AUTH, 20, True, align=CEN, after=2); para(AFF, 12, align=CEN, after=40)
+    q = para(VENUE, 10.5, color='333333', align=CEN, after=0); q.add_run().add_break(WD_BREAK.PAGE)
+    para('CONTENTS', 18, True, color='1F3A68', font='Arial', after=12)
+    for h, lvl in headings():
+        q = para(h, 11 if lvl == 0 else 10.4, bold=lvl == 0, after=2)
+        if lvl: q.paragraph_format.left_indent = Mm(8)
+    q.add_run().add_break(WD_BREAK.PAGE)
     para(TITLE, 17, True, font='Arial', after=4); para(SUB, 11.5, color='5B6475', font='Arial', after=8)
-    para(f'**{AUTH}** · {AFF}', 10, after=0); para(DATE, 9.5, color='5B6475', after=10)
+    para(f'**{AUTH}** · {AFF}', 10, after=10)
     para('Abstract', 11.5, True, font='Arial', after=2); para(ABSTRACT, 10, align=WD_ALIGN_PARAGRAPH.JUSTIFY, after=4)
-    para('**Keywords:** ' + KEYWORDS, 9.5, after=10)
+    q = para('**Keywords:** ' + KEYWORDS, 9.5, after=10); q.add_run().add_break(WD_BREAK.PAGE)
     def shade(cell, hexcol):
         tcPr = cell._tc.get_or_add_tcPr(); s = OxmlElement('w:shd'); s.set(qn('w:val'), 'clear'); s.set(qn('w:color'), 'auto'); s.set(qn('w:fill'), hexcol); tcPr.append(s)
     def blocks(Bs):
@@ -730,19 +780,28 @@ def render_docx():
 
 def render_pdf():
     from playwright.sync_api import sync_playwright
+    from pypdf import PdfWriter, PdfReader
+    zero = dict(top='0', bottom='0', left='0', right='0')
     with sync_playwright() as p:
         b = p.chromium.launch(executable_path='/opt/pw-browsers/chromium-1194/chrome-linux/chrome')
-        pg = b.new_page(); pg.goto('file://' + R + '/paper_v3.html'); pg.wait_for_timeout(500)
-        pg.pdf(path=R + '/Droplet_Intelligence_Paper_v3.pdf', format='A4', print_background=True, display_header_footer=True,
-               header_template='<div></div>', footer_template="<div style='font-size:8px;color:#888;width:100%;text-align:center;font-family:sans-serif'>Droplet Intelligence v3 · <span class='pageNumber'></span> / <span class='totalPages'></span></div>",
+        pg = b.new_page()
+        pg.goto('file://' + R + '/paper_v3.html'); pg.wait_for_timeout(500)
+        pg.pdf(path=R + '/_main.pdf', format='A4', print_background=True, display_header_footer=True,
+               header_template='<div></div>', footer_template="<div style='font-size:9px;color:#666;width:100%;text-align:center;font-family:serif'><span class='pageNumber'></span></div>",
                margin=dict(top='18mm', bottom='18mm', left='16mm', right='16mm'))
-        pg.goto('file://' + R + '/cover_v3.html'); pg.wait_for_timeout(500)
-        pg.pdf(path=R + '/Droplet_Intelligence_Cover_v3.pdf', format='A4', print_background=True, margin=dict(top='0', bottom='0', left='0', right='0'))
+        pg.goto('file://' + R + '/front_v3.html'); pg.wait_for_timeout(500)
+        pg.pdf(path=R + '/_front.pdf', format='A4', print_background=True, margin=dict(top='18mm', bottom='18mm', left='16mm', right='16mm'))
+        render_cover_html(); render_index_html(heading_pages(R + '/_main.pdf'))
+        for name in ('cover', 'index'):
+            pg.goto(f'file://{R}/{name}_v3.html'); pg.wait_for_timeout(500)
+            pg.pdf(path=f'{R}/_{name}.pdf', format='A4', print_background=True, margin=zero)
         b.close()
-    from pypdf import PdfWriter
+    for n in ('cover', 'index', 'front'): assert len(PdfReader(f'{R}/_{n}.pdf').pages) == 1, n
     w = PdfWriter()
-    for f_ in ('Droplet_Intelligence_Cover_v3.pdf', 'Droplet_Intelligence_Paper_v3.pdf'): w.append(R + '/' + f_)
+    for n in ('cover', 'index', 'front', 'main'): w.append(f'{R}/_{n}.pdf')
     w.write(R + '/Droplet_Intelligence_Paper_v3.pdf')
+    import shutil; shutil.copy(R + '/_cover.pdf', R + '/Droplet_Intelligence_Cover_v3.pdf')
+    for n in ('cover', 'index', 'front', 'main'): os.remove(f'{R}/_{n}.pdf')
 
 
 def renumber():
@@ -762,5 +821,5 @@ if __name__ == '__main__':
     print('figure order', renumber())
     n_abs = len(re.sub(r'_\{|\^\{|\}', ' ', ABSTRACT).split())
     print('abstract words:', n_abs)
-    render_html(); render_cover_html(); render_pdf(); render_docx()
+    render_html(); render_pdf(); render_docx()
     print('wrote paper_v3.html, Droplet_Intelligence_Paper_v3.pdf, Droplet_Intelligence_Paper_v3.docx')
